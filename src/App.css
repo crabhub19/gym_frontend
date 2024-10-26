@@ -1,0 +1,35 @@
+body{
+  @apply dark:bg-black;
+}
+
+
+.display-none{
+  @apply hidden;
+}
+
+#scroll-up {
+    background: var(--theme);
+    height: 40px;
+    width: 40px;
+    right: 31px;
+    bottom: 18px;
+    position: fixed;
+    color:var(--white);
+    font-size: 20px;
+    /* border-radius: 50%; */
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
+  }
+#theme-button {
+    background: var(--theme);
+    height: 40px;
+    width: 40px;
+    right: 90px;
+    bottom: 18px;
+    position: fixed;
+    color:var(--white);
+    font-size: 20px;
+    /* border-radius: 50%; */
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
+  }

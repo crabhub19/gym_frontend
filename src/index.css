@@ -1,0 +1,222 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --black:rgb(0, 0, 0);
+  --dark:rgb(29, 29, 29);
+  --main : #ff1313;
+  --darkMain: #c20505;
+  --white: #fff;
+  --gray: gray;
+  --theme:#FF0000;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* import font */
+@font-face {
+  font-family: Oswald;
+  src: url(./assets/font/Oswald-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: Chococooky;
+  src: url(./assets/font/Chococooky.woff);
+}
+@font-face {
+  font-family: Cooljazz;
+  src: url(./assets/font/Cooljazz.ttf);
+}
+@layer components{
+  
+
+    /* theme management */
+
+    
+    /*-------------Color include--------------*/
+    /*-- Background color---*/
+    .white-bg {
+      background: var(--white);
+    }
+    
+    .gray-bg {
+      background: var(--gray);
+    }
+    .black-bg {
+      background: var(--black);
+    }
+    .theme-bg {
+      background: var(--theme);
+    }
+    .dark-bg {
+      background: var(--dark);
+    }
+    
+    
+    /*--- color------*/
+    .white-color {
+      color: var(--white);
+    }
+    
+    .black-color {
+      color: var(--black);
+    }
+    .gray-color {
+      color: var(--gray);
+    }
+    
+    .theme-color {
+      color: var(--theme);
+    }
+    .dark-color {
+      color: var(--dark);
+    }
+
+    /* border customize */
+    .white-border{
+      border: 2px solid var(--white)
+    }
+    .black-border{
+      border: 2px solid var(--black)
+    }
+    .dark-border{
+      border: 2px solid var(--dark)
+    }
+    .theme-border{
+      border: 2px solid var(--theme)
+    }
+    /* text stoke */
+    .text-stroke {
+      -webkit-text-stroke: 1px var(--white); /* Stroke color and width */
+      color: transparent; /* Make text color transparent */
+    }
+    .dark-text-stroke {
+      -webkit-text-stroke: 1px var(--black); /* Stroke color and width */
+      color: transparent; /* Make text color transparent */
+    }
+
+
+    /* secondary button */
+    .secondary-btn {
+      background: transparent;
+      color:var(--white);
+      border: 2px solid var(--white);
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      padding: 27px 44px;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 0px;
+      line-height: 1;
+      -moz-user-select: none;
+      letter-spacing: 1px;
+      line-height: 0;
+      margin-bottom: 0;
+      margin: 10px;
+      cursor: pointer;
+      transition: color 0.4s linear;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      margin: 0;
+      @apply white-border
+    }
+    
+    .secondary-btn::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 101%;
+      height: 101%;
+      background: var(--darkMain);
+      z-index: 1;
+      border-radius: 5px;
+      transition: transform 0.5s;
+      transition-timing-function: ease;
+      transform-origin: 0 0;
+      transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
+      transform: scaleY(0);
+      border-radius: 0px;
+      @apply dark:dark-bg
+    }
+    
+    .secondary-btn:hover::before {
+      transform: scaleY(1);
+      color: var(--white) !important;
+      z-index: -1;
+    }
+    
+    .secondary-btn:hover {
+      background-position: bottom;
+    }
+    
+    .secondary-btn:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+
+    /* for button */
+  .btn {
+    background: var(--main);
+    color:var(--white);
+    border: 2px solid var(--white);
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    padding: 27px 44px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 0px;
+    line-height: 1;
+    -moz-user-select: none;
+    letter-spacing: 1px;
+    line-height: 0;
+    margin-bottom: 0;
+    margin: 10px;
+    cursor: pointer;
+    transition: color 0.4s linear;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    margin: 0;
+    @apply dark:hover:white-border dark:hover:white-color hover:theme-color hover:theme-border
+  }
+  
+  .btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 101%;
+    height: 101%;
+    /* background: var(--darkMain); */
+    z-index: 1;
+    border-radius: 5px;
+    transition: transform 0.5s;
+    transition-timing-function: ease;
+    transform-origin: 0 0;
+    transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
+    transform: scaleX(0);
+    border-radius: 0px;
+    @apply dark:dark-bg white-bg
+  }
+  
+  .btn:hover::before {
+    transform: scaleX(1);
+    color: var(--white) !important;
+    z-index: -1;
+  }
+  
+  .btn:hover {
+    background-position: right;
+  }
+  
+  .btn:focus {
+    outline: 0;
+    box-shadow: none;
+  }
+
+}
