@@ -1,12 +1,8 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --black:rgb(0, 0, 0);
-  --dark:rgb(29, 29, 29);
-  --main : #ff1313;
-  --darkMain: #c20505;
-  --white: #fff;
-  --gray: gray;
-  --theme:#FF0000;
+  line-height: 1.5;
+  --black:black;
+  --white:white;
 }
 
 @tailwind base;
@@ -20,11 +16,15 @@
 }
 @font-face {
   font-family: Chococooky;
-  src: url(./assets/font/Chococooky.woff);
+  src: url(./assets/font/Chococooky.ttf);
 }
 @font-face {
-  font-family: Cooljazz;
-  src: url(./assets/font/Cooljazz.ttf);
+  font-family: RubikWetPaint;
+  src: url(./assets/font/RubikWetPaint-Regular.ttf);
+}
+@font-face {
+  font-family: Lato;
+  src: url(./assets/font/Lato-Black.ttf);
 }
 @layer components{
   
@@ -32,58 +32,9 @@
     /* theme management */
 
     
-    /*-------------Color include--------------*/
-    /*-- Background color---*/
-    .white-bg {
-      background: var(--white);
-    }
-    
-    .gray-bg {
-      background: var(--gray);
-    }
-    .black-bg {
-      background: var(--black);
-    }
-    .theme-bg {
-      background: var(--theme);
-    }
-    .dark-bg {
-      background: var(--dark);
-    }
     
     
-    /*--- color------*/
-    .white-color {
-      color: var(--white);
-    }
     
-    .black-color {
-      color: var(--black);
-    }
-    .gray-color {
-      color: var(--gray);
-    }
-    
-    .theme-color {
-      color: var(--theme);
-    }
-    .dark-color {
-      color: var(--dark);
-    }
-
-    /* border customize */
-    .white-border{
-      border: 2px solid var(--white)
-    }
-    .black-border{
-      border: 2px solid var(--black)
-    }
-    .dark-border{
-      border: 2px solid var(--dark)
-    }
-    .theme-border{
-      border: 2px solid var(--theme)
-    }
     /* text stoke */
     .text-stroke {
       -webkit-text-stroke: 1px var(--white); /* Stroke color and width */
@@ -94,12 +45,41 @@
       color: transparent; /* Make text color transparent */
     }
 
+      /* container customiztions */
+    .container-web{
+      .container {
+        width: 100%;
+    }
+    @media (min-width: 640px) {
+        .container-web {
+            max-width: 640px;
+        }
+    }
+    @media (min-width: 768px) {
+        .container-web {
+            max-width: 768px;
+        }
+    }
+    @media (min-width: 1024px) {
+        .container-web {
+            max-width: 1024px;
+        }
+    }
+    @media (min-width: 1280px) {
+        .container-web {
+            max-width: 1280px;
+        }
+    }
+    @media (min-width: 1536px) {
+        .container-web {
+            max-width: 1536px;
+        }
+    }
+    }
 
     /* secondary button */
     .secondary-btn {
       background: transparent;
-      color:var(--white);
-      border: 2px solid var(--white);
       font-family: "Oswald", sans-serif;
       text-transform: uppercase;
       padding: 27px 44px;
@@ -120,7 +100,7 @@
       z-index: 1;
       overflow: hidden;
       margin: 0;
-      @apply white-border
+      @apply text-white border-2 border-white
     }
     
     .secondary-btn::before {
@@ -130,7 +110,6 @@
       top: 0;
       width: 101%;
       height: 101%;
-      background: var(--darkMain);
       z-index: 1;
       border-radius: 5px;
       transition: transform 0.5s;
@@ -139,13 +118,13 @@
       transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
       transform: scaleY(0);
       border-radius: 0px;
-      @apply dark:dark-bg
+      @apply bg-main-dark dark:bg-dark
     }
     
     .secondary-btn:hover::before {
       transform: scaleY(1);
-      color: var(--white) !important;
       z-index: -1;
+      @apply text-white !important
     }
     
     .secondary-btn:hover {
@@ -159,9 +138,9 @@
 
     /* for button */
   .btn {
-    background: var(--main);
+    /* background: var(--main);
     color:var(--white);
-    border: 2px solid var(--white);
+    border: 2px solid var(--white); */
     font-family: "Oswald", sans-serif;
     text-transform: uppercase;
     padding: 27px 44px;
@@ -182,7 +161,8 @@
     z-index: 1;
     overflow: hidden;
     margin: 0;
-    @apply dark:hover:white-border dark:hover:white-color hover:theme-color hover:theme-border
+    /* @apply dark:hover:white-border dark:hover:white-color hover:theme-color hover:theme-border; */
+    @apply border-2 border-white bg-main text-white dark:hover:border-white dark:hover:text-white hover:text-theme hover:border-theme
   }
   
   .btn::before {
@@ -201,13 +181,14 @@
     transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
     transform: scaleX(0);
     border-radius: 0px;
-    @apply dark:dark-bg white-bg
+    /* @apply dark:dark-bg white-bg */
+    @apply dark:bg-dark bg-white
   }
   
   .btn:hover::before {
     transform: scaleX(1);
-    color: var(--white) !important;
     z-index: -1;
+    @apply text-white !important
   }
   
   .btn:hover {

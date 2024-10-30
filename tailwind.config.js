@@ -5,18 +5,32 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    colors: {
+      'dark': '#1E201E',
+      'theme':'#FF0000',
+      'main': '#ff1313',
+      'main-dark': '#c20505',
+      'gray-dark': '#343a40',
+      'gray': '#6c757d',
+      'gray-light': '#d3dce6',
+      'black':'#000',
+      'white':'#fff'
+    },
+    fontFamily: {
+      oswald: ['Oswald', 'sans-serif'],
+      RubikWetPaint: ['RubikWetPaint', 'sans-serif'],
+      chococooky: ['Chococooky', 'sans-serif'],
+      lato: ['Lato', 'sans-serif'],
+    },
+    backgroundImage: {
+      'home-page-image': "url('/src/assets/image/builtIn/h1_hero.png')",
+      'logoOFGym': "url('/src/assets/image/builtIn/gym.png')",
+      'lightLogoOFGym': "url('/src/assets/image/builtIn/gym-light.png')",
+      'darkLogo': "url('/src/assets/image/builtIn/gym2.jpeg')",
+    },
     extend: {
-      fontFamily: {
-        oswald: ['Oswald', 'sans-serif'],
-        cooljazz: ['Cooljazz', 'sans-serif'],
-        chococooky: ['Chococooky', 'sans-serif'],
-      },
-      backgroundImage: {
-        'home-page-image': "url('/src/assets/image/builtIn/h1_hero.png')",
-        'logoOFGym': "url('/src/assets/image/builtIn/gym.png')",
-        'lightLogoOFGym': "url('/src/assets/image/builtIn/gym-light.png')",
-        'darkLogo': "url('/src/assets/image/builtIn/gym2.jpeg')",
-      }
+
+
     },
   },
   plugins: [],

@@ -1,14 +1,21 @@
 body{
-  @apply dark:bg-black;
+  @apply text-black dark:bg-black dark:text-white ;
+}
+/* Hide scrollbar for all elements in WebKit-based browsers (Chrome, Safari) */
+*::-webkit-scrollbar {
+  display: none;
 }
 
+/* Hide scrollbar for all elements in Firefox */
+* {
+  scrollbar-width: none; /* Firefox */
+}
 
 .display-none{
   @apply hidden;
 }
 
 #scroll-up {
-    background: var(--theme);
     height: 40px;
     width: 40px;
     right: 31px;
@@ -19,9 +26,9 @@ body{
     /* border-radius: 50%; */
     border: 2px solid transparent;
     box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
+    @apply bg-theme
   }
 #theme-button {
-    background: var(--theme);
     height: 40px;
     width: 40px;
     right: 90px;
@@ -32,4 +39,50 @@ body{
     /* border-radius: 50%; */
     border: 2px solid transparent;
     box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
+    @apply dark:bg-theme bg-dark
   }
+
+
+  /* for multistem from in step controller */
+.container{
+  padding-inline: 100px !important;
+}
+.container .title{
+  @apply dark:text-white
+}
+.container .circle{
+  @apply bg-gray-dark border-gray
+}
+.container .circleActive{
+  @apply bg-main-dark border-main
+}
+.container .stem{
+  @apply bg-gray
+}
+.container .stemActive{
+  @apply bg-main
+}
+.containerMobile .stepContainerMobile{
+  @apply justify-center
+}
+.containerMobile .title{
+  @apply dark:text-white
+}
+.containerMobile .circleMobile{
+  @apply bg-gray-dark border-gray
+}
+.containerMobile .circleActive{
+  @apply bg-main-dark border-main
+}
+.containerMobile .stemMobile{
+  @apply bg-gray
+}
+.containerMobile .stemActive{
+  @apply bg-main
+}
+.buttonsContainer .nextButton{
+  @apply bg-main rounded-sm hover:bg-main-dark uppercase
+}
+.buttonsContainer .backButton{
+  @apply bg-gray rounded-sm hover:bg-gray-dark no-underline text-white px-5 text-base font-bold
+}
