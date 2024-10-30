@@ -44,7 +44,7 @@ export default function NavBar(pros) {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="m-2.5 inline-flex items-center justify-center rounded-md p-2.5 dark:text-white text-black"
+            className={`m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ${pathLocation==="/"?'text-white':'dark:text-white text-black'}`}
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
@@ -104,7 +104,7 @@ export default function NavBar(pros) {
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
                       item.current ? 'line-through decoration-double decoration-2' : '',
-                      'hover:line-through hover:decoration-double hover:decoration-2 cursor-pointer block rounded-lg px-3 py-2 font-semibold leading-7 font-oswald text-white text-2xl text-dark dark:text-white',
+                      'hover:line-through hover:decoration-double hover:decoration-2 cursor-pointer block rounded-lg px-3 py-2 font-semibold leading-7 font-oswald text-2xl text-dark dark:text-white',
                     )}
                   >
                     {item.name}

@@ -123,7 +123,6 @@ export default function Payment() {
           <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
-              xmlns="http://www.w3.org/2000/svg"
               id="Layer_1"
               data-name="Layer 1"
               viewBox="0 0 24 24"
@@ -144,13 +143,11 @@ export default function Payment() {
           <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
               fill="currentColor"
               version="1.1"
               id="Capa_1"
               viewBox="0 0 560.209 560.209"
-              xml:space="preserve"
+              xmlSpace="preserve"
             >
               <g>
                 <g>
@@ -172,7 +169,6 @@ export default function Payment() {
           <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
-              xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
