@@ -36,7 +36,7 @@ export default function Register() {
     ]
   return (
     <section className='pt-28 min-h-screen w-full'>
-    <div className='flex justify-center md:block'>
+    <div className='flex justify-center md:block font-chococooky'>
     <StepsController
         title="Register yourself for joining us" 
         breakpoint={768}

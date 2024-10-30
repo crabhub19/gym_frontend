@@ -4,7 +4,7 @@ import 'aos/dist/aos.css';
 import AOS from 'aos';
 import './App.css'
 import NavBar from './assets/components/NavBar';
-import Home from './assets/components/home';
+import Home from './assets/components/Home';
 import Top from './assets/components/top';
 import Theme from './assets/components/Theme';
 import { Toaster,toast } from 'sonner';

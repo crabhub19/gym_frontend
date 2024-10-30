@@ -8,11 +8,11 @@ export default function Payment() {
     setExpandedDivs(id);
   };
   return (
-    <div className="border-2 border-dark shadow-lg rounded-sm dark:border-white md:max-w-[460px]">
-      <h1 className="text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-RubikWetPaint">
+    <div className="shadow-2xl drop-shadow-2xl rounded-sm dark:border md:max-w-[460px]">
+      <h1 className="text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato">
         Payment
       </h1>
-      <div className="px-4 flex min-h-28 relative">
+      <div className="px-4 flex min-h-28 relative font-lato">
         {/* Button 1 and Div 1 */}
         <div className="">
           <button
@@ -21,7 +21,7 @@ export default function Payment() {
           >
             <img
               className="h-8"
-              src="https://www.logo.wine/a/logo/BKash/BKash-bKash-Logo.wine.svg"
+              src="https://th.bing.com/th?id=OIP.C-uJDyVtwmkmqVS3vAPvvAHaE8&w=306&h=204&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
               alt=""
             />
           </button>
@@ -53,7 +53,7 @@ export default function Payment() {
           >
             <img
               className="h-8"
-              src="https://www.logo.wine/a/logo/BKash/BKash-bKash-Logo.wine.svg"
+              src="https://www.logo.wine/a/logo/Nagad/Nagad-Logo.wine.svg"
               alt=""
             />
           </button>
@@ -120,7 +120,7 @@ export default function Payment() {
             placeholder="Tel: 01739362582"
             required
           />
-          <div className="absolute left-2 inset-y-0 flex items-center">
+          <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
               xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +141,7 @@ export default function Payment() {
             placeholder="Transaction ID: 17c34ds1"
             required
           />
-          <div className="absolute left-2 inset-y-0 flex items-center">
+          <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
               xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ export default function Payment() {
             placeholder="Amount: Our Join Fee 3000 Taka"
             required
           />
-          <div className="absolute left-2 inset-y-0 flex items-center">
+          <div className="absolute left-1 inset-y-0 flex items-center">
             <svg
               className="h-8 w-8 ml-1 p-1 dark:text-white text-dark"
               xmlns="http://www.w3.org/2000/svg"
@@ -181,8 +181,8 @@ export default function Payment() {
           </div>
         </div>
       </div>
-      <div className="px-4 text-center">
-        <blockquote>
+      <div className="px-4 text-center pb-4">
+        <blockquote className="font-oswald">
           <b>Note: </b>Our Join Fee is 3000 Taka. And we charge 900 Taka per
           month.
         </blockquote>

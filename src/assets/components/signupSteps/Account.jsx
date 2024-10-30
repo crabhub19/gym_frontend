@@ -1,10 +1,9 @@
 import React,{useState} from 'react'
-
 export default function Account() {
 
   return (
-    <div className='border-2 border-dark shadow-lg rounded-sm dark:border-white md:max-w-[460px]'>
-        <h1 className='text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-RubikWetPaint'>Account</h1>
+    <div className='shadow-2xl drop-shadow-2xl rounded-sm dark:border md:max-w-[460px]'>
+        <h1 className='text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato'>Account</h1>
         <div className='p-4 mx-auto'>
             <div className='m-4 relative'>
               <input
@@ -47,7 +46,6 @@ export default function Account() {
               </div>
             </div>
         </div>
-
     </div>
   )
 }

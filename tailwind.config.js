@@ -21,12 +21,10 @@ export default {
       RubikWetPaint: ['RubikWetPaint', 'sans-serif'],
       chococooky: ['Chococooky', 'sans-serif'],
       lato: ['Lato', 'sans-serif'],
+      lovelo: ['Lovelo', 'sans-serif'],
     },
     backgroundImage: {
       'home-page-image': "url('/src/assets/image/builtIn/h1_hero.png')",
-      'logoOFGym': "url('/src/assets/image/builtIn/gym.png')",
-      'lightLogoOFGym': "url('/src/assets/image/builtIn/gym-light.png')",
-      'darkLogo': "url('/src/assets/image/builtIn/gym2.jpeg')",
     },
     extend: {
 

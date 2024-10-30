@@ -26,6 +26,10 @@
   font-family: Lato;
   src: url(./assets/font/Lato-Black.ttf);
 }
+@font-face {
+  font-family: Lovelo;
+  src: url(./assets/font/Lovelo-LineLight.otf);
+}
 @layer components{
   
 

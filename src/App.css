@@ -1,5 +1,5 @@
 body{
-  @apply text-black dark:bg-black dark:text-white ;
+  @apply text-black dark:bg-black dark:text-white font-lato;
 }
 /* Hide scrollbar for all elements in WebKit-based browsers (Chrome, Safari) */
 *::-webkit-scrollbar {
@@ -48,7 +48,7 @@ body{
   padding-inline: 100px !important;
 }
 .container .title{
-  @apply dark:text-white
+  @apply dark:text-white font-lato
 }
 .container .circle{
   @apply bg-gray-dark border-gray
@@ -66,7 +66,7 @@ body{
   @apply justify-center
 }
 .containerMobile .title{
-  @apply dark:text-white
+  @apply dark:text-white font-lato
 }
 .containerMobile .circleMobile{
   @apply bg-gray-dark border-gray
@@ -81,8 +81,8 @@ body{
   @apply bg-main
 }
 .buttonsContainer .nextButton{
-  @apply bg-main rounded-sm hover:bg-main-dark uppercase
+  @apply bg-main rounded-sm hover:bg-main-dark uppercase font-lato
 }
 .buttonsContainer .backButton{
-  @apply bg-gray rounded-sm hover:bg-gray-dark no-underline text-white px-5 text-base font-bold
+  @apply bg-gray rounded-sm hover:bg-gray-dark no-underline text-white px-5 text-base font-bold font-lato
 }
