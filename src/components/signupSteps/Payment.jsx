@@ -1,123 +1,56 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import PaymentMethod from "./PaymentMethod";
+import { useDispatch, useSelector } from "react-redux";
+import { viewPaymentMethod } from "../../features/paymentMethod/paymentMethodSlice";
+import { BlinkBlur } from "react-loading-indicators";
+export default function Payment(props) {
+  let {formData,handleChange} = props
 
-export default function Payment() {
-  const [expandedDivs, setExpandedDivs] = useState(1);
+  const paymentMethodData = useSelector((state) => state.paymentMethod.data);
+  const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
+  const dispatch = useDispatch();
+  const [expandedDivs, setExpandedDivs] = useState(null);
+  useEffect(() => {
+    dispatch(viewPaymentMethod());
+  }, [dispatch]);
 
+// Update expandedDivs when paymentMethodData is available
+useEffect(() => {
+  if (paymentMethodData.length > 0) {
+    setExpandedDivs(paymentMethodData[0]?.id); // Set the ID of the first element
+  }
+}, [paymentMethodData]); // Re-run whenever paymentMethodData changes
   // Function to toggle the expansion for a specific div
   const toggleExpand = (id) => {
     setExpandedDivs(id);
   };
   return (
-    <div className="shadow-2xl drop-shadow-2xl rounded-sm dark:border md:max-w-[460px]">
+    <div className="shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark">
       <h1 className="text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato">
         Payment
       </h1>
       <div className="px-4 flex min-h-28 relative font-lato">
-        {/* Button 1 and Div 1 */}
-        <div className="">
-          <button
-            onClick={() => toggleExpand(1)}
-            className="px-4 py-2 hover:bg-black dark:hover:bg-white border-r-2 border-dark dark:border-white"
-          >
-            <img
-              className="h-8"
-              src="https://th.bing.com/th?id=OIP.C-uJDyVtwmkmqVS3vAPvvAHaE8&w=306&h=204&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-              alt=""
-            />
-          </button>
-          {expandedDivs === 1 && (
-            <div className="absolute left-0 w-full">
-              <table className="w-full mx-auto border-collapse">
-                <thead>
-                  <tr className="bg-dark text-white">
-                    <th>Method</th>
-                    <th>Type</th>
-                    <th>Number</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="text-center font-bold">
-                    <td>bkash</td>
-                    <td>Agent</td>
-                    <td>01703055918</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-        <div className="">
-          <button
-            onClick={() => toggleExpand(2)}
-            className="px-4 py-2  rounded hover:bg-blue-700"
-          >
-            <img
-              className="h-8"
-              src="https://www.logo.wine/a/logo/Nagad/Nagad-Logo.wine.svg"
-              alt=""
-            />
-          </button>
-          {expandedDivs === 2 && (
-            <div className="absolute left-0 w-full">
-              <table className="w-full mx-auto border-collapse">
-                <thead>
-                  <tr className="bg-dark text-white">
-                    <th>Method</th>
-                    <th>Type</th>
-                    <th>Number</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="text-center font-bold">
-                    <td>Nagad</td>
-                    <td>Agent</td>
-                    <td>01703055918</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-        <div className="">
-          <button
-            onClick={() => toggleExpand(3)}
-            className="px-4 py-2  rounded hover:bg-blue-700"
-          >
-            <img
-              className="h-8"
-              src="https://www.logo.wine/a/logo/BKash/BKash-bKash-Logo.wine.svg"
-              alt=""
-            />
-          </button>
-          {expandedDivs === 3 && (
-            <div className="absolute left-0 w-full">
-              <table className="w-full mx-auto border-collapse">
-                <thead>
-                  <tr className="bg-dark text-white">
-                    <th>Method</th>
-                    <th>Type</th>
-                    <th>Number</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="text-center font-bold">
-                    <td>Rocket</td>
-                    <td>Agent</td>
-                    <td>01703055918</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+        {paymentMethodStatus === "loading" ? (
+          <div className="w-full h-full flex justify-center items-center pt-2">
+            <BlinkBlur color="#ff1313" size="medium"/>
+          </div>
+           /* payment Method */
+        ):paymentMethodData.map((item) => ((
+          <PaymentMethod key={item.id} item={item} expandedDivs={expandedDivs} toggleExpand={toggleExpand} />
+        )))}
+       
+
       </div>
       <div className="px-4 mx-auto">
-        <div className="m-4 relative">
+        <div className="m-4 relative" data-aos="flip-right" data-aos-delay="100">
           <input
             id="tel"
             className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
             type="tel"
             placeholder="Tel: 01739362582"
+            name="transaction_number"
+            onChange={handleChange}
+            value={formData.transaction_number}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">
@@ -132,12 +65,15 @@ export default function Payment() {
             </svg>
           </div>
         </div>
-        <div className="m-4 relative">
+        <div className="m-4 relative" data-aos="flip-right" data-aos-delay="200">
           <input
             id="transactionID"
             className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
             type="text"
             placeholder="Transaction ID: 17c34ds1"
+            name="transaction_id"
+            onChange={handleChange}
+            value={formData.transaction_id}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">
@@ -158,12 +94,15 @@ export default function Payment() {
             </svg>
           </div>
         </div>
-        <div className="m-4 relative">
+        <div className="m-4 relative" data-aos="flip-right" data-aos-delay="300">
           <input
             id="amount"
             className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
             type="number"
             placeholder="Amount: Our Join Fee 3000 Taka"
+            name="amount"
+            onChange={handleChange}
+            value={formData.amount}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">

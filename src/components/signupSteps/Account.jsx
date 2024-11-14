@@ -1,28 +1,36 @@
 import React,{useState} from 'react'
-export default function Account() {
-
+export default function Account(props) {
+  const {formData,handleChange} = props
   return (
-    <div className='shadow-2xl drop-shadow-2xl rounded-sm dark:border md:max-w-[460px]'>
+    <>
+    <div className='shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark'>
         <h1 className='text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato'>Account</h1>
         <div className='p-4 mx-auto'>
-            <div className='m-4 relative'>
+            <div className='m-4 relative' data-aos="flip-right" data-aos-delay="100">
               <input
                 id="email"
-                className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+                className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md  focus:scale-105 border-gray-light rounded-lg w-full outline-none pl-12"
                 type="email"
                 placeholder="Email:email@gmail.com"
+                onChange={handleChange}
+                name='email'
+                value={formData.email}
                 required
               />
               <div className='absolute left-0 inset-y-0 flex items-center'>
                 <svg className='h-8 w-8 ml-1 p-1 dark:text-white text-dark' fill="currentColor" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="M12,0A12.013,12.013,0,0,0,0,12c-.125,9.574,11.159,15.429,18.9,9.817a1.5,1.5,0,1,0-1.727-2.453C11.42,23.582,2.863,19.146,3,12,3.472.07,20.529.072,21,12v1.5a1.5,1.5,0,0,1-3,0V12C17.748,4.071,6.251,4.072,6,12a6.017,6.017,0,0,0,10.078,4.388A4.5,4.5,0,0,0,24,13.5V12A12.013,12.013,0,0,0,12,0Zm0,15a3,3,0,0,1,0-6A3,3,0,0,1,12,15Z"/></svg>
               </div>
             </div>
-            <div className='m-4 relative'>
+            <div className='m-4 relative' data-aos="flip-right" data-aos-delay="200">
               <input
                 id="password"
                 className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
                 type="password"
                 placeholder="Password: ****"
+                onChange={handleChange}
+                name='password'
+                minLength={4}
+                value={formData.password}
                 required
               />
               <div className='absolute left-0 inset-y-0 flex items-center'>
@@ -31,12 +39,16 @@ export default function Account() {
                 </svg>
               </div>
             </div>
-            <div className='m-4 relative'>
+            <div className='m-4 relative' data-aos="flip-right" data-aos-delay="300">
               <input
                 id="retypePassword"
                 className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
                 type="password"
                 placeholder="Retype_Password: ****"
+                onChange={handleChange}
+                value={formData.retypePassword}
+                name='retypePassword'
+                minLength={4}
                 required
               />
               <div className='absolute left-0 inset-y-0 flex items-center'>
@@ -47,5 +59,6 @@ export default function Account() {
             </div>
         </div>
     </div>
+    </>
   )
 }

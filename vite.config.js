@@ -4,4 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: true, // This will allow Vite to use your computer's IP address
+  },
 })

@@ -10,8 +10,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
-import logo from '../../assets/image/builtIn/gym.png'
-import lightLogo from '../../assets/image/builtIn/gym-light.png'
+import logo from '../assets/image/builtIn/gym.png'
+import lightLogo from '../assets/image/builtIn/gym-light.png'
+import { logoutUser } from '../features/account/accountSlice';
 
 export default function NavBar(pros) {
   let {isDarkMode} = pros;
@@ -23,12 +24,13 @@ export default function NavBar(pros) {
   let navigation = [
     { name: 'Home', to: '/', current: pathLocation==="/"?true:false },
     { name: 'Register', to: '/register', current: pathLocation==="/register"?true:false },
-    { name: 'course', to: '/course', current: pathLocation==="/course"?true:false },
-    { name: 'contrct', to: '/contrct', current: pathLocation==="/contrct"?true:false },
-    { name: 'any', to: '/any', current: pathLocation==="/any"?true:false },
+    { name: 'Login', to: '/login', current: pathLocation==="/login"?true:false },
+    { name: 'About', to: '/about', current: pathLocation==="/about"?true:false },
+    { name: 'Profile', to: '/profile', current: pathLocation==="/profile"?true:false },
+    { name: 'logout', to: '/logout', current: pathLocation==="/logout"?true:false },
   ]
   return (
-    <header className="w-full absolute">
+    <header className="w-full absolute shadow-md">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between  p-6">
         <div className="flex lg:flex-1">
             <span className="sr-only">GYM</span>

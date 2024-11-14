@@ -14,7 +14,7 @@ export default {
       'gray': '#6c757d',
       'gray-light': '#d3dce6',
       'black':'#000',
-      'white':'#fff'
+      'white':'#fff',
     },
     fontFamily: {
       oswald: ['Oswald', 'sans-serif'],
@@ -24,7 +24,9 @@ export default {
       lovelo: ['Lovelo', 'sans-serif'],
     },
     backgroundImage: {
-      'home-page-image': "url('/src/assets/image/builtIn/h1_hero.png')",
+      'home-page-image': "url('/src/assets/image/background/h1_hero.png')",
+      'login-page-bg': "url('/src/assets/image/background/login_bg.jpg')",
+      'login-page-form': "url('/src/assets/image/background/login_from.jpg')",
     },
     extend: {
 

@@ -1,5 +1,5 @@
 body{
-  @apply text-black dark:bg-black dark:text-white font-lato;
+  @apply dark:bg-dark
 }
 /* Hide scrollbar for all elements in WebKit-based browsers (Chrome, Safari) */
 *::-webkit-scrollbar {
@@ -9,6 +9,8 @@ body{
 /* Hide scrollbar for all elements in Firefox */
 * {
   scrollbar-width: none; /* Firefox */
+  @apply text-gray-dark  dark:text-white font-lato transition ease-in-out duration-500;
+
 }
 
 .display-none{
@@ -55,6 +57,9 @@ body{
 }
 .container .circleActive{
   @apply bg-main-dark border-main
+}
+.container .formContainer{
+  @apply my-auto
 }
 .container .stem{
   @apply bg-gray
