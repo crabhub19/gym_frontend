@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../features/profile/profileSlice';
+import profilePicture from '../assets/image/builtIn/profile_picture.png';
 export default function Profile() {
   const dispatch = useDispatch();
   const userProfile  = useSelector((state) => state.profile.data);
@@ -26,7 +27,7 @@ export default function Profile() {
         </p>
       </div>
       <div className="md:w-1/2 flex justify-center mb-6 md:mb-0">
-        <img src={userProfile?.profile_picture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover shadow-2xl"/>
+        <img src={userProfile.profile_picture?userProfile.profile_picture:profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover shadow-2xl"/>
       </div>
     </section>
 
