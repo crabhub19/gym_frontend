@@ -113,7 +113,7 @@ export default function Register() {
       };
       dispatch(register(accountData)).then((resultAction) => {
         if (register.fulfilled.match(resultAction)) {
-          toast.success("Account created successfully");
+          toast.success("we have sent you a varification email");
           navigate("/");
           setFormData({
             email: "",

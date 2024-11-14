@@ -56,6 +56,7 @@ const accountSlice = createSlice({
       state.token = null;
       state.isAdmin = false;
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
     },
   },
   extraReducers: (builder) => {

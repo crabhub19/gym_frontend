@@ -26,8 +26,8 @@ export default function Profile() {
           {userProfile?.bio}
         </p>
       </div>
-      <div className="md:w-1/2 flex justify-center mb-6 md:mb-0">
-        <img src={userProfile.profile_picture?userProfile.profile_picture:profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover shadow-2xl"/>
+      <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
+        <img src={userProfile?.profile_picture ? userProfile.profile_picture : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
       </div>
     </section>
 
@@ -41,7 +41,7 @@ export default function Profile() {
     }
 
 
-  
+  {(userProfile?.age || userProfile?.weight || userProfile?.height) && (
     <section id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
       <table className='min-w-full table-auto mx-auto text-center'>
@@ -61,7 +61,7 @@ export default function Profile() {
         </tbody>
       </table>
     </section>
-
+    )}
     
     <section id="projects" className="px-6 sm:px-10 md:px-16 py-12 shadow-lg">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Contract Information</h2>

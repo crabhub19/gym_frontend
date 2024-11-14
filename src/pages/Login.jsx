@@ -33,6 +33,7 @@ export default function Login() {
         toast.success("Login successfully");
         navigate("/profile");
         setCredentials({ username: "", password: "" });
+        window.location.reload();
         
       }else if (loginUser.rejected.match(resultAction)) {
         if (resultAction.payload.target === "password") {
