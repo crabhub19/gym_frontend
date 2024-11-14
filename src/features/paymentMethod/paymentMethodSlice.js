@@ -32,7 +32,7 @@ const paymentMethonSlice = createSlice({
         })
         .addCase(viewPaymentMethod.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload;   
+          state.error = action.payload.detail;   
         });
     },
   });

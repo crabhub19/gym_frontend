@@ -21,13 +21,18 @@ export default function NavBar(pros) {
   }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathLocation = useLocation().pathname;
-  let navigation = [
-    { name: 'Home', to: '/', current: pathLocation==="/"?true:false },
-    { name: 'Register', to: '/register', current: pathLocation==="/register"?true:false },
-    { name: 'Login', to: '/login', current: pathLocation==="/login"?true:false },
-    { name: 'About', to: '/about', current: pathLocation==="/about"?true:false },
+  let aditionalNavigation = localStorage.getItem('token')?[
     { name: 'Profile', to: '/profile', current: pathLocation==="/profile"?true:false },
     { name: 'logout', to: '/logout', current: pathLocation==="/logout"?true:false },
+
+  ]:[
+    { name: 'Register', to: '/register', current: pathLocation==="/register"?true:false },
+    { name: 'Login', to: '/login', current: pathLocation==="/login"?true:false },
+  ]
+  let navigation = [
+    { name: 'Home', to: '/', current: pathLocation==="/"?true:false },    
+    { name: 'About', to: '/about', current: pathLocation==="/about"?true:false },
+    ...aditionalNavigation
   ]
   return (
     <header className="w-full absolute shadow-md">

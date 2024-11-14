@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 export default function Account(props) {
-  const {formData,handleChange} = props
+  const {formData,handleChange,email,password,retypePassword} = props
   return (
     <>
     <div className='shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark'>
@@ -9,7 +9,7 @@ export default function Account(props) {
             <div className='m-4 relative' data-aos="flip-right" data-aos-delay="100">
               <input
                 id="email"
-                className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md  focus:scale-105 border-gray-light rounded-lg w-full outline-none pl-12"
+                className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md  focus:scale-105 border-gray-light rounded-lg w-full outline-none pl-12 ${email?'':' outline-2  outline-theme'}`}
                 type="email"
                 placeholder="Email:email@gmail.com"
                 onChange={handleChange}
@@ -24,7 +24,7 @@ export default function Account(props) {
             <div className='m-4 relative' data-aos="flip-right" data-aos-delay="200">
               <input
                 id="password"
-                className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+                className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${password?'':' outline-2  outline-theme'}`}
                 type="password"
                 placeholder="Password: ****"
                 onChange={handleChange}
@@ -42,7 +42,7 @@ export default function Account(props) {
             <div className='m-4 relative' data-aos="flip-right" data-aos-delay="300">
               <input
                 id="retypePassword"
-                className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+                className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${retypePassword?'':' outline-2  outline-theme'}`}
                 type="password"
                 placeholder="Retype_Password: ****"
                 onChange={handleChange}

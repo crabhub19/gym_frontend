@@ -15,7 +15,12 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Logout from './components/Logout';
 import Footer from './components/Footer';
+
 function App() {
+  //navigation
+  const navigate = useNavigate();
+  // enable and disable darkmode
+  const [isDarkMode, setIsDarkMode] = useState(false);
   useEffect(() => {
     // AOS for animation
     AOS.init({
@@ -25,20 +30,35 @@ function App() {
       delay: 0,
     });
   }, [])
-  // enable and disable darkmode
-  const [isDarkMode, setIsDarkMode] = useState(false);
+
+
+  // authinticate
+  useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+  localStorage.removeItem('token');
+  navigate('/');
+  }
+  }, [])
   return (
     <>
-    <HashRouter>      {/* navbar */}
+      {/* navbar */}
       <NavBar isDarkMode={isDarkMode}/>
       {/* all routes */}
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="login" element={<Login/>}/>
-        <Route path="register" element={<Register/>}/>
-        <Route path="about" element={<About/>}/>
-        <Route path="profile" element={<Profile/>}/>
-        <Route path="logout" element={<Logout/>}/>
+      <Route path="/" element={<Home/>}/>
+      <Route path="about" element={<About/>}/>
+        {localStorage.getItem('token')?(
+          <>
+            <Route path="profile" element={<Profile/>}/>
+            <Route path="logout" element={<Logout/>}/>
+          </>
+        ):(
+          <>
+            <Route path="login" element={<Login/>}/>
+            <Route path="register" element={<Register/>}/>
+          </>
+        )}
       </Routes>
       <Footer/>
       {/* toaster popup */}
@@ -49,7 +69,6 @@ function App() {
       <Top/>
       {/* loading */}
       <Loading/>
-    </HashRouter>
     </>
   )
 }

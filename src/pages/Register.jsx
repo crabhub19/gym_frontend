@@ -11,6 +11,14 @@ import { register } from "../features/account/accountSlice";
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [email, setEmail] = useState(true);
+  const [password, setPassword] = useState(true);
+  const [retypePassword, setRetypePassword] = useState(true);
+  const [first_name, setFirstName] = useState(true);
+  const [phone_number, setPhoneNumber] = useState(true);
+  const [transaction_number, setTransactionNumber] = useState(true);
+  const [transaction_id, setTransactionId] = useState(true);
+  const [amount, setAmount] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -41,39 +49,58 @@ export default function Register() {
   const manageNextStep = (currentStep) => {
     if (currentStep === 1) {
       if (!formData.email) {
+        setEmail(false);
         toast.warning("You have to enter email.");
         return false;
       } else if (!formData.password) {
+        setPassword(false);
+        setEmail(true);
         toast.warning("You have to enter password.");
         return false;
       } else if (formData.password !== formData.retypePassword) {
+        setRetypePassword(false);
+        setEmail(true);
+        setPassword(true);
         toast.warning("Passwords don't match.");
         return false;
       }
+      setRetypePassword(true);
+      setEmail(true);
+      setPassword(true);
     } else if (currentStep === 2) {
       if (!formData.first_name) {
+        setFirstName(false);
         toast.warning(
           "You have to enter first name. But you can skip Last Name"
         );
         return false;
       } else if (!formData.phone_number) {
-        toast.warning("You have to enter phone number.");
-        return false;
-      } else if (!formData.phone_number) {
+        setPhoneNumber(false);
+        setFirstName(true);
         toast.warning("You have to enter phone number.");
         return false;
       }
+      setFirstName(true);
+      setPhoneNumber(true);
     } else if (currentStep === 3) {
       if (!formData.transaction_number) {
+        setTransactionNumber(false);
         toast.warning("You have to enter transaction number.");
         return false;
       } else if (!formData.transaction_id) {
+        setTransactionId(false);
+        setTransactionNumber(true);
         toast.warning("You have to enter transaction ID.");
         return false;
       } else if (!formData.amount) {
+        setTransactionId(true);
+        setAmount(false);
         toast.warning("You have to enter amount.");
         return false;
       }
+      setAmount(true);
+      setTransactionNumber(true)
+      setTransactionId(true)
     } else if (currentStep === 4) {
       const accountData = {
         user: {
@@ -101,7 +128,7 @@ export default function Register() {
           })
           return true
         }else if (register.rejected.match(resultAction)) {
-          toast.error(resultAction.payload);
+          toast.error(resultAction.payload.detail);
           return false
         }
       });
@@ -109,13 +136,13 @@ export default function Register() {
     return true;
   };
   const steps = [
-    <Account formData={formData} handleChange={handleChange} />,
-    <Information formData={formData} handleChange={handleChange} />,
-    <Payment formData={formData} handleChange={handleChange} />,
+    <Account email={email} password={password} retypePassword={retypePassword} formData={formData} handleChange={handleChange} />,
+    <Information first_name={first_name} phone_number={phone_number} formData={formData} handleChange={handleChange} />,
+    <Payment transaction_number={transaction_number} transaction_id={transaction_id} amount={amount} formData={formData} handleChange={handleChange} />,
     <Complete formData={formData} handleChange={handleChange} />,
   ];
   return (
-    <section className="pt-28 min-h-screen w-full">
+    <section className="pt-28 min-h-screen w-full pb-2">
       <div className="flex justify-center md:block font-chococooky items-center">
         <StepsController
           title="Register yourself for joining us"

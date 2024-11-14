@@ -69,7 +69,7 @@ const accountSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload;   
+        state.error = action.payload.detail;   
       });
       builder
       .addCase(loginUser.pending, (state) => {
@@ -83,7 +83,7 @@ const accountSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload;
+        state.error = action.payload.detail;
       });
   },
 });

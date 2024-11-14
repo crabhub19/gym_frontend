@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Information(props) {
-  let {formData,handleChange} = props
+  let {formData,handleChange,first_name,phone_number} = props
   return (
     <>
       <div className="shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark">
@@ -12,7 +12,7 @@ export default function Information(props) {
           <div className="m-4 relative" data-aos="flip-right">
             <input
               id="first_name"
-              className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${first_name?'':'outline-2  outline-theme'}`}
               type="text"
               placeholder="First Name"
               name="first_name"
@@ -82,7 +82,7 @@ export default function Information(props) {
           >
             <input
               id="phone_number"
-              className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${phone_number?'':'outline-2  outline-theme'}`}
               type="tel"
               placeholder="Contract Number"
               name="phone_number"

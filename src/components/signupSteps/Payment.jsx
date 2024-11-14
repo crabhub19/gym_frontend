@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { viewPaymentMethod } from "../../features/paymentMethod/paymentMethodSlice";
 import { BlinkBlur } from "react-loading-indicators";
 export default function Payment(props) {
-  let {formData,handleChange} = props
+  let {formData,handleChange,transaction_number,transaction_id,amount} = props
 
   const paymentMethodData = useSelector((state) => state.paymentMethod.data);
   const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
   const dispatch = useDispatch();
   const [expandedDivs, setExpandedDivs] = useState(null);
   useEffect(() => {
-    dispatch(viewPaymentMethod());
-  }, [dispatch]);
+    if(paymentMethodStatus === "idle"){
+      dispatch(viewPaymentMethod());
+    }
+  }, [dispatch,paymentMethodStatus]);
 
 // Update expandedDivs when paymentMethodData is available
 useEffect(() => {
@@ -45,7 +47,7 @@ useEffect(() => {
         <div className="m-4 relative" data-aos="flip-right" data-aos-delay="100">
           <input
             id="tel"
-            className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+            className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${transaction_number?'':'outline-2  outline-theme'}`}
             type="tel"
             placeholder="Tel: 01739362582"
             name="transaction_number"
@@ -68,7 +70,7 @@ useEffect(() => {
         <div className="m-4 relative" data-aos="flip-right" data-aos-delay="200">
           <input
             id="transactionID"
-            className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+            className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${transaction_id?'':'outline-2  outline-theme'}`}
             type="text"
             placeholder="Transaction ID: 17c34ds1"
             name="transaction_id"
@@ -97,7 +99,7 @@ useEffect(() => {
         <div className="m-4 relative" data-aos="flip-right" data-aos-delay="300">
           <input
             id="amount"
-            className="border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12"
+            className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${amount?'':'outline-2  outline-theme'}`}
             type="number"
             placeholder="Amount: Our Join Fee 3000 Taka"
             name="amount"
