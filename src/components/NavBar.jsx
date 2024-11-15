@@ -105,6 +105,7 @@ export default function NavBar(pros) {
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <NavLink
+                    onClick={() => setMobileMenuOpen(false)} // Close menu on link click
                     key={item.name}
                     as="Link"
                     to={item.to}
