@@ -51,7 +51,7 @@ export default function NavBar(pros) {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className={`m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ${pathLocation==="/"?'text-white':'dark:text-white text-black'}`}
+            className={`m-1 inline-flex items-center justify-center rounded-sm p-1 bg-theme text-white`}
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
@@ -81,7 +81,7 @@ export default function NavBar(pros) {
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-dark">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 dark:bg-dark">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
@@ -94,7 +94,7 @@ export default function NavBar(pros) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-black dark:text-white"
+              className="m-1 rounded-sm text-white p-1 bg-theme"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="h-6 w-6" />

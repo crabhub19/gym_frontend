@@ -1,5 +1,5 @@
 body{
-  @apply dark:bg-dark
+  @apply dark:bg-dark text-gray-dark  dark:text-white
 }
 /* Hide scrollbar for all elements in WebKit-based browsers (Chrome, Safari) */
 *::-webkit-scrollbar {
@@ -9,7 +9,7 @@ body{
 /* Hide scrollbar for all elements in Firefox */
 * {
   scrollbar-width: none; /* Firefox */
-  @apply text-gray-dark  dark:text-white font-lato transition ease-in-out duration-500;
+  @apply font-lato transition ease-in-out duration-500;
 
 }
 
