@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import Logout from './components/Logout';
 import Footer from './components/Footer';
 import UpdateProfile from './pages/UpdateProfile';
+import Team from './pages/Team';
 
 function App() {
   //navigation
@@ -49,6 +50,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="about" element={<About/>}/>
+      <Route path="team" element={<Team/>}/>
         {localStorage.getItem('token')?(
           <>
             <Route path="profile" element={<Profile/>}/>

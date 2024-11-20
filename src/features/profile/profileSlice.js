@@ -15,8 +15,8 @@ export const fetchUserProfile = createAsyncThunk(
           
         } catch (error) {
           return rejectWithValue(error.response.data);
-        }finally { dispatch(setLoading(false)); }
-  }
+        }finally { dispatch(setLoading(false)); }    
+  }     
   );
 
 // Async thunk to update user profile
