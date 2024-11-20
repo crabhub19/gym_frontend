@@ -1,4 +1,4 @@
-
+import { NavLink } from 'react-router-dom'
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../features/profile/profileSlice';
@@ -25,9 +25,11 @@ export default function Profile() {
         <p className="text-lg sm:text-xl md:text-2xl font-medium">
           {userProfile?.bio}
         </p>
+        <NavLink to="update-profile" className='mt-4 border-2 border-dark dark:border-white px-6 py-2 rounded-sm hover:bg-dark
+        hover:text-white dark:hover:text-dark dark:hover:bg-white flex w-fit'><span><svg className='w-6 h-6 mr-2' fill='currentColor' xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"><path d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm14.122,9.879c-1.134-1.134-3.11-1.134-4.243,0l-7.879,7.878v4.243h4.243l7.878-7.878c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-7.292,7.293h-1.415v-1.415l7.293-7.292c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Zm-9.778,1.293H5c-1.654,0-3,1.346-3,3v5H0v-5c0-2.757,2.243-5,5-5H13c.289,0,.568,.038,.844,.085l-1.915,1.915Z"/></svg></span><span>UPDATE</span></NavLink>
       </div>
       <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
-        <img src={userProfile?.profile_picture ? userProfile.profile_picture : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
+        <img src={userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
       </div>
     </section>
 
@@ -49,7 +51,7 @@ export default function Profile() {
           <tr>
             {userProfile?.age && <th>Age</th>}
             {userProfile?.weight && <th>Weight</th>}
-            {userProfile?.height && <th>Weight</th>}
+            {userProfile?.height && <th>Height</th>}
           </tr>
         </thead>
         <tbody>

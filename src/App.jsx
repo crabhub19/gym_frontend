@@ -15,6 +15,7 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Logout from './components/Logout';
 import Footer from './components/Footer';
+import UpdateProfile from './pages/UpdateProfile';
 
 function App() {
   //navigation
@@ -51,6 +52,7 @@ function App() {
         {localStorage.getItem('token')?(
           <>
             <Route path="profile" element={<Profile/>}/>
+            <Route path="profile/update-profile" element={<UpdateProfile/>}/>
             <Route path="logout" element={<Logout/>}/>
           </>
         ):(

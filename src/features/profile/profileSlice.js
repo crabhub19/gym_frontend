@@ -19,6 +19,26 @@ export const fetchUserProfile = createAsyncThunk(
   }
   );
 
+// Async thunk to update user profile
+export const updateUserProfile = createAsyncThunk(
+  'profile/updateUserProfile',
+  async (profileData, { rejectWithValue, dispatch }) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await api.patch('/account/profile/me/', profileData,{
+        headers: {
+          'Content-Type': '',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'An error occurred while updating the profile.');
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+);
+
 
   // Profile slice
 const profileSlice = createSlice({
@@ -39,6 +59,19 @@ const profileSlice = createSlice({
           state.data = action.payload;
         })
         .addCase(fetchUserProfile.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.payload.detail;
+        });
+
+      builder
+        .addCase(updateUserProfile.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(updateUserProfile.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.data = action.payload;
+        })
+        .addCase(updateUserProfile.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.payload.detail;
         });

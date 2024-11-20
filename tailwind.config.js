@@ -15,6 +15,7 @@ export default {
       'gray-light': '#d3dce6',
       'black':'#000',
       'white':'#fff',
+      'blue':'blue',
     },
     fontFamily: {
       oswald: ['Oswald', 'sans-serif'],

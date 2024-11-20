@@ -9,7 +9,7 @@ body{
 /* Hide scrollbar for all elements in Firefox */
 * {
   scrollbar-width: none; /* Firefox */
-  @apply font-lato transition ease-in-out duration-500;
+  @apply font-lato transition ease-out duration-500;
 
 }
 

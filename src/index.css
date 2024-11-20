@@ -40,11 +40,11 @@
     
     
     /* text stoke */
-    .text-stroke {
+    .dark-text-stroke {
       -webkit-text-stroke: 1px var(--white); /* Stroke color and width */
       color: transparent; /* Make text color transparent */
     }
-    .dark-text-stroke {
+    .text-stroke {
       -webkit-text-stroke: 1px var(--black); /* Stroke color and width */
       color: transparent; /* Make text color transparent */
     }
