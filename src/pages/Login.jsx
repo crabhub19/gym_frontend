@@ -146,9 +146,9 @@ export default function Login() {
                 </div>
                 <div className="mt-4 flex items-center justify-between group">
                   <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
-                  <a href="#" className="text-xs hover:text-theme uppercase">
+                  <Link to="/register" className="text-xs hover:text-theme uppercase">
                     or sign up
-                  </a>
+                  </Link>
                   <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
                 </div>
               </div>

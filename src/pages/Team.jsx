@@ -18,7 +18,7 @@ export default function Team() {
       <section className='min-h-screen pt-28 px-2 md:px-12 lg:px-20'>
       <div className="mx-auto p-4 pb-0 max-w-screen-sm lg:mb-16">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center">Meet The Team</h2>
-          <p className="font-light sm:text-xl text-center">Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind</p>
+          <p className="font-light sm:text-xl text-center">Explore the whole team members of gym</p>
       </div> 
       <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 pb-8">
         {allProfile?.map((profile) => (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { StepsController } from "multistep-react-form";
 import Account from "../components/signupSteps/Account";
@@ -128,7 +129,7 @@ export default function Register() {
           })
           return true
         }else if (register.rejected.match(resultAction)) {
-          toast.error(resultAction.payload.detail);
+          toast.error("something went wrong");
           return false
         }
       });
@@ -151,6 +152,13 @@ export default function Register() {
           steps={steps}
         />
       </div>
+      <div className="flex items-center justify-center group mt-4 md:mt-0">
+                  <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
+                  <Link to="/login" className="text-xs hover:text-theme uppercase">
+                    If you already have an account
+                  </Link>
+                  <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
+                </div>
     </section>
   );
 }

@@ -346,7 +346,7 @@ export default function UpdateProfile() {
               id="weight"
               className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 border-gray-light rounded-lg w-full outline-none`}
               type="text"
-              placeholder="5.8"
+              placeholder="68"
               name="weight"
               value={profileData?.weight}
               onChange={handleChange}
@@ -360,7 +360,7 @@ export default function UpdateProfile() {
               id="age"
               className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 border-gray-light rounded-lg w-full outline-none`}
               type="text"
-              placeholder="5.8"
+              placeholder="23"
               name="age"
               value={profileData?.age}
               onChange={handleChange}
