@@ -8,7 +8,8 @@ import Payment from "../components/signupSteps/Payment";
 import Complete from "../components/signupSteps/Complete";
 import Information from "../components/signupSteps/Information";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../features/account/accountSlice";
+import { register, loginUser } from "../features/account/accountSlice";
+import { addTransaction } from "../features/transaction/transactionSlice";
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -114,6 +115,13 @@ export default function Register() {
       };
       dispatch(register(accountData)).then((resultAction) => {
         if (register.fulfilled.match(resultAction)) {
+          const transactionData = {
+            sender_email : formData.email,
+            transaction_number: formData.transaction_number,
+            transaction_id: formData.transaction_id,
+            amount: formData.amount
+          }
+          dispatch(addTransaction(transactionData));
           toast.success("we have sent you a varification email");
           navigate("/");
           setFormData({

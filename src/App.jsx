@@ -49,7 +49,6 @@ function App() {
       {/* all routes */}
       <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="about" element={<About/>}/>
       <Route path="team" element={<Team/>}/>
         {localStorage.getItem('token')?(
           <>

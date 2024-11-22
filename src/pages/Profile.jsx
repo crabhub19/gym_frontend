@@ -19,7 +19,7 @@ export default function Profile() {
     
 
     
-    <section id="home" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
+    <section id="profile" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
       <div className="md:w-1/2">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">{userProfile?.account?.user?.first_name} {userProfile?.account?.user?.last_name}'s Profile</h1>
         <p className="text-lg sm:text-xl md:text-2xl font-medium">

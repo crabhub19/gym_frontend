@@ -31,7 +31,6 @@ export default function NavBar(pros) {
   ]
   let navigation = [
     { name: 'Home', to: '/', current: pathLocation==="/"?true:false },    
-    { name: 'About', to: '/about', current: pathLocation==="/about"?true:false },
     { name: 'Team', to: '/team', current: pathLocation==="/team"?true:false },
     ...aditionalNavigation
   ]

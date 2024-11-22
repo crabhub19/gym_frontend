@@ -30,6 +30,10 @@
   font-family: Lovelo;
   src: url(./assets/font/Lovelo-LineLight.otf);
 }
+@font-face {
+  font-family: RocknRollOne;
+  src: url(./assets/font/RocknRollOne-Regular.ttf);
+}
 @layer components{
   
 

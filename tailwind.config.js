@@ -23,6 +23,7 @@ export default {
       chococooky: ['Chococooky', 'sans-serif'],
       lato: ['Lato', 'sans-serif'],
       lovelo: ['Lovelo', 'sans-serif'],
+      rock: ['RocknRollOne', 'sans-serif'],
     },
     backgroundImage: {
       'home-page-image': "url('/src/assets/image/background/h1_hero.png')",
