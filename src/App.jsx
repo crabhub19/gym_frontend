@@ -1,79 +1,138 @@
-import { useState,useEffect } from 'react'
-import {HashRouter,Routes,Route,useNavigate,useLocation} from "react-router-dom";
-import 'aos/dist/aos.css';
-import AOS from 'aos';
-import './App.css'
-import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Top from './components/Top'
-import Theme from './components/Theme';
-import { Toaster,toast } from 'sonner';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Loading from './components/Loading';
-import About from './pages/About';
-import Profile from './pages/Profile';
-import Logout from './components/Logout';
-import Footer from './components/Footer';
-import UpdateProfile from './pages/UpdateProfile';
-import Team from './pages/Team';
-
+import { useState, useEffect, Suspense, lazy } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import "aos/dist/aos.css";
+import AOS from "aos";
+import "./App.css";
+import { Toaster, toast } from "sonner";
+import { fetcAllProfile } from "./features/profile/allProfileSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import Top from "./components/Top";
+import Theme from "./components/Theme";
+import Loading from "./components/Loading";
+import Profile from "./pages/Profile";
+import Logout from "./components/Logout";
+import UpdateProfile from "./pages/UpdateProfile";
+import Team from "./pages/Team";
+import { LifeLine, ThreeDot } from "react-loading-indicators";
+const Register = lazy(() => import("./pages/Register"));
+const Login = lazy(() => import("./pages/Login"));
+const Footer = lazy(() => import("./components/Footer"));
 function App() {
+  //dispatch
+  const dispatch = useDispatch();
+  const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
   //navigation
   const navigate = useNavigate();
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   useEffect(() => {
     // AOS for animation
     AOS.init({
       offset: 100,
       duration: 600,
-      easing: 'ease-out-sine',
+      easing: "ease-out-sine",
       delay: 0,
     });
-  }, [])
 
+    if (fetchAllProfileStatus === "idle") {
+      dispatch(fetcAllProfile());
+    }
+  }, []);
 
   // authinticate
   useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-  localStorage.removeItem('token');
-  navigate('/');
-  }
-  }, [])
+    const token = localStorage.getItem("token");
+    if (!token) {
+      localStorage.removeItem("token");
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       {/* navbar */}
-      <NavBar isDarkMode={isDarkMode}/>
+      <NavBar isDarkMode={isDarkMode} />
       {/* all routes */}
       <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="team" element={<Team/>}/>
-        {localStorage.getItem('token')?(
+        <Route path="/" element={<Home />} />
+        <Route path="team" element={<Team />} />
+        {localStorage.getItem("token") ? (
           <>
-            <Route path="profile" element={<Profile/>}/>
-            <Route path="profile/update-profile" element={<UpdateProfile/>}/>
-            <Route path="logout" element={<Logout/>}/>
+            <Route path="profile" element={<Profile />} />
+            <Route path="profile/update-profile" element={<UpdateProfile />} />
+            <Route path="logout" element={<Logout />} />
           </>
-        ):(
+        ) : (
           <>
-            <Route path="login" element={<Login/>}/>
-            <Route path="register" element={<Register/>}/>
+            <Route path="login" element={
+               <Suspense
+               fallback={
+                 <div className="flex justify-center items-center py-32">
+                   <ThreeDot
+                     variant="bounce"
+                     color="#ff0000"
+                     size="medium"
+                     text="loading Login Page "
+                     textColor=""
+                   />
+                 </div>
+               }
+             >
+               <Login/>
+             </Suspense>
+            } />
+            <Route
+              path="register"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-32">
+                      <ThreeDot
+                        variant="bounce"
+                        color="#ff0000"
+                        size="medium"
+                        text="loading Register Page"
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <Register />
+                </Suspense>
+              }
+            />
           </>
         )}
       </Routes>
-      <Footer/>
+      
+      <Suspense fallback={
+        <div className="flex justify-center items-center py-20"
+        ><ThreeDot variant="bounce" color="#ff0000" size="medium" text="loading Footer " textColor="" />
+        </div>
+      }>
+        <Footer />
+      </Suspense>
       {/* toaster popup */}
-      <Toaster toastOptions={{ className: 'md:py-24 py-12 text-2xl shadow-2xl flex justify-center rounded-sm' }} richColors theme={`${isDarkMode ? 'dark' : 'light'}`} closeButton />
+      <Toaster
+        toastOptions={{
+          className:
+            "md:py-24 py-12 text-2xl shadow-2xl flex justify-center rounded-sm",
+        }}
+        richColors
+        theme={`${isDarkMode ? "dark" : "light"}`}
+        closeButton
+      />
       {/* theme customization */}
-      <Theme isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
+      <Theme isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       {/* click to top */}
-      <Top/>
+      <Top />
       {/* loading */}
-      <Loading/>
+      <Loading />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

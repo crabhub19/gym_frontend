@@ -372,7 +372,7 @@ export default function UpdateProfile() {
           </div>
         </div>
         <div className="py-4 space-x-2">
-        <button className="border-2 bg-blue text-white hover:bg-white hover:text-blue hover:border-blue  px-6 py-2 rounded-lg dark:hover:bg-dark" type="submit">Update</button>
+        <button className="border-2  border-blue hover:bg-blue px-6 py-2 rounded-lg text-blue" type="submit">Update</button>
         <button className="border-2  dark:border-white hover:bg-theme px-6 py-2 rounded-lg hover:text-white">Cancel</button>
         </div>
         </form>

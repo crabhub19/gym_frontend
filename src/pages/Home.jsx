@@ -1,5 +1,7 @@
-import React from "react";
-import About from "./About";
+import React, { Suspense, lazy } from "react";
+import { ThreeDot } from "react-loading-indicators";
+// import About from "./About";
+const About = React.lazy(() => import("./About"));
 
 export default function Home() {
   const scrollToAbout = (event) => { event.preventDefault(); document.getElementById("about").scrollIntoView({ behavior: "smooth" }); };
@@ -36,7 +38,13 @@ export default function Home() {
         </div>
       </main>
       <section id="about" className="">
-      <About />
+
+      {/* <About /> */}
+      <Suspense fallback={<div className="flex justify-center items-center py-20"
+      ><ThreeDot variant="bounce" color="#ff0000" size="medium" text="loading about " textColor="" />
+      </div>}>
+        <About />
+      </Suspense>
       </section>
     </>
   );

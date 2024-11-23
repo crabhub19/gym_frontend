@@ -39,6 +39,20 @@ export const updateUserProfile = createAsyncThunk(
   }
 );
 
+export const deleteUserProfile = createAsyncThunk(
+  'profile/deleteUserProfile',
+  async (_, { rejectWithValue, dispatch }) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await api.delete('/account/profile/me/');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'An error occurred while deleting the profile.');
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+)
 
   // Profile slice
 const profileSlice = createSlice({
@@ -75,6 +89,11 @@ const profileSlice = createSlice({
           state.status = 'failed';
           state.error = action.payload.detail;
         });
+
+      builder
+        .addCase(deleteUserProfile.pending, (state) => {
+          state.status = 'loading';
+        })
     },
   });
   

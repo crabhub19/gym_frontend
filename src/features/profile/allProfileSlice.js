@@ -6,17 +6,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // Async thunk to fetch user profile
 export const fetcAllProfile = createAsyncThunk(
     'allProfile/fetchAllProfile',
-    async (_, { rejectWithValue,dispatch }) => {  
-      dispatch(setLoading(true));
+    async (_, { rejectWithValue }) => {  
       try {
         const response = await api.get("/account/profile");          
         return response.data;
           
         } catch (error) {
           return rejectWithValue(error.response.data);
-        }finally {dispatch(setLoading(false)); }
-
-        
+        }     
   }
   );
 
