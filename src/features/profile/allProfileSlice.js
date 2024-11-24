@@ -4,7 +4,7 @@ import { setLoading } from '../loading/loadingSlice';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Async thunk to fetch user profile
-export const fetcAllProfile = createAsyncThunk(
+export const fetchAllProfile = createAsyncThunk(
     'allProfile/fetchAllProfile',
     async (_, { rejectWithValue }) => {  
       try {
@@ -28,14 +28,14 @@ const allProfileSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
       builder
-        .addCase(fetcAllProfile.pending, (state) => {
+        .addCase(fetchAllProfile.pending, (state) => {
           state.status = 'loading';
         })
-        .addCase(fetcAllProfile.fulfilled, (state, action) => {
+        .addCase(fetchAllProfile.fulfilled, (state, action) => {
           state.status = 'succeeded';
           state.data = action.payload;
         })
-        .addCase(fetcAllProfile.rejected, (state, action) => {
+        .addCase(fetchAllProfile.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.payload.detail;
       })

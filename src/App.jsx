@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import "./App.css";
 import { Toaster, toast } from "sonner";
-import { fetcAllProfile } from "./features/profile/allProfileSlice";
+import { fetchAllProfile } from "./features/profile/allProfileSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
@@ -39,7 +39,7 @@ function App() {
     });
 
     if (fetchAllProfileStatus === "idle") {
-      dispatch(fetcAllProfile());
+      dispatch(fetchAllProfile());
     }
   }, []);
 
@@ -70,11 +70,11 @@ function App() {
             <Route path="login" element={
                <Suspense
                fallback={
-                 <div className="flex justify-center items-center py-32">
+                 <div className="flex justify-center items-center py-44">
                    <ThreeDot
                      variant="bounce"
                      color="#ff0000"
-                     size="medium"
+                     size="large"
                      text="loading Login Page "
                      textColor=""
                    />
@@ -89,11 +89,11 @@ function App() {
               element={
                 <Suspense
                   fallback={
-                    <div className="flex justify-center items-center py-32">
+                    <div className="flex justify-center items-center py-48">
                       <ThreeDot
                         variant="bounce"
                         color="#ff0000"
-                        size="medium"
+                        size="large"
                         text="loading Register Page"
                         textColor=""
                       />
@@ -110,7 +110,7 @@ function App() {
       
       <Suspense fallback={
         <div className="flex justify-center items-center py-20"
-        ><ThreeDot variant="bounce" color="#ff0000" size="medium" text="loading Footer " textColor="" />
+        ><ThreeDot variant="bounce" color="#ff0000" size="large" text="loading Footer " textColor="" />
         </div>
       }>
         <Footer />

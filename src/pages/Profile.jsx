@@ -2,27 +2,13 @@ import { Link } from 'react-router-dom'
 import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../features/profile/profileSlice';
-import DeleteModal from '../components/DeleteModal';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
-import {deleteUserProfile} from '../features/profile/profileSlice'
-import { setLoading } from '../features/loading/loadingSlice'
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../features/account/accountSlice';
 export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const userProfile  = useSelector((state) => state.profile.data);
   const userProfileStatus  = useSelector((state) => state.profile.status);
-  const handleDelete = async() => {
-    setDeleteModalOpen(false)
-    dispatch(setLoading(true))
-    await dispatch(deleteUserProfile())
-    dispatch(logoutUser())
-    navigate('/')
-    dispatch(setLoading(false))
-  }
-
   useEffect(() => {
     if (userProfileStatus === 'idle'){
       dispatch(fetchUserProfile())
@@ -30,7 +16,6 @@ export default function Profile() {
   }, [dispatch,userProfileStatus]);
   return (
     <>
-    <DeleteModal deleteModalOpen={deleteModalOpen} setDeleteModalOpen={setDeleteModalOpen} handleDelete={handleDelete}/>
  <div className="min-h-screen flex flex-col pt-28">
     <section id="profile" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
       <div className="md:w-1/2">
@@ -38,17 +23,8 @@ export default function Profile() {
         <p className="text-lg sm:text-xl md:text-2xl font-medium">
           {userProfile?.bio}
         </p>
-        <div className='flex gap-4'>
-          <Link to="update-profile" className='mt-4 drop-shadow-2xl shadow-md bg-blue border-dark dark:border-white px-6 py-2 rounded-sm hover:bg-dark
-          text-white dark:hover:text-dark dark:hover:bg-white flex w-fit'><span><svg className='w-6 h-6 mr-2' fill='currentColor' xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"><path d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm14.122,9.879c-1.134-1.134-3.11-1.134-4.243,0l-7.879,7.878v4.243h4.243l7.878-7.878c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-7.292,7.293h-1.415v-1.415l7.293-7.292c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Zm-9.778,1.293H5c-1.654,0-3,1.346-3,3v5H0v-5c0-2.757,2.243-5,5-5H13c.289,0,.568,.038,.844,.085l-1.915,1.915Z"/></svg></span><span>UPDATE</span></Link>
-          <button onClick={() => setDeleteModalOpen(true)} className='mt-4 bg-red border-2 border-red hover:border-dark hover:dark:border-white px-6 py-2 rounded-sm hover:bg-dark
-          text-white dark:hover:text-dark dark:hover:bg-white flex w-fit'><span><svg className='w-6 h-6 mr-2' viewBox="0 0 24 24" fill="none">
-          <path d="M10 12V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M14 12V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M4 7H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg></span><span>Delete</span></button>
+        <div className='flex gap-4 mt-4'>
+          <Link to="update-profile" className='mt-4 border-2 border-dark dark:border-white px-6 py-2 rounded-sm hover:bg-dark hover:text-white flex w-fit'><span><svg className='w-6 h-6 mr-2' fill='currentColor' id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"><path d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm14.122,9.879c-1.134-1.134-3.11-1.134-4.243,0l-7.879,7.878v4.243h4.243l7.878-7.878c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-7.292,7.293h-1.415v-1.415l7.293-7.292c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Zm-9.778,1.293H5c-1.654,0-3,1.346-3,3v5H0v-5c0-2.757,2.243-5,5-5H13c.289,0,.568,.038,.844,.085l-1.915,1.915Z"/></svg></span><span>EDIT</span></Link>
         </div>
       </div>
       <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
@@ -66,7 +42,7 @@ export default function Profile() {
     }
 
 
-  {(userProfile?.age || userProfile?.weight || userProfile?.height) && (
+  {(userProfile?.age || userProfile?.weight || userProfile?.height || userProfile?.gender) && (
     <section id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
       <table className='min-w-full table-auto mx-auto text-center'>
@@ -75,6 +51,7 @@ export default function Profile() {
             {userProfile?.age && <th>Age</th>}
             {userProfile?.weight && <th>Weight</th>}
             {userProfile?.height && <th>Height</th>}
+            {userProfile?.gender && <th>Gender</th>}
           </tr>
         </thead>
         <tbody>
@@ -82,6 +59,7 @@ export default function Profile() {
             <td>{userProfile?.age}</td>
             <td>{userProfile?.weight}</td>
             <td>{userProfile?.height}</td>
+            <td>{userProfile?.gender}</td>
           </tr>
         </tbody>
       </table>

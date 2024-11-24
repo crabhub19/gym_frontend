@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../features/account/accountSlice";
+import { fetchUserProfile } from "../features/profile/profileSlice";
 import { toast } from "sonner";
 export default function Login() {
   const dispatch = useDispatch();
@@ -31,10 +32,9 @@ export default function Login() {
     dispatch(loginUser(credentials)).then((resultAction) => {
       if (loginUser.fulfilled.match(resultAction)) {
         toast.success("Login successfully");
+        dispatch(fetchUserProfile());
         navigate("/profile");
         setCredentials({ username: "", password: "" });
-        window.location.reload();
-        
       }else if (loginUser.rejected.match(resultAction)) {
         if (resultAction.payload.target === "password") {
           setPassword(false);
