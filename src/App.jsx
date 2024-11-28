@@ -1,10 +1,11 @@
 import { useState, useEffect, Suspense, lazy } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import "./App.css";
 import { Toaster, toast } from "sonner";
 import { fetchAllProfile } from "./features/profile/allProfileSlice";
+import { fetchUserProfile } from "./features/profile/profileSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
@@ -12,22 +13,24 @@ import Home from "./pages/Home";
 import Top from "./components/Top";
 import Theme from "./components/Theme";
 import Loading from "./components/Loading";
-import Profile from "./pages/Profile";
 import Logout from "./components/Logout";
-import UpdateProfile from "./pages/UpdateProfile";
 import Team from "./pages/Team";
-import { LifeLine, ThreeDot } from "react-loading-indicators";
-const Register = lazy(() => import("./pages/Register"));
+import { ThreeDot } from "react-loading-indicators";
 const Login = lazy(() => import("./pages/Login"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Register = lazy(() => import("./pages/Register"));
 const Footer = lazy(() => import("./components/Footer"));
+const UpdateProfile = lazy(() => import("./pages/UpdateProfile"));
 function App() {
   //dispatch
   const dispatch = useDispatch();
   const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
+  const fetchUserProfileStatus = useSelector((state) => state.profile.status);
   //navigation
   const navigate = useNavigate();
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
+
 
   useEffect(() => {
     // AOS for animation
@@ -40,6 +43,9 @@ function App() {
 
     if (fetchAllProfileStatus === "idle") {
       dispatch(fetchAllProfile());
+    }
+    if (fetchUserProfileStatus === "idle") {
+      dispatch(fetchUserProfile());
     }
   }, []);
 
@@ -61,8 +67,36 @@ function App() {
         <Route path="team" element={<Team />} />
         {localStorage.getItem("token") ? (
           <>
-            <Route path="profile" element={<Profile />} />
-            <Route path="profile/update-profile" element={<UpdateProfile />} />
+            <Route path="profile" element={<Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <ThreeDot
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        text="loading Register Page"
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <Profile />
+                </Suspense>} />
+            <Route path="profile/update-profile" element={<Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <ThreeDot
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        text="loading Register Page"
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <UpdateProfile />
+                </Suspense>} />
             <Route path="logout" element={<Logout />} />
           </>
         ) : (
@@ -76,7 +110,7 @@ function App() {
                      color="#ff0000"
                      size="large"
                      text="loading Login Page "
-                     textColor=""
+                     
                    />
                  </div>
                }
@@ -95,7 +129,7 @@ function App() {
                         color="#ff0000"
                         size="large"
                         text="loading Register Page"
-                        textColor=""
+                        
                       />
                     </div>
                   }
@@ -110,7 +144,7 @@ function App() {
       
       <Suspense fallback={
         <div className="flex justify-center items-center py-20"
-        ><ThreeDot variant="bounce" color="#ff0000" size="large" text="loading Footer " textColor="" />
+        ><ThreeDot variant="bounce" color="#ff0000" size="large" text="loading Footer "  />
         </div>
       }>
         <Footer />

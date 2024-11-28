@@ -5,6 +5,7 @@ import {
   fetchUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  updateProfileData
 } from "../features/profile/profileSlice";
 import { fetchAllProfile } from "../features/profile/allProfileSlice";
 import DeleteModal from "../components/DeleteModal";
@@ -16,12 +17,11 @@ export default function UpdateProfile() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const userProfile = useSelector((state) => state.profile.data);
   const userProfileStatus = useSelector((state) => state.profile.status);
-  useEffect(() => {
-    if (userProfileStatus === "idle") {
-      dispatch(fetchUserProfile());
-    }
-  }, [dispatch, userProfileStatus]);
-
+  // useEffect(() => {
+  //   if (userProfileStatus === "idle") {
+  //     dispatch(fetchUserProfile());
+  //   }
+  // }, [dispatch, userProfileStatus]);
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -37,6 +37,12 @@ export default function UpdateProfile() {
     profile_picture: null, // to handle file input
     uploaded_profile_picture: null, // to handle upload file input
   });
+  useEffect(() => {
+    const storedProfileData = localStorage.getItem("profileData");
+    if (storedProfileData) {
+      setProfileData(JSON.parse(storedProfileData));
+    }
+  })
   useEffect(() => {
     if (userProfile) {
       setProfileData({
@@ -97,13 +103,31 @@ export default function UpdateProfile() {
       if (profileData.profile_picture) {
         formData.append("profile_picture", profileData.profile_picture);
       }
+      const updatedProfileData = { 
+        account: {
+          user: {
+            first_name: profileData.first_name,
+            last_name: profileData.last_name,
+          },
+          phone_number: profileData.phone_number,
+        },
+        bio: profileData.bio,
+        about: profileData.about,
+        age: profileData.age,
+        weight: profileData.weight,
+        height: profileData.height,
+        address: profileData.address,
+        gender: profileData.gender,
+        uploaded_profile_picture: profileData.uploaded_profile_picture,
+        // Add other fields as needed
+      };
 
       // Dispatch the updateUserProfile action with the form data
-      await dispatch(updateUserProfile(formData));
-      navigate("/profile");
-      await dispatch(fetchUserProfile());
-      dispatch(fetchAllProfile());
+      navigate(-1);
       toast.success("Profile updated successfully");
+      await dispatch(updateProfileData(updatedProfileData));
+      await dispatch(updateUserProfile(formData));
+      dispatch(fetchAllProfile());
     } catch (error) {
       toast.error("Error updating profile");
     }
@@ -444,8 +468,6 @@ export default function UpdateProfile() {
                       checked={profileData?.gender === "female"}
                       onChange={handleChange}
                     />Female
-                    {console.log(profileData?.gender)}
-                    
                     </div>
                     </div>
                   </div>

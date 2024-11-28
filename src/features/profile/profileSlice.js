@@ -23,7 +23,7 @@ export const fetchUserProfile = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
   'profile/updateUserProfile',
   async (profileData, { rejectWithValue, dispatch }) => {
-    dispatch(setLoading(true));
+    dispatch(setLoading(false));
     try {
       const response = await api.patch('/account/profile/me/', profileData,{
         headers: {
@@ -62,7 +62,11 @@ const profileSlice = createSlice({
       status: 'idle',
       error: null,
     },
-    reducers: {},
+    reducers: {
+      updateProfileData: (state, action) => {
+        state.data = { ...state.data, ...action.payload }; // Merge updates into current data
+      },
+    },
     extraReducers: (builder) => {
       builder
         .addCase(fetchUserProfile.pending, (state) => {
@@ -96,5 +100,5 @@ const profileSlice = createSlice({
         })
     },
   });
-  
+  export  const { updateProfileData } = profileSlice.actions;
   export default profileSlice.reducer;
