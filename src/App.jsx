@@ -3,9 +3,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import "./App.css";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 import { fetchAllProfile } from "./features/profile/allProfileSlice";
-import { fetchUserProfile } from "./features/profile/profileSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
@@ -25,7 +24,6 @@ function App() {
   //dispatch
   const dispatch = useDispatch();
   const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
-  const fetchUserProfileStatus = useSelector((state) => state.profile.status);
   //navigation
   const navigate = useNavigate();
   // enable and disable darkmode
@@ -43,9 +41,6 @@ function App() {
 
     if (fetchAllProfileStatus === "idle") {
       dispatch(fetchAllProfile());
-    }
-    if (fetchUserProfileStatus === "idle") {
-      dispatch(fetchUserProfile());
     }
   }, []);
 
