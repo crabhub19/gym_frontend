@@ -44,6 +44,9 @@ function App() {
     }
   }, []);
 
+ 
+
+
   // authinticate
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -157,7 +160,7 @@ function App() {
       {/* theme customization */}
       <Theme isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       {/* click to top */}
-      <Top />
+      <Top  />
       {/* loading */}
       <Loading />
     </>

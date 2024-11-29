@@ -23,12 +23,11 @@ body{
     right: 31px;
     bottom: 18px;
     position: fixed;
-    color:var(--white);
     font-size: 20px;
     /* border-radius: 50%; */
     border: 2px solid transparent;
     box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
-    @apply bg-theme
+    @apply bg-theme text-white
   }
 #theme-button {
     height: 40px;
@@ -36,12 +35,11 @@ body{
     right: 90px;
     bottom: 18px;
     position: fixed;
-    color:var(--white);
     font-size: 20px;
     /* border-radius: 50%; */
     border: 2px solid transparent;
     box-shadow: 0 0 10px 3px rgba(108, 98, 98, 0.2);
-    @apply dark:bg-theme bg-dark
+    @apply dark:bg-theme bg-dark text-white
   }
 
 

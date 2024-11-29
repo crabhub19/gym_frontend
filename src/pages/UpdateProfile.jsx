@@ -42,7 +42,7 @@ export default function UpdateProfile() {
     if (storedProfileData) {
       setProfileData(JSON.parse(storedProfileData));
     }
-  })
+  },[])
   useEffect(() => {
     if (userProfile) {
       setProfileData({
@@ -152,12 +152,12 @@ export default function UpdateProfile() {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <div className="flex flex-col md:flex-row md:justify-between justify-center items-center mb-5 md:items-start">
-              <h2 className="mt-10 md:mb-0 mb-5 tracking-wide md:text-7xl text-5xl font-oswald  font-bold dark:dark-text-stroke text-stroke">
+              <h2 data-aos="fade-right" className="mt-10 md:mb-0 mb-5 tracking-wide md:text-7xl text-5xl font-oswald  font-bold dark:dark-text-stroke text-stroke">
                 Update Profile
               </h2>
               <div className="text-center">
                 <div className="">
-                  <img
+                  <img data-aos="zoom-in"
                     src={
                       profileData?.uploaded_profile_picture
                         ? profileData.uploaded_profile_picture

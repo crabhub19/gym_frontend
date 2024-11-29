@@ -18,8 +18,8 @@ export default function Team() {
     <>
       <section className='min-h-screen pt-28 px-2 md:px-12 lg:px-20'>
       <div className="mx-auto p-4 pb-0 max-w-screen-sm lg:mb-16">
-          <h2 className="mb-4 text-5xl lg:text-7xl tracking-tight text-stroke font-extrabold text-center dark:dark-text-stroke">Meet The Team</h2>
-          <p className="font-light sm:text-xl text-center">Explore the whole team members of gym</p>
+          <h2 data-aos="fade-down" className="mb-4 text-5xl lg:text-7xl tracking-tight text-stroke font-extrabold text-center dark:dark-text-stroke">Meet The Team</h2>
+          <p data-aos="fade-up" className="font-light sm:text-xl text-center">Explore the whole team members of gym</p>
       </div>
       {allProfileStatus === 'loading' && (
           <div className="flex justify-center items-center pt-20">
@@ -34,7 +34,7 @@ export default function Team() {
         )}
       <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 sm:pt-0 sm:pb-8 py-8">
         {allProfile?.map((profile) => (
-          <div key={profile.id} className='relative w-full h-96 overflow-hidden rounded-md shadow-2xl hover:drop-shadow-2xl group'>
+          <div data-aos="fade-up" key={profile.id} className='relative w-full h-96 overflow-hidden rounded-md shadow-2xl hover:drop-shadow-2xl group'>
             <img className='w-full h-full object-cover group-hover:scale-125' src={profile?.profile_picture_url ? profile.profile_picture_url : profilePicture} alt="" />
             <div className='absolute bottom-0 p-2 w-full cursor-default bg-white dark:bg-dark'>
                 <h5 className='text-center  font-extrabold font-chococooky  text-2xl tracking-wide'>{profile?.account?.user?.first_name} {profile?.account?.user?.last_name}</h5>

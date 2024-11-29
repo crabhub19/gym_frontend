@@ -19,21 +19,21 @@ export default function Profile() {
  <div className="min-h-screen flex flex-col pt-28">
     <section id="profile" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
       <div className="md:w-1/2">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">{userProfile?.account?.user?.first_name} {userProfile?.account?.user?.last_name}'s Profile</h1>
-        <p className="text-lg sm:text-xl md:text-2xl font-medium">
+        <h1 data-aos="zoom-out" className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">{userProfile?.account?.user?.first_name} {userProfile?.account?.user?.last_name}'s Profile</h1>
+        <p data-aos="zoom-out" className="text-lg sm:text-xl md:text-2xl font-medium">
           {userProfile?.bio}
         </p>
-        <div className='flex gap-4 mt-4'>
+        <div data-aos="zoom-out" className='flex gap-4 mt-4'>
           <Link to="update-profile" className='mt-4 border-2 border-dark dark:border-white px-6 py-2 rounded-sm hover:bg-dark hover:text-white dark:hover:bg-white dark:hover:text-dark flex w-fit'><span><svg className='w-6 h-6 mr-2' fill='currentColor' id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"><path d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm14.122,9.879c-1.134-1.134-3.11-1.134-4.243,0l-7.879,7.878v4.243h4.243l7.878-7.878c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-7.292,7.293h-1.415v-1.415l7.293-7.292c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Zm-9.778,1.293H5c-1.654,0-3,1.346-3,3v5H0v-5c0-2.757,2.243-5,5-5H13c.289,0,.568,.038,.844,.085l-1.915,1.915Z"/></svg></span><span>EDIT</span></Link>
         </div>
       </div>
       <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
-        <img src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
+        <img data-aos="flip-right" src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
       </div>
     </section>
 
     {userProfile?.about &&
-        <section id="about" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
+        <section data-aos="fade-up" id="about" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
         <h2 className=" text-3xl sm:text-4xl font-semibold mb-6 ">About Me</h2>
         <p className="text-lg sm:text-xl font-medium  ">
           {userProfile?.about}
@@ -43,7 +43,7 @@ export default function Profile() {
 
 
   {(userProfile?.age || userProfile?.weight || userProfile?.height || userProfile?.gender) && (
-    <section id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
+    <section data-aos="fade-up" id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
       <table className='min-w-full table-auto mx-auto text-center'>
         <thead>
@@ -66,7 +66,7 @@ export default function Profile() {
     </section>
     )}
     
-    <section id="projects" className="px-6 sm:px-10 md:px-16 py-12 shadow-lg">
+    <section data-aos="fade-up" id="contarctInformation" className="px-6 sm:px-10 md:px-16 py-12 shadow-lg">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Contract Information</h2>
       <div className="mt-10">
             <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">

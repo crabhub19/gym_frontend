@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../assets/image/builtIn/gym.png'
 export default function Footer () {
     return (
-      <div className="relative bg-main-dark">
+      <div data-aos="fade-up" className="relative bg-main-dark">
         
         <div className="p-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
           <div className="grid gap-16 row-gap-10 mb-8 lg:grid-cols-6">

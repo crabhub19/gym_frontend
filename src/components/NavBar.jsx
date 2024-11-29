@@ -1,6 +1,6 @@
 
 import { NavLink,useLocation } from 'react-router-dom';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -20,6 +20,8 @@ export default function NavBar(pros) {
     return classes.filter(Boolean).join(' ')
   }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isSticky, setIsSticky] = useState(false);
+  const [showScrollUp, setShowScrollUp] = useState(false);
   const pathLocation = useLocation().pathname;
   let aditionalNavigation = localStorage.getItem('token')?[
     { name: 'Profile', to: '/profile', current: pathLocation==="/profile"?true:false },
@@ -34,9 +36,29 @@ export default function NavBar(pros) {
     { name: 'Team', to: '/team', current: pathLocation==="/team"?true:false },
     ...aditionalNavigation
   ]
+   //  scroll to top
+   useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY < 400) {
+        setIsSticky(false);
+        setShowScrollUp(false);
+      } else {
+        setIsSticky(true);
+        setShowScrollUp(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <header className="w-full absolute shadow-md">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between  p-6">
+    <header className={`w-full shadow-md z-10 ${isSticky ? 'bg-gradient-main-to-dark text-white fixed' : 'bg-transparent absolute'}`}>
+      <nav aria-label="Global" className={`mx-auto flex max-w-7xl items-center justify-between ${isSticky ? 'py-4' : 'py-6'}`}>
         <div className="flex lg:flex-1">
             <span className="sr-only">GYM</span>
           <a href="#" className="-m-1.5 p-1.5">
