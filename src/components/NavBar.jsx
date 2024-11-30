@@ -58,7 +58,7 @@ export default function NavBar(pros) {
   }, []);
   return (
     <header className={`w-full shadow-md z-10 ${isSticky ? 'bg-gradient-main-to-dark text-white fixed' : 'bg-transparent absolute'}`}>
-      <nav aria-label="Global" className={`mx-auto flex max-w-7xl items-center justify-between ${isSticky ? 'py-4' : 'py-6'}`}>
+      <nav aria-label="Global" className={`mx-auto flex max-w-7xl items-center justify-between ${isSticky ? ' py-1 2xl:py-6' : 'py-6'}`}>
         <div className="flex lg:flex-1">
             <span className="sr-only">GYM</span>
           <a href="#" className="-m-1.5 p-1.5">
@@ -79,7 +79,7 @@ export default function NavBar(pros) {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <div className={`hidden lg:flex lg:gap-x-12 font-oswald text-lg font-semibold ${pathLocation==='/'?"text-white":"text-dark dark:text-white"}`}>
+        <div className={`hidden lg:flex lg:gap-x-12 font-oswald text-lg font-semibold ${pathLocation==='/'?"text-white":""}`}>
         {navigation.map((item) => (
             <NavLink
               key={item.name}

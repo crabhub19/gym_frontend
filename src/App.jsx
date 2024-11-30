@@ -33,7 +33,7 @@ function App() {
   useEffect(() => {
     // AOS for animation
     AOS.init({
-      offset: 100,
+      offset: 110,
       duration: 600,
       easing: "ease-out-sine",
       delay: 0,
