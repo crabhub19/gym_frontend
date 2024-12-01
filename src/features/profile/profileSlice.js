@@ -17,7 +17,7 @@ export const fetchUserProfile = createAsyncThunk(
           return rejectWithValue(error.response.data);
         }finally { dispatch(setLoading(false)); }    
   }     
-  );
+);
 
 // Async thunk to update user profile
 export const updateUserProfile = createAsyncThunk(
@@ -53,6 +53,22 @@ export const deleteUserProfile = createAsyncThunk(
     }
   }
 )
+
+  export const pickProfile = createAsyncThunk(
+    'profile/pickProfile',
+    async (profileID, { rejectWithValue, dispatch }) => {
+      dispatch(setLoading(true));
+      try {
+        const response = await api.patch(`/account/profile/${profileID}/`);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || 'An error occurred while picking the profile.');
+      } finally {
+        dispatch(setLoading(false));
+      }
+    }
+  )
+
 
   // Profile slice
 const profileSlice = createSlice({
@@ -98,6 +114,27 @@ const profileSlice = createSlice({
         .addCase(deleteUserProfile.pending, (state) => {
           state.status = 'loading';
         })
+        .addCase(deleteUserProfile.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.data = null; // Clear data after successful deletion
+        })
+        .addCase(deleteUserProfile.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.payload.detail;
+        });
+
+      builder
+        .addCase(pickProfile.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(pickProfile.fulfilled, (state, action) => {
+          state.status = 'succeeded';
+          state.data = action.payload;
+        })
+        .addCase(pickProfile.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.payload.detail;
+        });
     },
   });
   export  const { updateProfileData } = profileSlice.actions;
