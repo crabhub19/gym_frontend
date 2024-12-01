@@ -1,15 +1,36 @@
-import React from 'react'
-
+import React,{useState} from 'react'
+import axios from 'axios'
+import { toast } from 'sonner';
 export default function ContractUs() {
+  const url = import.meta.env.VITE_API_URL
+  const [data,setData] = useState({name:'',email:'',message:''})
+  const [loading,setLoading] = useState(false)
+  const handleChange = (e) => {
+    setData({...data,[e.target.name]:e.target.value})
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post(`${url}/account/contractUs/`,data)
+      toast.success("Message sent successfully");
+      setData({name:'',email:'',message:''})
+      setLoading(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+      setLoading(false);
+    };
+  }
+    
   return (
     <>
-    <section className='min-h-screen flex justify-center items-center'>
+    <section id='contractUs' className='min-h-screen flex justify-center items-center'>
     <div>
     <h1 data-aos="fade-up" className="text-7xl font-bold text-center text-stroke dark:dark-text-stroke pt-8">Contact Us</h1>
-    <form>
+    <form onSubmit={handleSubmit}>
       <div
-        className="max-w-screen-xl px-8 grid gap-8 grid-cols-1 md:grid-cols-2 md:px-12 lg:px-16 xl:px-32 py-12 mx-auto bg-gray-100 text-gray-900 rounded-lg shadow-lg">
-        <div data-aos="fade-left" className="flex flex-col gap-8">
+        className="max-w-screen-xl px-8 grid gap-8 grid-cols-1 md:grid-cols-2 md:px-12 lg:px-16 xl:px-32 py-12 mx-auto bg-gray-100 text-gray-900 rounded-sm shadow-lg">
+        <div data-aos="fade-up" className="flex flex-col gap-8">
           <div>
             <h2 className="text-4xl lg:text-5xl font-bold leading-tight">Lets talk about everything!</h2>
           </div>
@@ -516,11 +537,13 @@ export default function ContractUs() {
             <label className="uppercase text-sm font-bold"  htmlFor="first_name">Name</label>
           <div className="relative" data-aos="flip-right">
             <input
-              id="first_name"
-              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 `}
+              id="name"
+              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-sm w-full outline-none pl-12 `}
               type="text"
               placeholder="First Name"
-              name="first_name"
+              name="name"
+              value={data.name}
+              onChange={handleChange}
               required
             />
             <div className="absolute left-0 inset-y-0 flex items-center">
@@ -550,10 +573,12 @@ export default function ContractUs() {
           <div className='relative' data-aos="flip-right" data-aos-delay="100">
               <input
                 id="email"
-                className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md  focus:scale-105 border-gray-light rounded-lg w-full outline-none pl-12 `}
+                className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md  focus:scale-105 border-gray-light rounded-sm w-full outline-none pl-12 `}
                 type="email"
                 placeholder="Email:email@gmail.com"
                 name='email'
+                value={data.email}
+                onChange={handleChange}
                 required
               />
               <div className='absolute left-0 inset-y-0 flex items-center'>
@@ -563,13 +588,13 @@ export default function ContractUs() {
           </div>
           <div className="mt-4">
             <label  className="uppercase text-sm font-bold" htmlFor='message'>Message</label>
-            <textarea  data-aos="flip-right" name="message" rows={4} placeholder="Type your message here..."
-              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none px-12 relative`}></textarea>
+            <textarea value={data.message} onChange={handleChange}  data-aos="flip-right" name="message" rows={4} placeholder="Type your message here..."
+              className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-sm w-full outline-none px-12 relative`}></textarea>
           </div>
           <div className="mt-4">
-            <button
-              className="uppercase text-sm font-bold tracking-wide bg-indigo-500 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
-              Send Message
+            <button type='submit'
+              className="uppercase text-sm font-bold tracking-wide bg-blue hover:bg-deep-blue text-white p-3 rounded-sm w-full focus:outline-none focus:shadow-outline">
+              {loading ? "Sending..." : "Send Message"}
             </button>
           </div>
         </div>

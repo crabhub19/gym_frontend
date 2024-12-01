@@ -1,5 +1,5 @@
 
-import { NavLink,useLocation } from 'react-router-dom';
+import { NavLink,useLocation,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import {
   Dialog,
@@ -12,13 +12,13 @@ import {
 
 import logo from '../assets/image/builtIn/gym.png'
 import lightLogo from '../assets/image/builtIn/gym-light.png'
-import { logoutUser } from '../features/account/accountSlice';
 
 export default function NavBar(pros) {
-  let {isDarkMode} = pros;
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
+  let {isDarkMode} = pros;
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isSticky, setIsSticky] = useState(false);
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -56,15 +56,21 @@ export default function NavBar(pros) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const scrollToContractUs = async(event) => {
+    event.preventDefault();
+    await navigate('/');
+    document.getElementById("contractUs").scrollIntoView({ behavior: "smooth" });
+  };
   return (
-    <header className={`w-full shadow-md z-10 ${isSticky ? 'bg-gradient-main-to-dark text-white fixed' : 'bg-transparent absolute'}`}>
+    <header data-aos="fade-down" className={`w-full shadow-md z-10 ${isSticky ? 'bg-gradient-main-to-dark text-white fixed' : 'bg-transparent absolute'}`}>
       <nav aria-label="Global" className={`mx-auto flex max-w-7xl items-center justify-between ${isSticky ? ' py-1 2xl:py-6' : 'py-6'}`}>
         <div className="flex lg:flex-1">
             <span className="sr-only">GYM</span>
           <a href="#" className="-m-1.5 p-1.5">
             <img
               alt=""
-              src={isDarkMode?logo:pathLocation==="/"?logo:lightLogo}
+              src={isSticky?logo:isDarkMode?logo:pathLocation==="/"?logo:lightLogo}
               className="h-16 w-auto"
             />
           </a>
@@ -96,8 +102,8 @@ export default function NavBar(pros) {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="btn">
-            Join Us <span aria-hidden="true">&rarr;</span>
+          <a onClick={scrollToContractUs} className="btn">
+            Contract Us <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </nav>
@@ -143,10 +149,10 @@ export default function NavBar(pros) {
               </div>
               <div className="py-6">
                 <a
-                  href="#"
+                  onClick={scrollToContractUs}
                   className="btn"
                 >
-                  Log out
+                  Contract Us
                 </a>
               </div>
             </div>
