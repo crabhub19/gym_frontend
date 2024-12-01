@@ -20,6 +20,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
 const Footer = lazy(() => import("./components/Footer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile"));
+const AnotherUserProfile = lazy(() => import("./pages/AnotherUserProfile"));
 function App() {
   //dispatch
   const dispatch = useDispatch();
@@ -63,6 +64,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="team" element={<Team />} />
+        <Route
+              path="team/anotherUserProfile"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <ThreeDot
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        text="loading Register Page"
+                        
+                      />
+                    </div>
+                  }
+                >
+                  <AnotherUserProfile />
+                </Suspense>
+              }
+            />
         {localStorage.getItem("token") ? (
           <>
             <Route path="profile" element={<Suspense

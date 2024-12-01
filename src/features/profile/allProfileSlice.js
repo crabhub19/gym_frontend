@@ -21,11 +21,22 @@ export const fetchAllProfile = createAsyncThunk(
 const allProfileSlice = createSlice({
     name: 'allProfile',
     initialState: {
+      anotherUserProfile:null,
       data: [],
       status: 'idle',
       error: null,
     },
-    reducers: {},
+    reducers: {
+      fetchAnotherUserProfile: (state, action) => {
+        const id = action.payload;
+        const profile = state.data.find((user) => user.id === id);
+        if (profile) {
+          state.anotherUserProfile = profile;
+        } else {
+          state.anotherUserProfile = null; // Reset if no matching profile is found
+        }
+      },
+    },
     extraReducers: (builder) => {
       builder
         .addCase(fetchAllProfile.pending, (state) => {
@@ -42,4 +53,5 @@ const allProfileSlice = createSlice({
     },
   });
 
+  export const { fetchAnotherUserProfile } = allProfileSlice.actions;
   export default allProfileSlice.reducer;

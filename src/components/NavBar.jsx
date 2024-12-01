@@ -103,7 +103,7 @@ export default function NavBar(pros) {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a onClick={scrollToContractUs} className="btn">
-            Contract Us <span aria-hidden="true">&rarr;</span>
+            Contact Us <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </nav>
@@ -152,7 +152,7 @@ export default function NavBar(pros) {
                   onClick={scrollToContractUs}
                   className="btn"
                 >
-                  Contract Us
+                  Contact Us
                 </a>
               </div>
             </div>
