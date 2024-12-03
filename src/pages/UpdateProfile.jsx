@@ -5,23 +5,27 @@ import {
   fetchUserProfile,
   updateUserProfile,
   deleteUserProfile,
-  updateProfileData
+  updateProfileData,
 } from "../features/profile/profileSlice";
+import { changePassword } from "../features/user/userSlice";
 import { fetchAllProfile } from "../features/profile/allProfileSlice";
 import DeleteModal from "../components/DeleteModal";
 import profilePicture from "../assets/image/builtIn/profile_picture.png";
 import { toast } from "sonner";
+import ChangePasswordModal from "../components/ChangePasswordModal";
 export default function UpdateProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  //fetch profile
+  const userProfileStatus  = useSelector((state) => state.profile.status);
+  useEffect(() => {
+    if (userProfileStatus === 'idle'){
+      dispatch(fetchUserProfile())
+    }
+  }, [dispatch,userProfileStatus]);
+
+  //update profile Data
   const userProfile = useSelector((state) => state.profile.data);
-  const userProfileStatus = useSelector((state) => state.profile.status);
-  // useEffect(() => {
-  //   if (userProfileStatus === "idle") {
-  //     dispatch(fetchUserProfile());
-  //   }
-  // }, [dispatch, userProfileStatus]);
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -134,6 +138,7 @@ export default function UpdateProfile() {
   };
 
   //delete user profile
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleDelete = async () => {
     setDeleteModalOpen(false);
     await dispatch(deleteUserProfile());
@@ -141,12 +146,67 @@ export default function UpdateProfile() {
     navigate("/");
   };
 
+
+
+
+
+
+  //change password funtion
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
+  const changePasswordStatus = useSelector((state) => state.user.status);
+  const [changePasswordData, setChangePasswordData] = useState({
+    old_password: "",
+    new_password: "",
+    confirm_password: "",
+  });
+  const handleChangePasswordOnChange = (e) => {
+    const { name, value } = e.target;
+    setChangePasswordData({ ...changePasswordData, [name]: value });
+  }
+  const handleChangePassword = async () => {
+    if (changePasswordData.new_password !== changePasswordData.confirm_password) {
+      toast.error("Passwords do not match");
+      setConfirmPassword(true);
+      setOldPassword(false);
+      return;
+    }
+    dispatch(changePassword(changePasswordData)).then((action) => {
+      if (changePassword.fulfilled.match(action)) {
+        setChangePasswordData({
+          old_password: "",
+          new_password: "",
+          confirm_password: "",
+        });
+        setChangePasswordModalOpen(false);
+        toast.success("Password changed successfully");
+      } else if (changePassword.rejected.match(action)) {
+        if (action.payload.target === "old_password") {
+          setOldPassword(true);
+          setConfirmPassword(false);
+        }
+        const errorMessage = action.payload?.detail || "An error occurred";
+        toast.error(errorMessage);
+      }
+    })
+  }
+
   return (
     <>
       <DeleteModal
         deleteModalOpen={deleteModalOpen}
         setDeleteModalOpen={setDeleteModalOpen}
         handleDelete={handleDelete}
+      />
+      <ChangePasswordModal
+        changePasswordModalOpen={changePasswordModalOpen}
+        setChangePasswordModalOpen={setChangePasswordModalOpen}
+        handleChangePasswordOnChange={handleChangePasswordOnChange}
+        handleChangePassword={handleChangePassword}
+        oldPassword={oldPassword}
+        confirmPassword={confirmPassword}
+        changePasswordStatus={changePasswordStatus}
       />
       <section className="pt-32 lg:px-12 px-4 md:px-8">
         <form onSubmit={handleSubmit}>
@@ -495,7 +555,7 @@ export default function UpdateProfile() {
           <div className="flex gap-4">
             {/* change password */}
             <button
-              onClick={() => setDeleteModalOpen(true)}
+              onClick={() => setChangePasswordModalOpen(true)}
               className="mt-4 bg-blue border-2 border-blue hover:border-dark hover:dark:border-white px-6 py-2 rounded-sm hover:bg-dark
           text-white dark:hover:text-dark dark:hover:bg-white flex w-fit"
             >

@@ -56,6 +56,11 @@ function App() {
       navigate("/");
     }
   }, []);
+
+  //scroll to top
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [navigate]);
   return (
     <>
       {/* navbar */}

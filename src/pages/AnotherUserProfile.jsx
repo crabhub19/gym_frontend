@@ -40,24 +40,24 @@ export default function AnotherUserProfile() {
     }
 
 
-  {(anotherUserProfileData?.age || anotherUserProfileData?.weight || anotherUserProfileData?.height || anotherUserProfileData?.gender) && (
+{(anotherUserProfileData?.age || anotherUserProfileData?.weight || anotherUserProfileData?.height || anotherUserProfileData?.gender) && (
     <section data-aos="fade-up" id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
-      <table className='min-w-full table-auto mx-auto text-center'>
+      <table className='w-full'>
         <thead>
           <tr>
-            {anotherUserProfileData?.age && <th>Age</th>}
-            {anotherUserProfileData?.weight && <th>Weight</th>}
-            {anotherUserProfileData?.height && <th>Height</th>}
-            {anotherUserProfileData?.gender && <th>Gender</th>}
+            {anotherUserProfileData?.age && <th className='text-start'>Age</th>}
+            {anotherUserProfileData?.weight && <th className='text-start'>Weight</th>}
+            {anotherUserProfileData?.height && <th className='text-start'>Height</th>}
+            {anotherUserProfileData?.gender && <th className='text-start'>Gender</th>}
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{anotherUserProfileData?.age}</td>
-            <td>{anotherUserProfileData?.weight}</td>
-            <td>{anotherUserProfileData?.height}</td>
-            <td>{anotherUserProfileData?.gender}</td>
+            {anotherUserProfileData?.age && <td>{anotherUserProfileData?.age}</td>}
+            {anotherUserProfileData?.weight && <td>{anotherUserProfileData?.weight}</td>}
+            {anotherUserProfileData?.height && <td>{anotherUserProfileData?.height}</td>}
+            {anotherUserProfileData?.gender && <td>{anotherUserProfileData?.gender}</td>}
           </tr>
         </tbody>
       </table>

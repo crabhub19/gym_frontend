@@ -1,5 +1,4 @@
 import api from '../../api/api';
-// import axios from 'axios';
 import { setLoading } from '../loading/loadingSlice';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // const url = import.meta.env.VITE_API_URL;
@@ -54,20 +53,7 @@ export const deleteUserProfile = createAsyncThunk(
   }
 )
 
-  export const pickProfile = createAsyncThunk(
-    'profile/pickProfile',
-    async (profileID, { rejectWithValue, dispatch }) => {
-      dispatch(setLoading(true));
-      try {
-        const response = await api.patch(`/account/profile/${profileID}/`);
-        return response.data;
-      } catch (error) {
-        return rejectWithValue(error.response?.data || 'An error occurred while picking the profile.');
-      } finally {
-        dispatch(setLoading(false));
-      }
-    }
-  )
+
 
 
   // Profile slice
@@ -119,19 +105,6 @@ const profileSlice = createSlice({
           state.data = null; // Clear data after successful deletion
         })
         .addCase(deleteUserProfile.rejected, (state, action) => {
-          state.status = 'failed';
-          state.error = action.payload.detail;
-        });
-
-      builder
-        .addCase(pickProfile.pending, (state) => {
-          state.status = 'loading';
-        })
-        .addCase(pickProfile.fulfilled, (state, action) => {
-          state.status = 'succeeded';
-          state.data = action.payload;
-        })
-        .addCase(pickProfile.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.payload.detail;
         });

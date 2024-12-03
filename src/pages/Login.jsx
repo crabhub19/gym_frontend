@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../features/account/accountSlice";
 import { fetchUserProfile } from "../features/profile/profileSlice";
@@ -9,11 +9,6 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(true);
   const [password, setPassword] = useState(true);
-  const loginStatus = useSelector((state) => state.account.status);
-  const loginError = useSelector((state) => state.account.error);
-  const loginToken = useSelector((state) => state.account.token);
-  const loginUsers = useSelector((state) => state.account.user);
-  const loginIsAdmin = useSelector((state) => state.account.isAdmin);
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -31,10 +26,10 @@ export default function Login() {
     e.preventDefault();
     dispatch(loginUser(credentials)).then((resultAction) => {
       if (loginUser.fulfilled.match(resultAction)) {
+        setCredentials({ username: "", password: "" });
         toast.success("Login successfully");
         dispatch(fetchUserProfile());
         navigate("/profile");
-        setCredentials({ username: "", password: "" });
       }else if (loginUser.rejected.match(resultAction)) {
         if (resultAction.payload.target === "password") {
           setPassword(false);
@@ -78,7 +73,6 @@ export default function Login() {
                       type="email"
                       placeholder="Email:email@gmail.com"
                       name="username"
-                      value={credentials.username}
                       onChange={handleChange}
                       required
                     />
@@ -108,7 +102,6 @@ export default function Login() {
                       type="password"
                       placeholder="Password: ****"
                       name="password"
-                      value={credentials.password}
                       onChange={handleChange}
                       required
                     />

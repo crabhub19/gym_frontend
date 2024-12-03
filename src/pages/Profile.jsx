@@ -45,21 +45,21 @@ export default function Profile() {
   {(userProfile?.age || userProfile?.weight || userProfile?.height || userProfile?.gender) && (
     <section data-aos="fade-up" id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
-      <table className='min-w-full table-auto mx-auto text-center'>
+      <table className='w-full'>
         <thead>
           <tr>
-            {userProfile?.age && <th>Age</th>}
-            {userProfile?.weight && <th>Weight</th>}
-            {userProfile?.height && <th>Height</th>}
-            {userProfile?.gender && <th>Gender</th>}
+            {userProfile?.age && <th className='text-start'>Age</th>}
+            {userProfile?.weight && <th className='text-start'>Weight</th>}
+            {userProfile?.height && <th className='text-start'>Height</th>}
+            {userProfile?.gender && <th className='text-start'>Gender</th>}
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{userProfile?.age}</td>
-            <td>{userProfile?.weight}</td>
-            <td>{userProfile?.height}</td>
-            <td>{userProfile?.gender}</td>
+            {userProfile?.age && <td>{userProfile?.age}</td>}
+            {userProfile?.weight && <td>{userProfile?.weight}</td>}
+            {userProfile?.height && <td>{userProfile?.height}</td>}
+            {userProfile?.gender && <td>{userProfile?.gender}</td>}
           </tr>
         </tbody>
       </table>
