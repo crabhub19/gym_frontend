@@ -13,7 +13,7 @@ export const changePassword = createAsyncThunk(
       }
     }
   )
-
+  
 
 const userSlice = createSlice({
     name: 'user',

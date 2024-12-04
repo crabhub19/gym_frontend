@@ -1,11 +1,10 @@
 import React from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-export default function ForgotPasswordModal(props) {
-    const { forgotPasswordModalOpen, setForgotPasswordModalOpen, handleForgotPassword, email, accountStatus } = props
+export default function LogoutModal(props) {
+    const { logoutModalOpen, setLogoutModalOpen, handleLogout } = props
   return (
-    <>
-    <Dialog open={forgotPasswordModalOpen} onClose={setForgotPasswordModalOpen} className="relative z-10">
+    <Dialog open={logoutModalOpen} onClose={setLogoutModalOpen} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -23,52 +22,37 @@ export default function ForgotPasswordModal(props) {
                 </div>
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                   <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                    Forgot Password
+                    Deactivate account
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Are you sure you want to reset your password with this email?
+                      Are you sure you want to logout your account?
+                      This action cannot be undone.
                     </p>
-                    <h1 className='text-lg '>{email? email : "enter your email"}</h1>
                   </div>
                 </div>
               </div>
             </div>
             <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-              {accountStatus === "loading" ? (
-                <>
-                <button
+              <button
                 type="button"
-                disabled
-                className="inline-flex w-full justify-center text-sm font-semibold border-2  bg-red px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto"
-              >
-                <svg className=' animate-bounce bg-white rounded-full w-5 h-5'></svg>
-              </button>
-                </>
-              ):(
-                <>
-                <button
-                type="button"
-                onClick={handleForgotPassword}
+                onClick={handleLogout}
                 className="inline-flex w-full justify-center text-sm font-semibold border-2  bg-red px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto hover:scale-105"
               >
-                Yes
+                Logout
               </button>
-                </>
-              )}
               <button
                 type="button"
                 data-autofocus
-                onClick={() => setForgotPasswordModalOpen(false)}
+                onClick={() => setLogoutModalOpen(false)}
                 className="mt-3 inline-flex w-full justify-center text-sm font-semibold border-2  bg-blue px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto hover:scale-105"
               >
-                No
+                Cancel
               </button>
             </div>
           </DialogPanel>
         </div>
       </div>
     </Dialog>
-    </>
   )
 }

@@ -14,7 +14,6 @@ export default function NavBar(pros) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const [showScrollUp, setShowScrollUp] = useState(false);
   const pathLocation = useLocation().pathname;
   let aditionalNavigation = localStorage.getItem("token")
     ? [
@@ -56,10 +55,8 @@ export default function NavBar(pros) {
       const scrollY = window.scrollY;
       if (scrollY < 400) {
         setIsSticky(false);
-        setShowScrollUp(false);
       } else {
         setIsSticky(true);
-        setShowScrollUp(true);
       }
     };
 

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../features/account/accountSlice";
+import { loginUser, forgotPassword, validateResetPassword,resetPassword } from "../features/account/accountSlice";
 import { fetchUserProfile } from "../features/profile/profileSlice";
 import { toast } from "sonner";
+import ForgotPasswordModal from "../components/ForgotPasswordModal";
+import ValidateResetPasswordModal from "../components/ValidateResetPasswordModal";
+import ResetPasswordModal from "../components/ResetPasswordModal";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const accountStatus = useSelector((state) => state.account.status);
+  const accountError = useSelector((state) => state.account.error);
   const [email, setEmail] = useState(true);
   const [password, setPassword] = useState(true);
 
@@ -45,8 +50,86 @@ export default function Login() {
     
   };
 
+
+
+
+
+  //forgot password
+  const [forgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false);
+  const [validateResetPasswordModalOpen, setValidateResetPasswordModalOpen] = useState(false);
+  const [resetPasswordModalOpen, setResetPasswordModalOpen] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
+  const [resetPasswordData, setResetPasswordData] = useState({
+    uuid_code : "",
+    new_password: "",
+    confirm_password: "",
+  })
+
+
+  const handleOnChangeResetPasswordData = (e) => {
+    const { name, value } = e.target;
+    setResetPasswordData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+
+
+  const clickForgotPassword = () => {
+    if (!credentials.username) {
+      toast.error("You have to enter email.");
+      return;
+    }
+    setForgotPasswordModalOpen(true);
+  }
+  const handleForgotPassword = async() => {
+    await dispatch(forgotPassword({email: credentials.username}));
+    if(accountStatus === "rejected"){
+      toast.error("Something went wrong");
+      return
+    }
+    setForgotPasswordModalOpen(false);
+    setValidateResetPasswordModalOpen(true);
+  };
+
+  const handleValidateResetPassword = () => {
+    dispatch(validateResetPassword({uuid_code: resetPasswordData.uuid_code})).then((resultAction) => {
+      if (validateResetPassword.fulfilled.match(resultAction)) {
+        toast.success("Validate password successfully");
+        setValidateResetPasswordModalOpen(false);
+        setResetPasswordModalOpen(true);
+      }else if (validateResetPassword.rejected.match(resultAction)) {
+        const errorMessage = resultAction.payload?.error || "An error occurred";
+        toast.error(errorMessage);
+      }
+    })
+  }
+  const handleResetPassword = async () => {
+    if (resetPasswordData.new_password !== resetPasswordData.confirm_password) {
+      toast.error("Passwords do not match");
+      setConfirmPassword(true);
+      return;
+    }
+    
+    const response = await dispatch(resetPassword({
+      uuid_code: resetPasswordData.uuid_code,
+      new_password: resetPasswordData.new_password}));
+    if(resetPassword.fulfilled.match(response)){
+      toast.success("Reset password successfully");
+      setResetPasswordModalOpen(false);
+    }else if(resetPassword.rejected.match(response)){
+      const errorMessage = response.payload?.error || "An error occurred";
+      toast.error(errorMessage);
+    }
+  };
+
+
   return (
     <>
+    <ForgotPasswordModal forgotPasswordModalOpen={forgotPasswordModalOpen} setForgotPasswordModalOpen={setForgotPasswordModalOpen} handleForgotPassword={handleForgotPassword} email={credentials.username} accountStatus={accountStatus}/>
+    <ValidateResetPasswordModal validateResetPasswordModalOpen={validateResetPasswordModalOpen} setValidateResetPasswordModalOpen={setValidateResetPasswordModalOpen} handleValidateResetPassword={handleValidateResetPassword} handleOnChangeResetPasswordData={handleOnChangeResetPasswordData} accountStatus={accountStatus}/>
+    <ResetPasswordModal resetPasswordModalOpen={resetPasswordModalOpen} setResetPasswordModalOpen={setResetPasswordModalOpen} handleResetPassword={handleResetPassword} handleOnChangeResetPasswordData={handleOnChangeResetPasswordData} confirmPassword={confirmPassword} accountStatus={accountStatus}/>
       <form onSubmit={handleSubmit} className="w-full">
         <div className="pt-28 min-h-screen flex justify-center items-center">
           <div className=" block w-full">
@@ -132,9 +215,9 @@ export default function Login() {
                 </div>
                 <div className="mt-4 flex items-center justify-between group">
                   <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
-                  <a href="#" className="text-xs hover:text-theme uppercase">
+                  <button onClick={clickForgotPassword} className="text-xs hover:text-theme uppercase">
                     or forgot password
-                  </a>
+                  </button>
                   <span className="border-b w-1/5 md:w-1/4 group-hover:border-theme"></span>
                 </div>
                 <div className="mt-4 flex items-center justify-between group">

@@ -1,26 +1,24 @@
-import React from "react";
+import React from 'react'
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import {ExclamationCircleIcon, LockOpenIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-export default function ChangePasswordModal(props) {
-  const {
-    changePasswordModalOpen,
-    setChangePasswordModalOpen,
-    handleChangePassword,
-    handleChangePasswordOnChange,
-    oldPassword,
-    confirmPassword,
-    changePasswordStatus
-    
-  } = props;
+import {ExclamationCircleIcon, LockOpenIcon} from "@heroicons/react/24/outline";
+export default function ResetPasswordModal(props) {
+    const {
+        resetPasswordModalOpen,
+        setResetPasswordModalOpen,
+        handleResetPassword,
+        handleOnChangeResetPasswordData,
+        confirmPassword,
+        accountStatus
+      } = props;
   return (
     <>
       <Dialog
-        open={changePasswordModalOpen}
+        open={resetPasswordModalOpen}
         onClose={()=>{}}
         className="relative z-10"
       >
@@ -39,31 +37,9 @@ export default function ChangePasswordModal(props) {
                 <div className="sm:flex sm:items-start justify-center items-center pb-4">
                   <ExclamationCircleIcon aria-hidden="true" className="size-7" />
                   <DialogTitle as="h3" className="font-semibold text-lg">
-                    Change Password
+                    Reset Password
                   </DialogTitle>
                 </div>
-                  <div className="">
-                    <label
-                      className="uppercase text-sm font-bold"
-                      htmlFor="old_password"
-                    >
-                      Current Password
-                    </label>
-                    <div className="relative" data-aos="flip-right">
-                      <input
-                        id="old_password"
-                        className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-sm w-full outline-none pl-12 ${oldPassword?'outline-2 outline-double outline-red':''}`}
-                        type="password"
-                        placeholder="type old password"
-                        name="old_password"
-                        onChange={handleChangePasswordOnChange}
-                        required
-                      />
-                      <div className="absolute left-4 inset-y-0 flex items-center">
-                        <LockClosedIcon className="h-6 w-6" />
-                      </div>
-                    </div>
-                  </div>
                   <div className="">
                     <label
                       className="uppercase text-sm font-bold"
@@ -78,7 +54,7 @@ export default function ChangePasswordModal(props) {
                         type="password"
                         placeholder="type new password"
                         name="new_password"
-                        onChange={handleChangePasswordOnChange}
+                        onChange={handleOnChangeResetPasswordData}
                         minLength={4}
                         required
                       />
@@ -101,7 +77,7 @@ export default function ChangePasswordModal(props) {
                         type="password"
                         placeholder="type confirm password"
                         name="confirm_password"
-                        onChange={handleChangePasswordOnChange}
+                        onChange={handleOnChangeResetPasswordData}
                         minLength={4}
                         required
                       />
@@ -113,22 +89,22 @@ export default function ChangePasswordModal(props) {
                 </div>
               </div>
               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-                {changePasswordStatus === "loading" ? (
+                {accountStatus === "loading" ? (
                   <>
                   <button
                   type="button"
                   disabled
-                  className="inline-flex w-full justify-center text-sm font-semibold border-2  bg-red px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto"
+                  className="inline-flex w-full justify-center text-sm font-semibold border-2  bg-red px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto hover:scale-105"
                 >
                   Changing
-                  <svg className="animate-spin bg-white h-5 w-5 ml-3 rounded-sm"></svg>
+                  <svg className="animate-spin bg-white h-4 w-4 ml-1 my-auto rounded-sm"></svg>
                 </button>
                   </>
                 ):(
                   <>
                   <button
                   type="button"
-                  onClick={handleChangePassword}
+                  onClick={handleResetPassword}
                   className="inline-flex w-full justify-center text-sm font-semibold border-2  bg-red px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto hover:scale-105"
                 >
                   Change
@@ -139,7 +115,7 @@ export default function ChangePasswordModal(props) {
                 <button
                   type="button"
                   data-autofocus
-                  onClick={() => setChangePasswordModalOpen(false)}
+                  onClick={() => setResetPasswordModalOpen(false)}
                   className="mt-3 inline-flex w-full justify-center text-sm font-semibold border-2  bg-blue px-6 py-2 rounded-lg text-white sm:mt-0 sm:w-auto hover:scale-105"
                 >
                   Cancel
@@ -150,5 +126,5 @@ export default function ChangePasswordModal(props) {
         </div>
       </Dialog>
     </>
-  );
+  )
 }
