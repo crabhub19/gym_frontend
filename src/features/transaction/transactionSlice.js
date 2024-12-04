@@ -17,8 +17,12 @@ export const addTransaction = createAsyncThunk(
   async (transactionData, { rejectWithValue }) => {
     try {
       const response = await api.post("/account/transactions/", transactionData);
+      console.log(response.data);
       return response.data;
+      
     } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -29,7 +33,7 @@ const transactionSlice = createSlice({
     initialState: {
       data: [],
       status: "idle",
-      error: null,
+      detail: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -40,10 +44,11 @@ const transactionSlice = createSlice({
         .addCase(fetchTransactions.fulfilled, (state, action) => {
           state.status = "succeeded";
           state.data = action.payload;
+          state.detail = action.payload.detail;
         })
         .addCase(fetchTransactions.rejected, (state, action) => {
           state.status = "failed";
-          state.error = action.payload;
+          state.detail = action.payload.detail;
         });
       },
     });

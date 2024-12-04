@@ -9,7 +9,6 @@ export default function Team() {
   const navigate = useNavigate();
   const allProfile = useSelector((state) => state.allProfile.data);
   const allProfileStatus = useSelector((state) => state.allProfile.status);
-  const anotherUserProfileData = useSelector((state) => state.allProfile.userProfile);
 
   useEffect(() => {
     if (allProfileStatus === "idle") {
@@ -31,11 +30,6 @@ export default function Team() {
     dispatch(fetchAnotherUserProfile(id));
     navigate("anotherUserProfile");
   };
-  useEffect(() => {
-    if (anotherUserProfileData) {
-      console.log("Updated User Profile Data:", anotherUserProfileData);
-    }
-  }, [anotherUserProfileData]);
 
   return (
     <>

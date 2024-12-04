@@ -18,7 +18,7 @@ const paymentMethonSlice = createSlice({
     initialState: {
       data: [],
       status: 'idle',
-      error: null,
+      detail: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -29,10 +29,12 @@ const paymentMethonSlice = createSlice({
         .addCase(viewPaymentMethod.fulfilled, (state, action) => {
           state.status = 'succeeded';
           state.data = action.payload; // get account to state
+          state.detail = action.payload.detail;
+
         })
         .addCase(viewPaymentMethod.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;   
+          state.detail = action.payload.detail;   
         });
     },
   });

@@ -11,7 +11,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accountStatus = useSelector((state) => state.account.status);
-  const accountError = useSelector((state) => state.account.error);
   const [email, setEmail] = useState(true);
   const [password, setPassword] = useState(true);
 
@@ -100,7 +99,7 @@ export default function Login() {
         setValidateResetPasswordModalOpen(false);
         setResetPasswordModalOpen(true);
       }else if (validateResetPassword.rejected.match(resultAction)) {
-        const errorMessage = resultAction.payload?.error || "An error occurred";
+        const errorMessage = resultAction.payload?.detail || "An error occurred";
         toast.error(errorMessage);
       }
     })
@@ -119,7 +118,7 @@ export default function Login() {
       toast.success("Reset password successfully");
       setResetPasswordModalOpen(false);
     }else if(resetPassword.rejected.match(response)){
-      const errorMessage = response.payload?.error || "An error occurred";
+      const errorMessage = response.payload?.detail || "An error occurred";
       toast.error(errorMessage);
     }
   };

@@ -84,7 +84,7 @@ const accountSlice = createSlice({
     token: localStorage.getItem('token') || null,
     isAdmin: localStorage.getItem('isAdmin') === 'true',
     status: 'idle',
-    error: null,
+    detail: null,
   },
   reducers: {
     logoutUser(state) {
@@ -103,10 +103,11 @@ const accountSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data.push(action.payload); // Add new account to state
+        state.detail = action.payload.detail;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload.detail;   
+        state.detail = action.payload.detail;   
       });
       builder
       .addCase(loginUser.pending, (state) => {
@@ -116,11 +117,12 @@ const accountSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user_id;
         state.token = action.payload.access;
-        state.isAdmin = action.payload.is_staff;    
+        state.isAdmin = action.payload.is_staff;
+        state.detail = action.payload.detail;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload.detail;
+        state.detail = action.payload.detail;
       });
       builder
       .addCase(forgotPassword.pending, (state) => {
@@ -128,10 +130,11 @@ const accountSlice = createSlice({
       })
       .addCase(forgotPassword.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.detail = action.payload.detail;
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload.error;
+        state.detail = action.payload.detail;
       });
       builder
       .addCase(validateResetPassword.pending, (state) => {
@@ -139,10 +142,11 @@ const accountSlice = createSlice({
       })
       .addCase(validateResetPassword.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.detail = action.payload.detail;
       })
       .addCase(validateResetPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload.error;
+        state.detail = action.payload.detail;
       });
       builder
       .addCase(resetPassword.pending, (state) => {
@@ -150,10 +154,11 @@ const accountSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.detail = action.payload.detail;
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload.error;
+        state.detail = action.payload.detail;
       });
   },
 });

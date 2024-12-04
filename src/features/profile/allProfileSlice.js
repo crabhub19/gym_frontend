@@ -24,7 +24,7 @@ const allProfileSlice = createSlice({
       anotherUserProfile:null,
       data: [],
       status: 'idle',
-      error: null,
+      detail: null,
     },
     reducers: {
       fetchAnotherUserProfile: (state, action) => {
@@ -45,10 +45,11 @@ const allProfileSlice = createSlice({
         .addCase(fetchAllProfile.fulfilled, (state, action) => {
           state.status = 'succeeded';
           state.data = action.payload;
+          state.detail = action.payload.detail;
         })
         .addCase(fetchAllProfile.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;
+          state.detail = action.payload.detail;
       })
     },
   });

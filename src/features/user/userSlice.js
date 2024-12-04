@@ -20,7 +20,7 @@ const userSlice = createSlice({
     initialState: {
       data: null,
       status: 'idle',
-      error: null,
+      detail: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -34,7 +34,7 @@ const userSlice = createSlice({
         })
         .addCase(changePassword.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;
+          state.detail = action.payload.detail;
         });
       }
     });

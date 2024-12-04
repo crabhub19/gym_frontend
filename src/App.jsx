@@ -177,7 +177,7 @@ function App() {
       <Toaster
         toastOptions={{
           className:
-            "md:py-24 py-12 text-2xl shadow-2xl flex justify-center rounded-sm",
+            "md:py-24 py-12 text-xl 2xl:text-2xl shadow-2xl flex justify-center rounded-sm max-w-full",
         }}
         richColors
         theme={`${isDarkMode ? "dark" : "light"}`}

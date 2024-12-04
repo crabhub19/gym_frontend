@@ -7,8 +7,8 @@ import Account from "../components/signupSteps/Account";
 import Payment from "../components/signupSteps/Payment";
 import Complete from "../components/signupSteps/Complete";
 import Information from "../components/signupSteps/Information";
-import { useDispatch, useSelector } from "react-redux";
-import { register, loginUser } from "../features/account/accountSlice";
+import { useDispatch } from "react-redux";
+import { register } from "../features/account/accountSlice";
 import { addTransaction } from "../features/transaction/transactionSlice";
 export default function Register() {
   const navigate = useNavigate();
@@ -121,9 +121,9 @@ export default function Register() {
             transaction_id: formData.transaction_id,
             amount: formData.amount
           }
-          dispatch(addTransaction(transactionData));
           toast.success("we have sent you a varification email");
           navigate("/");
+          dispatch(addTransaction(transactionData));
           setFormData({
             email: "",
             password: "",
@@ -135,9 +135,11 @@ export default function Register() {
             transaction_id: "",
             amount: "",
           })
+          localStorage.removeItem("formData");
           return true
         }else if (register.rejected.match(resultAction)) {
-          toast.error("something went wrong");
+          toast.error(resultAction.payload?.detail || "something went wrong");
+          setEmail(false);
           return false
         }
       });

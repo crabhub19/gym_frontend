@@ -62,7 +62,7 @@ const profileSlice = createSlice({
     initialState: {
       data: null,
       status: 'idle',
-      error: null,
+      detail: null,
     },
     reducers: {
       updateProfileData: (state, action) => {
@@ -80,7 +80,7 @@ const profileSlice = createSlice({
         })
         .addCase(fetchUserProfile.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;
+          state.detail = action.payload.detail;
         });
 
       builder
@@ -93,7 +93,7 @@ const profileSlice = createSlice({
         })
         .addCase(updateUserProfile.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;
+          state.detail = action.payload.detail;
         });
 
       builder
@@ -106,7 +106,7 @@ const profileSlice = createSlice({
         })
         .addCase(deleteUserProfile.rejected, (state, action) => {
           state.status = 'failed';
-          state.error = action.payload.detail;
+          state.detail = action.payload.detail;
         });
     },
   });
