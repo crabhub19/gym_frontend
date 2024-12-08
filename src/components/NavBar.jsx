@@ -14,6 +14,7 @@ export default function NavBar(pros) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const [scrollProgressBar, setScrollProgressBar] = useState(0);
   const pathLocation = useLocation().pathname;
   let aditionalNavigation = localStorage.getItem("token")
     ? [
@@ -53,6 +54,12 @@ export default function NavBar(pros) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const windowHeight = document.documentElement.clientHeight;
+      const scrollPercentage = (scrollY / (scrollHeight - windowHeight)) * 100;
+
+      setScrollProgressBar(scrollPercentage);
+      
       if (scrollY < 400) {
         setIsSticky(false);
       } else {
@@ -67,6 +74,10 @@ export default function NavBar(pros) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
+
+
 
   const scrollToContractUs = async (event) => {
     event.preventDefault();
@@ -83,9 +94,15 @@ export default function NavBar(pros) {
       className={`w-full shadow-md z-10 ${
         isSticky
           ? "bg-gradient-main-to-dark text-white fixed"
-          : "bg-transparent absolute"
+          : "absolute"
       }`}
     >
+      <div className="w-full h-1 flex justify-center">
+        <div
+          className="bg-yellow h-1"
+          style={{ width: `${scrollProgressBar}%` }}
+        ></div>
+      </div>
       <nav
         aria-label="Global"
         className={`mx-auto lg:px-0 md:px-4 px-2 flex max-w-7xl items-center justify-between ${

@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <main
         id="home"
-        className="min-h-screen bg-home-page-image bg-fixed bg-cover bg-top"
+        className="min-h-screen bg-home-page-image bg-fixed bg-cover bg-top overflow-hidden"
       >
         <div className="flex flex-col justify-center  min-h-[900px] pl-4 sm:pl-12 md:pl-28 gap-5">
           <h1

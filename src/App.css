@@ -15,7 +15,7 @@ body{
   @apply w-0 h-0
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-theme border-0
+  @apply bg-theme
 }
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-blue
@@ -24,7 +24,7 @@ body{
   @apply bg-green
 }
 ::-webkit-scrollbar-track {
-  @apply rounded-full absolute bg-dark
+  @apply rounded-full bg-gray-dark
 }
 ::-webkit-scrollbar-track:active {
   @apply bg-theme
