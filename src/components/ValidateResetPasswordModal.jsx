@@ -44,7 +44,8 @@ export default function ValidateResetPasswordModal(props) {
                         placeholder="type code"
                         name="uuid_code"
                         onChange={handleOnChangeResetPasswordData}
-                        minLength={6}
+                        minLength={4}
+                        maxLength={6}
                         required
                       />
                       <div className="absolute left-4 inset-y-0 flex items-center">

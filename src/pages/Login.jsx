@@ -75,7 +75,8 @@ export default function Login() {
 
 
 
-  const clickForgotPassword = () => {
+  const clickForgotPassword = (e) => {
+    e.preventDefault();
     if (!credentials.username) {
       toast.error("You have to enter email.");
       return;

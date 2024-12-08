@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React from 'react'
 export default function Account(props) {
   const {formData,handleChange,email,password,retypePassword} = props
   return (
