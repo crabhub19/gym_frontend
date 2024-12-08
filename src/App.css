@@ -1,16 +1,36 @@
 body{
   @apply dark:bg-dark text-gray-dark  dark:text-white
 }
-/* Hide scrollbar for all elements in WebKit-based browsers (Chrome, Safari) */
-*::-webkit-scrollbar {
-  display: none;
+
+* {
+  @apply font-lato transition ease-out duration-500;
 }
 
-/* Hide scrollbar for all elements in Firefox */
-* {
-  scrollbar-width: none; /* Firefox */
-  @apply font-lato transition ease-out duration-500;
+/* scroll bar */
 
+::-webkit-scrollbar {
+  @apply w-1
+}
+::-webkit-scrollbar-button {
+  @apply w-0 h-0
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-theme border-0
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue
+}
+::-webkit-scrollbar-thumb:active {
+  @apply bg-green
+}
+::-webkit-scrollbar-track {
+  @apply rounded-full absolute bg-dark
+}
+::-webkit-scrollbar-track:active {
+  @apply bg-theme
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .display-none{
