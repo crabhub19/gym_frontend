@@ -1,32 +1,34 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
+import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
+import { useSelector } from "react-redux";
 import logo from "../assets/image/builtIn/gym.png";
 import lightLogo from "../assets/image/builtIn/gym-light.png";
+import profilePicture from '../assets/image/builtIn/profile_picture.png';
 
 export default function NavBar(pros) {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+  const userProfile = useSelector((state) => state.profile.data);
   let { isDarkMode } = pros;
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [scrollProgressBar, setScrollProgressBar] = useState(0);
   const pathLocation = useLocation().pathname;
-  let aditionalNavigation = localStorage.getItem("token")
+  let additionalNavigation = localStorage.getItem("token")
     ? [
         {
-          name: "Profile",
-          to: "/profile",
-          current: pathLocation === "/profile" ? true : false,
+          name: "messenger",
+          to: "/messenger",
+          current: pathLocation === "/messenger" ? true : false,
         },
         {
-          name: "logout",
-          to: "/logout",
-          current: pathLocation === "/logout" ? true : false,
+          name: "Explore",
+          to: "/explore",
+          current: pathLocation === "/explore" ? true : false,
         },
       ]
     : [
@@ -48,8 +50,34 @@ export default function NavBar(pros) {
       to: "/team",
       current: pathLocation === "/team" ? true : false,
     },
-    ...aditionalNavigation,
+    ...additionalNavigation,
   ];
+
+  //TODO: profile menu
+  const profileMenuItem = [
+    {
+      name: "Profile",
+      to: "/profile",
+      current: pathLocation === "/profile" ? true : false,
+    },
+    {
+      name: "Update Profile",
+      to: "profile/update-profile",
+      current: pathLocation === "profile/update-profile" ? true : false,
+    },
+    {
+      name: "AddPost",
+      to: "/addPost",
+      current: pathLocation === "/addPost" ? true : false,
+    },
+    {
+      name: "logout",
+      to: "/logout",
+      current: pathLocation === "/logout" ? true : false,
+    },
+  ]
+
+
   //  scroll to top
   useEffect(() => {
     const handleScroll = () => {
@@ -99,13 +127,13 @@ export default function NavBar(pros) {
     >
       <div className="w-full h-1 flex justify-center">
         <div
-          className="bg-yellow h-1"
+          className="bg-theme h-1:"
           style={{ width: `${scrollProgressBar}%` }}
         ></div>
       </div>
       <nav
         aria-label="Global"
-        className={`mx-auto lg:px-0 md:px-4 px-2 flex max-w-7xl items-center justify-between ${
+        className={`mx-auto md:px-8 px-2 flex max-w-7xl items-center justify-between ${
           isSticky ? " py-1 2xl:py-6" : "py-6"
         }`}
       >
@@ -159,7 +187,7 @@ export default function NavBar(pros) {
           </button>
         </div>
         <div
-          className={`hidden lg:flex lg:gap-x-12 font-oswald text-lg font-semibold ${
+          className={`hidden lg:justify-end lg:flex lg:gap-x-12 font-oswald text-lg font-semibold ${
             pathLocation === "/" ? "text-white" : ""
           }`}
         >
@@ -180,10 +208,47 @@ export default function NavBar(pros) {
             </NavLink>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        
+        <div className="hidden w-auto ml-16 lg:flex lg:justify-center">
+        {localStorage.getItem("token") ? (
+          <>
+          {/* Profile dropdown */}
+          <Menu as="div" className="relative ml-3">
+              <div>
+                <MenuButton className="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-dark">
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    alt=""
+                    src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
+                    className="size-12 rounded-full"
+                  />
+                </MenuButton>
+              </div>
+              <MenuItems
+                transition
+                className="absolute right-0 z-10 bg-white dark:bg-dark mt-2 w-48 origin-top-right rounded-md py-1 shadow-2xl drop-shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in text-dark dark:text-white"
+              >
+                {profileMenuItem.map((item) => (
+                  <MenuItem key={item.name}>
+                    <Link
+                      to={item.to}
+                      className="block px-4 py-2 text-sm data-[focus]:bg-gray data-[focus]:outline-none"
+                    >
+                      {item.name}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </MenuItems>
+            </Menu>
+          </>
+        ):
+          <>
           <a onClick={scrollToContractUs} className="btn">
             Contact Us <span aria-hidden="true">&rarr;</span>
           </a>
+          </>
+        }
         </div>
       </nav>
       <Dialog

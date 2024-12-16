@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import React, { useEffect,useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../features/profile/profileSlice';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 import { useNavigate } from 'react-router-dom';
+import { Mosaic } from 'react-loading-indicators';
 export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,7 +17,15 @@ export default function Profile() {
   }, [dispatch,userProfileStatus]);
   return (
     <>
- <div className="min-h-screen flex flex-col pt-28">
+    {userProfileStatus === "loading" ? (
+      <>
+      <section className='h-screen w-full flex justify-center items-center'>
+      <Mosaic color={["#c20505", "#343a40", "#ff1313", "#d3dce6"]} size="large" text="fetching..."/>
+      </section>
+      </>
+    ):(
+      <>
+       <div className="min-h-screen flex flex-col pt-28">
     <section id="profile" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
       <div className="md:w-1/2">
         <h1 data-aos="zoom-out" className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">{userProfile?.account?.user?.first_name} {userProfile?.account?.user?.last_name}'s Profile</h1>
@@ -28,7 +37,7 @@ export default function Profile() {
         </div>
       </div>
       <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
-        <img data-aos="flip-right" src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
+        <img data-aos="flip-right" src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full object-cover object-center shadow-2xl"/>
       </div>
     </section>
 
@@ -147,6 +156,9 @@ export default function Profile() {
     </section>
 
   </div>
+      </>
+    )}
+
     </>
   )
 }

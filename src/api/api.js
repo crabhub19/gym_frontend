@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = import.meta.env.VITE_API_URL;
 // Create an Axios instance
 const api = axios.create({
-  baseURL: url, // Replace with your Django backend URL
+  baseURL: url,
   headers: {
     'Content-Type': 'application/json',
   },

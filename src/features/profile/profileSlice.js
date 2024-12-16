@@ -7,22 +7,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchUserProfile = createAsyncThunk(
     'profile/fetchUserProfile',
     async (_, { rejectWithValue,dispatch }) => {
-      dispatch(setLoading(true));
       try {
         const response = await api.get("/account/profile/me");          
         return response.data;
           
         } catch (error) {
           return rejectWithValue(error.response.data);
-        }finally { dispatch(setLoading(false)); }    
+        }  
   }     
 );
 
 // Async thunk to update user profile
 export const updateUserProfile = createAsyncThunk(
   'profile/updateUserProfile',
-  async (profileData, { rejectWithValue, dispatch }) => {
-    dispatch(setLoading(false));
+  async (profileData, { rejectWithValue }) => {
     try {
       const response = await api.patch('/account/profile/me/', profileData,{
         headers: {
@@ -32,8 +30,6 @@ export const updateUserProfile = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'An error occurred while updating the profile.');
-    } finally {
-      dispatch(setLoading(false));
     }
   }
 );

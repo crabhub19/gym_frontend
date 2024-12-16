@@ -1,10 +1,11 @@
 import { useState, useEffect, Suspense, lazy } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import "./App.css";
 import { Toaster } from "sonner";
 import { fetchAllProfile } from "./features/profile/allProfileSlice";
+import { fetchUserProfile } from "./features/profile/profileSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
@@ -14,7 +15,10 @@ import Theme from "./components/Theme";
 import Loading from "./components/Loading";
 import Logout from "./components/Logout";
 import Team from "./pages/Team";
+import Messenger from "./pages/Messenger";
 import { ThreeDot } from "react-loading-indicators";
+import Explore from "./pages/Explore";
+import AddPost from "./pages/AddPost";
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
@@ -25,8 +29,10 @@ function App() {
   //dispatch
   const dispatch = useDispatch();
   const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
+  const userProfileStatus = useSelector((state) => state.profile.status);
   //navigation
   const navigate = useNavigate();
+  const location = useLocation();
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -40,6 +46,9 @@ function App() {
       delay: 0,
     });
 
+    if (userProfileStatus === "idle" && localStorage.getItem("token")) {
+      dispatch(fetchUserProfile());
+    }
     if (fetchAllProfileStatus === "idle") {
       dispatch(fetchAllProfile());
     }
@@ -61,6 +70,9 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [navigate]);
+
+  // Determine if Footer should be shown
+  const showFooter = location.pathname !== "/messenger";
   return (
     <>
       {/* navbar */}
@@ -69,6 +81,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="team" element={<Team />} />
+        <Route path="messenger" element={<Messenger/>} />
+        <Route path="explore" element={<Explore/>} />
+        <Route path="addPost" element={<AddPost/>} />
+
+        
         <Route
               path="team/anotherUserProfile"
               element={
@@ -166,13 +183,13 @@ function App() {
         )}
       </Routes>
       
-      <Suspense fallback={
+        { showFooter && <Suspense fallback={
         <div className="flex justify-center items-center py-20"
         ><ThreeDot variant="bounce" color="#ff0000" size="large" text="loading Footer "  />
         </div>
       }>
         <Footer />
-      </Suspense>
+      </Suspense>}
       {/* toaster popup */}
       <Toaster
         toastOptions={{

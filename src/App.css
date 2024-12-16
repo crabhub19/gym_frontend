@@ -9,7 +9,7 @@ body{
 /* scroll bar */
 
 ::-webkit-scrollbar {
-  @apply w-1
+  @apply w-1 h-1
 }
 ::-webkit-scrollbar-button {
   @apply w-0 h-0
