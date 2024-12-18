@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllProfile, fetchAnotherUserProfile } from "../features/profile/allProfileSlice";
+import { fetchAnotherUserProfile } from "../features/profile/allProfileSlice";
 import { useDispatch, useSelector } from "react-redux";
 import profilePicture from "../assets/image/builtIn/profile_picture.png";
 import { ThreeDot } from "react-loading-indicators";
@@ -10,11 +10,7 @@ export default function Team() {
   const allProfile = useSelector((state) => state.allProfile.data);
   const allProfileStatus = useSelector((state) => state.allProfile.status);
 
-  useEffect(() => {
-    if (allProfileStatus === "idle") {
-      dispatch(fetchAllProfile());
-    }
-  }, [dispatch, allProfileStatus]);
+
   const managers = allProfile.filter(
     (profile) => profile?.account?.role === "manager"
   );
@@ -59,8 +55,8 @@ export default function Team() {
         
         {managers?.length !== 0 && (
           <div>
-            <h3 data-aos="flip-up" className="text-4xl font-bold text-center mb-8">Managers</h3>
-        <hr data-aos="slide-right" className="w-full mb-8" />
+            <h3 data-aos="fade-up" className="text-4xl font-bold text-center mb-8">Managers</h3>
+        <hr className="w-full mb-8" />
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 sm:pt-0 sm:pb-8 py-8">
           {managers?.map((profile) => (
             <div
@@ -99,8 +95,8 @@ export default function Team() {
         )}
         {trainers?.length !== 0 && (
           <div>
-            <h3 className="text-4xl font-bold text-center mb-8">Trainers</h3>
-        <hr data-aos="slide-right" className="w-full mb-8" />
+            <h3 data-aos="fade-up" className="text-4xl font-bold text-center mb-8">Trainers</h3>
+        <hr className="w-full mb-8" />
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 sm:pt-0 sm:pb-8 py-8">
           {trainers?.map((profile) => (
             <div
@@ -139,8 +135,8 @@ export default function Team() {
         )}
         {members?.length !== 0 && (
           <div>
-            <h3 data-aos="flip-up" className="text-4xl font-bold text-center mb-8">Members</h3>
-        <hr data-aos="slide-right" className="w-full mb-8" />
+            <h3 data-aos="fade-up" className="text-4xl font-bold text-center mb-8">Members</h3>
+        <hr className="w-full mb-8" />
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 sm:pt-0 sm:pb-8 py-8">
           {members?.map((profile) => (
             <div

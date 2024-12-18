@@ -2,27 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchUserProfile,
   updateUserProfile,
   deleteUserProfile,
   updateProfileData,
 } from "../features/profile/profileSlice";
 import { changePassword } from "../features/user/userSlice";
-import { fetchAllProfile } from "../features/profile/allProfileSlice";
 import DeleteModal from "../components/DeleteModal";
 import profilePicture from "../assets/image/builtIn/profile_picture.png";
 import { toast } from "sonner";
 import ChangePasswordModal from "../components/ChangePasswordModal";
+import { Mosaic } from "react-loading-indicators";
 export default function UpdateProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //fetch profile
   const userProfileStatus  = useSelector((state) => state.profile.status);
-  useEffect(() => {
-    if (userProfileStatus === 'idle'){
-      dispatch(fetchUserProfile())
-    }
-  }, [dispatch,userProfileStatus]);
+
 
   //update profile Data
   const userProfile = useSelector((state) => state.profile.data);
@@ -127,11 +122,10 @@ export default function UpdateProfile() {
       };
 
       // Dispatch the updateUserProfile action with the form data
-      navigate(-1);
+      navigate("/profile");
       toast.success("Profile updated successfully");
       await dispatch(updateProfileData(updatedProfileData));
       await dispatch(updateUserProfile(formData));
-      dispatch(fetchAllProfile());
     } catch (error) {
       toast.error("Error updating profile");
     }
@@ -139,7 +133,8 @@ export default function UpdateProfile() {
 
   //delete user profile
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const handleDelete = async () => {
+  const handleDelete = async (e) => {
+    e.preventDefault();
     setDeleteModalOpen(false);
     await dispatch(deleteUserProfile());
     dispatch(logoutUser());
@@ -165,7 +160,8 @@ export default function UpdateProfile() {
     const { name, value } = e.target;
     setChangePasswordData({ ...changePasswordData, [name]: value });
   }
-  const handleChangePassword = async () => {
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
     if (changePasswordData.new_password !== changePasswordData.confirm_password) {
       toast.error("Passwords do not match");
       setConfirmPassword(true);
@@ -208,6 +204,12 @@ export default function UpdateProfile() {
         confirmPassword={confirmPassword}
         changePasswordStatus={changePasswordStatus}
       />
+      {userProfileStatus === "loading" ? (
+      <section className='h-screen w-full flex justify-center items-center'>
+      <Mosaic color={["#c20505", "#343a40", "#ff1313", "#d3dce6"]} size="large" text="fetching..."/>
+      </section>
+    ):(
+      <>
       <section className="pt-32 lg:px-12 px-4 md:px-8">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col">
@@ -629,6 +631,8 @@ export default function UpdateProfile() {
           </div>
         </div>
       </section>
+      </>
+      )}
     </>
   );
 }

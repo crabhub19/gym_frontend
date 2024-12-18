@@ -1,20 +1,13 @@
 import { Link } from 'react-router-dom'
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserProfile } from '../features/profile/profileSlice';
+import React from 'react';
+import {  useSelector } from 'react-redux';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 import { useNavigate } from 'react-router-dom';
 import { Mosaic } from 'react-loading-indicators';
 export default function Profile() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const userProfile  = useSelector((state) => state.profile.data);
   const userProfileStatus  = useSelector((state) => state.profile.status);
-  useEffect(() => {
-    if (userProfileStatus === 'idle'){
-      dispatch(fetchUserProfile())
-    }
-  }, [dispatch,userProfileStatus]);
   return (
     <>
     {userProfileStatus === "loading" ? (

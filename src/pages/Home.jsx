@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { ThreeDot } from "react-loading-indicators";
+import { Riple } from "react-loading-indicators";
 // import About from "./About";
 const About = React.lazy(() => import("./About"));
 const ContractUs = React.lazy(() => import("./ContractUs"));
@@ -48,11 +48,10 @@ export default function Home() {
       <Suspense
         fallback={
           <div className="flex justify-center items-center py-20">
-            <ThreeDot
+            <Riple
               variant="bounce"
               color="#ff0000"
               size="medium"
-              text="loading about "
               textColor=""
             />
           </div>
@@ -63,11 +62,10 @@ export default function Home() {
       <Suspense
         fallback={
           <div className="flex justify-center items-center py-20">
-            <ThreeDot
+            <Riple
               variant="bounce"
               color="#ff0000"
               size="medium"
-              text="loading about "
               textColor=""
             />
           </div>

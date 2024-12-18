@@ -37,6 +37,9 @@ const postSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+          .addCase(fetchPosts.pending, (state) => {
+            state.status = 'loading';
+          })
           .addCase(fetchPosts.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'succeeded';
@@ -44,6 +47,9 @@ const postSlice = createSlice({
           .addCase(fetchPosts.rejected, (state, action) => {
             state.status = 'failed';
             state.detail = action.payload;
+          })
+          .addCase(addPost.pending, (state) => {
+            state.status = 'loading';
           })
           .addCase(addPost.fulfilled, (state, action) => {
             state.data.push(action.payload);

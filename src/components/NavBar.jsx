@@ -20,11 +20,11 @@ export default function NavBar(pros) {
   const pathLocation = useLocation().pathname;
   let additionalNavigation = localStorage.getItem("token")
     ? [
-        {
-          name: "messenger",
-          to: "/messenger",
-          current: pathLocation === "/messenger" ? true : false,
-        },
+        // {
+        //   name: "messenger",
+        //   to: "/messenger",
+        //   current: pathLocation === "/messenger" ? true : false,
+        // },
         {
           name: "Explore",
           to: "/explore",
@@ -221,7 +221,7 @@ export default function NavBar(pros) {
                   <img
                     alt=""
                     src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
-                    className="size-12 rounded-full"
+                    className="size-12 rounded-full object-cover"
                   />
                 </MenuButton>
               </div>
@@ -278,6 +278,37 @@ export default function NavBar(pros) {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-black dark:divide-white">
+              <div className="flex justify-end py-6">
+                {/* Profile dropdown */}
+          <Menu as="div" className="relative">
+              <div>
+                <MenuButton className="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-dark">
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    alt=""
+                    src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
+                    className="size-12 rounded-full object-cover"
+                  />
+                </MenuButton>
+              </div>
+              <MenuItems
+                transition
+                className="absolute right-0 z-10 bg-white dark:bg-dark mt-2 w-48 origin-top-right rounded-md py-1 shadow-2xl drop-shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in text-dark dark:text-white"
+              >
+                {profileMenuItem.map((item) => (
+                  <MenuItem key={item.name}>
+                    <Link
+                      to={item.to}
+                      className="block px-4 py-2 text-sm data-[focus]:bg-gray data-[focus]:outline-none"
+                    >
+                      {item.name}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </MenuItems>
+            </Menu>
+              </div>
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <NavLink

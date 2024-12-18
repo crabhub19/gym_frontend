@@ -6,6 +6,7 @@ import "./App.css";
 import { Toaster } from "sonner";
 import { fetchAllProfile } from "./features/profile/allProfileSlice";
 import { fetchUserProfile } from "./features/profile/profileSlice";
+import { fetchPosts } from "./features/post/postSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
@@ -14,52 +15,55 @@ import Top from "./components/Top";
 import Theme from "./components/Theme";
 import Loading from "./components/Loading";
 import Logout from "./components/Logout";
-import Team from "./pages/Team";
-import Messenger from "./pages/Messenger";
-import { ThreeDot } from "react-loading-indicators";
-import Explore from "./pages/Explore";
-import AddPost from "./pages/AddPost";
+// import Messenger from "./pages/Messenger";
+import { Riple } from "react-loading-indicators";
+import Footer from "./components/Footer";
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
-const Footer = lazy(() => import("./components/Footer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile"));
+const Team = lazy(() => import("./pages/Team"));
 const AnotherUserProfile = lazy(() => import("./pages/AnotherUserProfile"));
+const AddPost = lazy(() => import("./pages/AddPost"));
+const Explore = lazy(() => import("./pages/Explore"));
 function App() {
   //dispatch
   const dispatch = useDispatch();
-  const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
   const userProfileStatus = useSelector((state) => state.profile.status);
+  const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
+  const postStatus = useSelector((state) => state.post.status);
   //navigation
   const navigate = useNavigate();
   const location = useLocation();
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // AOS for animation
-    AOS.init({
-      // offset: 120,
-      duration: 600,
-      easing: "ease-out-sine",
-      delay: 0,
-    });
-
-    if (userProfileStatus === "idle" && localStorage.getItem("token")) {
+    if (token && userProfileStatus === "idle") {
       dispatch(fetchUserProfile());
     }
+  },[])
+
+  useEffect(() => {
     if (fetchAllProfileStatus === "idle") {
       dispatch(fetchAllProfile());
     }
+    if (!token) return;
+    if (postStatus === "idle") {
+      dispatch(fetchPosts());
+    }
   }, []);
-
- 
-
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      easing: "ease-out-sine",
+    });
+    return () => AOS.refresh();
+  },[])
 
   // authinticate
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (!token) {
       localStorage.removeItem("token");
       navigate("/");
@@ -80,23 +84,37 @@ function App() {
       {/* all routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="team" element={<Team />} />
-        <Route path="messenger" element={<Messenger/>} />
-        <Route path="explore" element={<Explore/>} />
-        <Route path="addPost" element={<AddPost/>} />
-
-        
+        {/* <Route path="messenger" element={<Messenger/>} /> */}
+        <Route
+              path="team"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        
+                      />
+                    </div>
+                  }
+                >
+                  <Team />
+                </Suspense>
+              }
+            />
         <Route
               path="team/anotherUserProfile"
               element={
                 <Suspense
                   fallback={
                     <div className="flex justify-center items-center py-48">
-                      <ThreeDot
+                      <Riple
                         variant="bounce"
                         color="#ff0000"
                         size="large"
-                        text="loading Register Page"
+                        
                         
                       />
                     </div>
@@ -111,11 +129,11 @@ function App() {
             <Route path="profile" element={<Suspense
                   fallback={
                     <div className="flex justify-center items-center py-48">
-                      <ThreeDot
+                      <Riple
                         variant="bounce"
                         color="#ff0000"
                         size="large"
-                        text="loading Register Page"
+                        
                         textColor=""
                       />
                     </div>
@@ -126,17 +144,47 @@ function App() {
             <Route path="profile/update-profile" element={<Suspense
                   fallback={
                     <div className="flex justify-center items-center py-48">
-                      <ThreeDot
+                      <Riple
                         variant="bounce"
                         color="#ff0000"
                         size="large"
-                        text="loading Register Page"
+                        
                         textColor=""
                       />
                     </div>
                   }
                 >
                   <UpdateProfile />
+                </Suspense>} />
+            <Route path="addPost" element={<Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <AddPost />
+                </Suspense>} />
+            <Route path="explore" element={<Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <Explore />
                 </Suspense>} />
             <Route path="logout" element={<Logout />} />
           </>
@@ -146,11 +194,10 @@ function App() {
                <Suspense
                fallback={
                  <div className="flex justify-center items-center py-44">
-                   <ThreeDot
+                   <Riple
                      variant="bounce"
                      color="#ff0000"
                      size="large"
-                     text="loading Login Page "
                      
                    />
                  </div>
@@ -165,11 +212,11 @@ function App() {
                 <Suspense
                   fallback={
                     <div className="flex justify-center items-center py-48">
-                      <ThreeDot
+                      <Riple
                         variant="bounce"
                         color="#ff0000"
                         size="large"
-                        text="loading Register Page"
+                        
                         
                       />
                     </div>
@@ -183,13 +230,8 @@ function App() {
         )}
       </Routes>
       
-        { showFooter && <Suspense fallback={
-        <div className="flex justify-center items-center py-20"
-        ><ThreeDot variant="bounce" color="#ff0000" size="large" text="loading Footer "  />
-        </div>
-      }>
-        <Footer />
-      </Suspense>}
+      <Footer />
+
       {/* toaster popup */}
       <Toaster
         toastOptions={{

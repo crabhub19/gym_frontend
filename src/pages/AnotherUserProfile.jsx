@@ -3,9 +3,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProfile } from '../features/profile/allProfileSlice';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
-import { useNavigate } from 'react-router-dom';
+import { ThreeDot } from 'react-loading-indicators';
 export default function AnotherUserProfile() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const allProfileStatus  = useSelector((state) => state.allProfile.status);
   const anotherUserProfileData  = useSelector((state) => state.allProfile.anotherUserProfile);
@@ -16,6 +15,18 @@ export default function AnotherUserProfile() {
   }, [dispatch, allProfileStatus]);
   return (
     <>
+    {allProfileStatus === "loading" ? (
+      <section className='h-screen w-full flex justify-center items-center'>
+      <ThreeDot
+              variant="bounce"
+              color="#ff0000"
+              size="large"
+              text="loading..."
+              textColor=""
+            />
+      </section>
+    ):(
+      
  <div className="min-h-screen flex flex-col pt-28">
     <section id="profile" className="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-12  drop-shadow-2xl shadow-md">
       <div className="md:w-1/2">
@@ -145,6 +156,8 @@ export default function AnotherUserProfile() {
     </section>
 
   </div>
+    )
+    }
     </>
   )
 }

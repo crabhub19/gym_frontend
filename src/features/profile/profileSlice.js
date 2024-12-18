@@ -58,6 +58,7 @@ const profileSlice = createSlice({
     initialState: {
       data: null,
       status: 'idle',
+      updateStatus: 'idle', // Separate status for updates
       detail: null,
     },
     reducers: {
@@ -81,14 +82,14 @@ const profileSlice = createSlice({
 
       builder
         .addCase(updateUserProfile.pending, (state) => {
-          state.status = 'loading';
+          state.updateStatus = 'loading';
         })
         .addCase(updateUserProfile.fulfilled, (state, action) => {
-          state.status = 'succeeded';
+          state.updateStatus = 'succeeded';
           state.data = action.payload;
         })
         .addCase(updateUserProfile.rejected, (state, action) => {
-          state.status = 'failed';
+          state.updateStatus = 'failed';
           state.detail = action.payload.detail;
         });
 
