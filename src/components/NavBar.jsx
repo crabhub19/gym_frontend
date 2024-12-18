@@ -12,6 +12,7 @@ export default function NavBar(pros) {
     return classes.filter(Boolean).join(" ");
   }
   const userProfile = useSelector((state) => state.profile.data);
+  const userProfileStatus = useSelector((state) => state.profile.status);
   let { isDarkMode } = pros;
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -69,6 +70,11 @@ export default function NavBar(pros) {
       name: "AddPost",
       to: "/addPost",
       current: pathLocation === "/addPost" ? true : false,
+    },
+    {
+      name: "MakePayment",
+      to: "/makePayment",
+      current: pathLocation === "/makePayment" ? true : false,
     },
     {
       name: "logout",
@@ -221,7 +227,7 @@ export default function NavBar(pros) {
                   <img
                     alt=""
                     src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
-                    className="size-12 rounded-full object-cover"
+                    className={`size-12 rounded-full object-cover ${userProfileStatus === "loading" ? "animate-spin" : ""}`}
                   />
                 </MenuButton>
               </div>
@@ -278,17 +284,19 @@ export default function NavBar(pros) {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-black dark:divide-white">
-              <div className="flex justify-end py-6">
+              <div className="flex items-center gap-8 justify-end py-6">
                 {/* Profile dropdown */}
+  
           <Menu as="div" className="relative">
               <div>
-                <MenuButton className="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-dark">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
+                <MenuButton className="relative flex items-center gap-8 ">
+                  <div className="text-2xl font-bold cursor-pointer">
+                  Profile Menu
+                  </div>
                   <img
                     alt=""
                     src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
-                    className="size-12 rounded-full object-cover"
+                    className="size-12  object-cover rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-dark "
                   />
                 </MenuButton>
               </div>

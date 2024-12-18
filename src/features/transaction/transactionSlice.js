@@ -17,12 +17,10 @@ export const addTransaction = createAsyncThunk(
   async (transactionData, { rejectWithValue }) => {
     try {
       const response = await api.post("/account/transactions/", transactionData);
-      console.log(response.data);
       return response.data;
       
     } catch (error) {
       console.log(error);
-      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -47,6 +45,19 @@ const transactionSlice = createSlice({
           state.detail = action.payload.detail;
         })
         .addCase(fetchTransactions.rejected, (state, action) => {
+          state.status = "failed";
+          state.detail = action.payload.detail;
+        });
+      builder
+        .addCase(addTransaction.pending, (state) => {
+          state.status = "loading";
+        })
+        .addCase(addTransaction.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.data.push(action.payload);
+          state.detail = action.payload.detail;
+        })
+        .addCase(addTransaction.rejected, (state, action) => {
           state.status = "failed";
           state.detail = action.payload.detail;
         });

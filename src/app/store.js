@@ -7,6 +7,7 @@ import allProfileReducer from '../features/profile/allProfileSlice'
 import userReducer from '../features/user/userSlice'
 import postReducer from '../features/post/postSlice'
 import postLikeReducer from '../features/post/postLikeSlice'
+import transactionReducer from '../features/transaction/transactionSlice'
 export const store = configureStore({
   reducer: {
     loading: loadingReducer,
@@ -16,7 +17,8 @@ export const store = configureStore({
     allProfile: allProfileReducer,
     user:userReducer,
     post:postReducer,
-    postLike:postLikeReducer
+    postLike:postLikeReducer,
+    transaction:transactionReducer
   },
 });
 

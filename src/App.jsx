@@ -26,6 +26,7 @@ const Team = lazy(() => import("./pages/Team"));
 const AnotherUserProfile = lazy(() => import("./pages/AnotherUserProfile"));
 const AddPost = lazy(() => import("./pages/AddPost"));
 const Explore = lazy(() => import("./pages/Explore"));
+const MakePayment = lazy(() => import("./pages/MakePayment"));
 function App() {
   //dispatch
   const dispatch = useDispatch();
@@ -185,6 +186,21 @@ function App() {
                   }
                 >
                   <Explore />
+                </Suspense>} />
+            <Route path="makePayment" element={<Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        
+                        textColor=""
+                      />
+                    </div>
+                  }
+                >
+                  <MakePayment />
                 </Suspense>} />
             <Route path="logout" element={<Logout />} />
           </>

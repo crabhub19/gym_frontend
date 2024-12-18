@@ -1,33 +1,71 @@
-import React, { useState,useEffect } from "react";
-import PaymentMethod from "./PaymentMethod";
-import { useDispatch, useSelector } from "react-redux";
-import { viewPaymentMethod } from "../../features/paymentMethod/paymentMethodSlice";
+import React, { useEffect, useState } from 'react'
+import PaymentMethod from '../pages/signupSteps/PaymentMethod'
+import { viewPaymentMethod } from '../features/paymentMethod/paymentMethodSlice';
+import { addTransaction } from '../features/transaction/transactionSlice';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useSelector, useDispatch } from 'react-redux'
 import { BlinkBlur } from "react-loading-indicators";
-export default function Payment(props) {
-  let {formData,handleChange,transaction_number,transaction_id,amount} = props
-
-  const paymentMethodData = useSelector((state) => state.paymentMethod.data);
-  const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
-  const dispatch = useDispatch();
-  const [expandedDivs, setExpandedDivs] = useState(null);
-  useEffect(() => {
-    if(paymentMethodStatus === "idle"){
-      dispatch(viewPaymentMethod());
-    }
-  }, [dispatch,paymentMethodStatus]);
-
-// Update expandedDivs when paymentMethodData is available
-useEffect(() => {
-  if (paymentMethodData.length > 0) {
-    setExpandedDivs(paymentMethodData[0]?.id); // Set the ID of the first element
-  }
-}, [paymentMethodData]); // Re-run whenever paymentMethodData changes
-  // Function to toggle the expansion for a specific div
-  const toggleExpand = (id) => {
+export default function MakePayment() {
+    const paymentMethodData = useSelector((state) => state.paymentMethod.data);
+    const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
+    const transactionStatus = useSelector((state) => state.transaction.status);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [expandedDivs, setExpandedDivs] = useState(null);
+    const [transaction_number, setTransactionNumber] = useState(true);
+    const [transaction_id, setTransactionId] = useState(true);
+    const [amount, setAmount] = useState(true);
+    const [transactionData, setTransactionData] = useState({
+        transaction_number: "",
+        transaction_id: "",
+        amount: "",
+    });
+    useEffect(() => {
+      if(paymentMethodStatus === "idle"){
+        dispatch(viewPaymentMethod());
+      }
+    }, [dispatch,paymentMethodStatus]);
+    useEffect(() => {
+      if (paymentMethodData.length > 0) {
+        setExpandedDivs(paymentMethodData[0]?.id); // Set the ID of the first element
+      }
+    }, [paymentMethodData]); // Re-run whenever paymentMethodData changes
+      // Function to toggle the expansion for a specific div
+    const toggleExpand = (id) => {
     setExpandedDivs(id);
-  };
+    };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setTransactionData((prev) => ({
+          ...prev,
+          [name]: value,
+        }))
+    }
+    const handleAddTransaction = async (e) => {
+      e.preventDefault();
+      try {
+        const result = await dispatch(addTransaction(transactionData));
+        
+        if (addTransaction.fulfilled.match(result)) {
+          setTransactionData({ transaction_number: "", transaction_id: "", amount: "" });
+          toast.success("Transaction completed successfully");
+          navigate(-1);
+        } else if (addTransaction.rejected.match(result)) {
+          // Handle the error returned by rejectWithValue
+          toast.error(result.payload?.detail || "transaction_id is  not unique");
+        }
+      } catch (error) {
+        // This will handle any unexpected exceptions
+        toast.error("Something went wrong");
+      }
+    };
+    
+    
   return (
-    <div className="shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark">
+    <>
+        <section className='min-h-screen w-full flex justify-center items-center pt-28'>
+        <div className="shadow-2xl drop-shadow-2xl rounded-sm sm:max-w-sm w-full dark:bg-dark">
       <h1 className="text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato">
         Payment
       </h1>
@@ -52,7 +90,6 @@ useEffect(() => {
             placeholder="Tel: 01739362582"
             name="transaction_number"
             onChange={handleChange}
-            value={formData.transaction_number}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">
@@ -75,7 +112,6 @@ useEffect(() => {
             placeholder="Transaction ID: 17c34ds1"
             name="transaction_id"
             onChange={handleChange}
-            value={formData.transaction_id}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">
@@ -104,7 +140,6 @@ useEffect(() => {
             placeholder="Amount: Our Join Fee 3000 Taka"
             name="amount"
             onChange={handleChange}
-            value={formData.amount}
             required
           />
           <div className="absolute left-1 inset-y-0 flex items-center">
@@ -117,13 +152,27 @@ useEffect(() => {
             </svg>
           </div>
         </div>
+        { transactionStatus === "loading" ? (
+          <>
+            <button className='bg-theme hover:bg-blue flex justify-center  duration-1000 text-white w-full p-2 rounded-sm'>Send Money
+            <svg className="animate-spin bg-white h-5 w-5 ml-3 rounded-sm"></svg>
+            </button>
+          </>
+        ):(
+          <>        
+          <button onClick={handleAddTransaction} className='bg-theme hover:bg-blue  duration-1000 text-white w-full p-2 rounded-sm'>Send Money</button>
+          </>
+        )}
+
       </div>
       <div className="px-4 text-center pb-4">
         <blockquote className="font-oswald">
-          <b>Note: </b>We  charge 900 Taka per
+          <b>Note: </b>We charge 900 Taka per
           month.
         </blockquote>
       </div>
     </div>
-  );
+        </section>
+    </>
+  )
 }

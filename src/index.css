@@ -14,27 +14,27 @@
 /* import font */
 @font-face {
   font-family: Oswald;
-  src: url(./assets/font/Oswald-VariableFont_wght.ttf);
+  src: url(./assets/font/Oswald-VariableFont_wght.ttf)format('woff2');
 }
 @font-face {
   font-family: Chococooky;
-  src: url(./assets/font/Chococooky.ttf);
+  src: url(./assets/font/Chococooky.ttf)format('woff2');
 }
 @font-face {
   font-family: RubikWetPaint;
-  src: url(./assets/font/RubikWetPaint-Regular.ttf);
+  src: url(./assets/font/RubikWetPaint-Regular.ttf)format('woff2');
 }
 @font-face {
   font-family: Lato;
-  src: url(./assets/font/Lato-Black.ttf);
+  src: url(./assets/font/Lato-Black.ttf)format('woff2');
 }
 @font-face {
   font-family: Lovelo;
-  src: url(./assets/font/Lovelo-LineLight.otf);
+  src: url(./assets/font/Lovelo-LineLight.otf)format('woff2');
 }
 @font-face {
   font-family: RocknRollOne;
-  src: url(./assets/font/RocknRollOne-Regular.ttf);
+  src: url(./assets/font/RocknRollOne-Regular.ttf)format('woff2');
 }
 @layer components{
   
