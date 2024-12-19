@@ -27,8 +27,8 @@ export default function Explore() {
                 </div>
 
                 {post.post_image_url && (
-                <div className=' shrink-0 flex justify-center lg:max-w-sm'>
-                  <img className='w-full lg:w-full sm:max-w-sm h-full object-cover' src={post.post_image_url} alt="" />
+                <div className=' shrink-0 flex justify-center lg:max-w-sm overflow-hidden max-h-[600px]'>
+                  <img className='w-full lg:w-full sm:max-w-sm  object-center object-cover' src={post.post_image_url} alt="" />
                 </div>
                 )}
                 <div className='flex-1 p-2 flex flex-col justify-between'>

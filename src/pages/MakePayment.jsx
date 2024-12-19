@@ -45,8 +45,26 @@ export default function MakePayment() {
     const handleAddTransaction = async (e) => {
       e.preventDefault();
       try {
+        if (!transactionData.transaction_number || !transactionData.transaction_id || !transactionData.amount) {
+          toast.error("Please fill all the fields");
+          if (!transactionData.transaction_number) {
+            setTransactionNumber(false);
+          }else {
+            setTransactionNumber(true);
+          }
+          if (!transactionData.transaction_id) {
+            setTransactionId(false);
+          }else {
+            setTransactionId(true);
+          }
+          if (!transactionData.amount) {
+            setAmount(false);
+          }else {
+            setAmount(true);
+          }
+          return;
+        }
         const result = await dispatch(addTransaction(transactionData));
-        
         if (addTransaction.fulfilled.match(result)) {
           setTransactionData({ transaction_number: "", transaction_id: "", amount: "" });
           toast.success("Transaction completed successfully");

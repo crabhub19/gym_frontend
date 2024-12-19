@@ -166,7 +166,6 @@ export default function NavBar(pros) {
         </div>
         <div className="flex lg:flex-1">
           <span className="sr-only">GYM</span>
-          <a href="#" className="-m-1.5 p-1.5">
             <img
               alt=""
               src={
@@ -180,7 +179,6 @@ export default function NavBar(pros) {
               }
               className="h-16 w-auto"
             />
-          </a>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -265,14 +263,12 @@ export default function NavBar(pros) {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 dark:bg-dark">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
                 alt=""
                 src={isDarkMode ? logo : lightLogo}
                 className="h-16 w-auto"
               />
-            </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
@@ -307,6 +303,7 @@ export default function NavBar(pros) {
                 {profileMenuItem.map((item) => (
                   <MenuItem key={item.name}>
                     <Link
+                      onClick={() => setMobileMenuOpen(false)}
                       to={item.to}
                       className="block px-4 py-2 text-sm data-[focus]:bg-gray data-[focus]:outline-none"
                     >
