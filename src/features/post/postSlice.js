@@ -17,10 +17,9 @@ export const addPost = createAsyncThunk(
     'post/addPost',
     async ({postData,config}, { rejectWithValue }) => {
       try {
-        console.log("config",config);
         const response = await api.post("/account/post/", postData,config);
-        
         return response.data;
+        
       } catch (error) {
         return rejectWithValue(error.response.data);
       }
@@ -34,7 +33,16 @@ const postSlice = createSlice({
       status: 'idle',
       detail: null,
     },
-    reducers: {},
+    reducers: {
+      updatePostLikeStatus: (state, action) => {
+        const  id  = action.payload;
+        const post = state.data.find((p) => p.id === id);
+        if (post) {
+          post.is_liked = !post.is_liked;
+          post.like_count += post.is_liked ? 1 : -1;
+        }
+      },
+    },
     extraReducers: (builder) => {
         builder
           .addCase(fetchPosts.pending, (state) => {
@@ -61,5 +69,5 @@ const postSlice = createSlice({
           })
       },
   });
-
+export const { updatePostLikeStatus } = postSlice.actions;
 export default postSlice.reducer;

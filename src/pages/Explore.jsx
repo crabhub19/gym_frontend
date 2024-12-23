@@ -1,12 +1,19 @@
 import React,{useEffect} from 'react'
 // import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon } from '@heroicons/react/16/solid'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { ThreeDot } from 'react-loading-indicators';
+import { addOrRemovePostLike } from '../features/post/postLikeSlice';
+import { updatePostLikeStatus } from '../features/post/postSlice';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 export default function Explore() {
   const postStatus = useSelector((state) => state.post.status);
   const postData = useSelector((state) => state.post.data);
+  const dispatch = useDispatch();
+  const postLikeHandle = async(postId) => {
+    await dispatch(updatePostLikeStatus(postId));
+    await dispatch(addOrRemovePostLike(postId));
+  };
   return (
     <>
         {postStatus === "loading" ? (
@@ -38,7 +45,7 @@ export default function Explore() {
                     <div>
                       <hr className='mt-4'/>
                       <div className='flex'>
-                        <HeartIcon className='w-12 h-12 hover:scale-110 cursor-pointer'/>
+                        <HeartIcon onClick={() => postLikeHandle(post.id)} className={`${post.is_liked?"text-red":""} w-12 h-12 hover:scale-110 cursor-pointer`}/>
                         <i className='ml-1 font-RubikWetPaint text-2xl'>{post.like_count}</i>
                       </div>
                     </div>
