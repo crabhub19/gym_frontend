@@ -2,16 +2,16 @@ import api from '../../api/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk(
-    'post/fetchPosts',
-    async (_, { rejectWithValue }) => {
-      try {
-        const response = await api.get("/account/post/");
-        return response.data;
-      } catch (error) {
-        return rejectWithValue(error.response.data);
-      }
+  'post/fetchPosts',
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/account/post/?page=${page}`);
+      return response.data; // Assuming API returns { results: [], count: total_count, next: next_url, previous: prev_url }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
-  );
+  }
+);
 
 export const addPost = createAsyncThunk(
     'post/addPost',
@@ -32,6 +32,9 @@ const postSlice = createSlice({
       data: [],
       status: 'idle',
       detail: null,
+      next: null, // URL for the next page
+      previous: null, // URL for the previous page
+      count: 0, // Total number of posts
     },
     reducers: {
       updatePostLikeStatus: (state, action) => {
@@ -49,7 +52,13 @@ const postSlice = createSlice({
             state.status = 'loading';
           })
           .addCase(fetchPosts.fulfilled, (state, action) => {
-            state.data = action.payload;
+          const newPosts = action.payload.results.filter(
+              (newPost) => !state.data.some((existingPost) => existingPost.id === newPost.id)
+          );
+            state.data = [...state.data,...newPosts]; // Append new posts
+            state.next = action.payload.next; // Next page URL
+            state.previous = action.payload.previous; // Previous page URL
+            state.count = action.payload.count; // Total posts count
             state.status = 'succeeded';
           })
           .addCase(fetchPosts.rejected, (state, action) => {

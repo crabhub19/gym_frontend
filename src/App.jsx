@@ -18,6 +18,7 @@ import Logout from "./components/Logout";
 // import Messenger from "./pages/Messenger";
 import { Riple } from "react-loading-indicators";
 import Footer from "./components/Footer";
+import { fetchUserPosts } from "./features/post/userPostSlice";
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
@@ -53,6 +54,9 @@ function App() {
     if (!token) return;
     if (postStatus === "idle") {
       dispatch(fetchPosts());
+    }
+    if (userProfileStatus === "idle") {
+      dispatch(fetchUserPosts());
     }
   }, []);
   useEffect(() => {

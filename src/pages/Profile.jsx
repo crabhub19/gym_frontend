@@ -1,20 +1,31 @@
 import { Link } from 'react-router-dom'
-import React from 'react';
+import React, { useEffect } from 'react';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
-import { Mosaic,ThreeDot } from 'react-loading-indicators';
+import { Mosaic, BlinkBlur } from 'react-loading-indicators';
 import { HeartIcon } from '@heroicons/react/16/solid'
 import { useSelector, useDispatch } from 'react-redux'
 import { addOrRemovePostLike } from '../features/post/postLikeSlice';
-import { updatePostLikeStatus } from '../features/post/postSlice';
+import { updateUserPostLikeStatus } from '../features/post/userPostSlice';
+import { fetchUserPosts } from '../features/post/userPostSlice';
+import InfiniteScroll from 'react-infinite-scroll-component';
 export default function Profile() {
 
   const userProfile  = useSelector((state) => state.profile.data);
   const userProfileStatus  = useSelector((state) => state.profile.status);
-  const postStatus = useSelector((state) => state.post.status);
-  const postData = useSelector((state) => state.post.data);
+    const {status:userPostStatus, data:userPostData,next:postNext,count:postCount} = useSelector((state) => state.userPost);
+  
   const dispatch = useDispatch();
+  const loadMorePosts = async() => {
+    if (postNext) {
+      const nextPage = new URL(postNext).searchParams.get('page');
+      console.log(nextPage);
+      await dispatch(fetchUserPosts(nextPage));
+    }
+  };
   const postLikeHandle = async(postId) => {
-    await dispatch(updatePostLikeStatus(postId));
+    console.log("liked",postId);
+    
+    await dispatch(updateUserPostLikeStatus(postId));
     await dispatch(addOrRemovePostLike(postId));
   };
   return (
@@ -160,16 +171,30 @@ export default function Profile() {
   </div>
       </>
     )}
-    {postStatus === "loading" ? (
-          <>
-            <section className='h-screen w-full flex justify-center items-center pt-32'>
-            <ThreeDot variant="bounce" color="#c20505" size="large" text="loading..."/>
-            </section>
-          </>
-        ):(
-          <>
-        <section className='min-h-screen pt-32'>
-          {postData.filter((post) => post.author.id == userProfile?.id).map((post) => (
+    {userPostStatus === "loading" && postCount === 0 ? (
+        <section className='h-screen w-full flex justify-center items-center'>
+        <BlinkBlur color={["#c20505", "#343a40", "#ff1313", "#d3dce6"]} size="large" text="fetching..."/>
+        </section>
+      ):(
+        <>
+                <section className='min-h-screen pt-32'>
+        <InfiniteScroll
+      dataLength={userPostData.length} // This is the length of the posts loaded so far
+      next={loadMorePosts} // Function to load more data
+      hasMore={!!postNext} // Boolean indicating whether more data is available
+      scrollThreshold={.1} // Trigger next fetch when 50% scrolled
+      loader={
+        <div className="flex justify-center items-center py-4">
+          <BlinkBlur variant="bounce" color="#c20505" size="large" text="Loading..." />
+        </div>
+      }
+      endMessage={
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          <b>No more posts to show!</b>
+        </p>
+      }
+    >
+          {userPostData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
                 <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-normal lg:justify-center'>
                     <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
@@ -196,9 +221,11 @@ export default function Profile() {
                 </div>
             </div>
           ))}
+        </InfiniteScroll>
+          {postNext && <button onClick={loadMorePosts} className='block mx-auto bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-2 px-4 rounded'>Load More</button>}
         </section>
-          </>
-        )}
+        </>
+      )}
     </>
   )
 }
