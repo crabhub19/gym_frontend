@@ -13,6 +13,18 @@ export const fetchUserPosts = createAsyncThunk(
     }
 );
 
+export const deleteUserPost = createAsyncThunk(
+    "userPost/deleteUserPost",
+    async (postId, { rejectWithValue }) => {
+        try {
+            const response = await api.delete(`/account/post/my_posts/?post_id=${postId}`);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const userPostSlice = createSlice({
     name: "userPost",
     initialState: {
@@ -32,6 +44,10 @@ const userPostSlice = createSlice({
               post.like_count += post.is_liked ? 1 : -1;
             }
           },
+        deleteUserPostOptimal: (state, action) => {
+            const postId = action.payload;
+            state.data = state.data.filter((post) => post.id !== postId);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -54,6 +70,6 @@ const userPostSlice = createSlice({
             });
     },
 });
-export const { updateUserPostLikeStatus } = userPostSlice.actions;
+export const { updateUserPostLikeStatus,deleteUserPostOptimal } = userPostSlice.actions;
 export default userPostSlice.reducer;
     

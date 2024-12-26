@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom'
 import React, { useEffect } from 'react';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 import { Mosaic, BlinkBlur } from 'react-loading-indicators';
-import { HeartIcon } from '@heroicons/react/16/solid'
+import { HeartIcon,ShieldExclamationIcon,TrashIcon } from '@heroicons/react/16/solid'
 import { useSelector, useDispatch } from 'react-redux'
 import { addOrRemovePostLike } from '../features/post/postLikeSlice';
 import { updateUserPostLikeStatus } from '../features/post/userPostSlice';
-import { fetchUserPosts } from '../features/post/userPostSlice';
+import { fetchUserPosts,deleteUserPost,deleteUserPostOptimal } from '../features/post/userPostSlice';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 export default function Profile() {
 
@@ -18,10 +19,15 @@ export default function Profile() {
   const loadMorePosts = async() => {
     if (postNext) {
       const nextPage = new URL(postNext).searchParams.get('page');
-      console.log(nextPage);
       await dispatch(fetchUserPosts(nextPage));
     }
   };
+  const handleDeletePost = async(postId) => {
+    console.log("deleted",postId);
+    
+    await dispatch(deleteUserPostOptimal(postId));
+    await dispatch(deleteUserPost(postId));
+  }
   const postLikeHandle = async(postId) => {
     console.log("liked",postId);
     
@@ -45,12 +51,16 @@ export default function Profile() {
         <p data-aos="zoom-out" className="text-lg sm:text-xl md:text-2xl font-medium">
           {userProfile?.bio}
         </p>
+        <b className='font-extrabold font-lovelo'>{userProfile?.account?.role}</b>
         <div data-aos="zoom-out" className='flex gap-4 mt-4'>
           <Link to="update-profile" className='mt-4 border-2 border-dark dark:border-white px-6 py-2 rounded-sm hover:bg-dark hover:text-white dark:hover:bg-white dark:hover:text-dark flex w-fit'><span><svg className='w-6 h-6 mr-2' fill='currentColor' id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"><path d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm14.122,9.879c-1.134-1.134-3.11-1.134-4.243,0l-7.879,7.878v4.243h4.243l7.878-7.878c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-7.292,7.293h-1.415v-1.415l7.293-7.292c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Zm-9.778,1.293H5c-1.654,0-3,1.346-3,3v5H0v-5c0-2.757,2.243-5,5-5H13c.289,0,.568,.038,.844,.085l-1.915,1.915Z"/></svg></span><span>EDIT</span></Link>
         </div>
       </div>
-      <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
+      <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0 relative">
         <img data-aos="flip-right" src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full object-cover object-center shadow-2xl"/>
+        {!userProfile?.account?.active && 
+        <ShieldExclamationIcon className='absolute top-0 right-0 w-10 h-10 text-red'/>
+        }
       </div>
     </section>
 
@@ -196,10 +206,11 @@ export default function Profile() {
     >
           {userPostData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
-                <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-normal lg:justify-center'>
+                <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-between lg:justify-center'>
                     <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
                     <h1 className='text-3xl ml-2'>{post.author.account.user.first_name}</h1>
-                    <q className='hidden lg:block'>{post.author.bio}</q>
+                    <p className=''>{new Date(post.created_at).toISOString().split('T')[0]}</p>
+                    <TrashIcon onClick={() => handleDeletePost(post.id)} className='text-red h-10 w-10 hover:scale-110 cursor-pointer'></TrashIcon>
                 </div>
 
                 {post.post_image_url && (

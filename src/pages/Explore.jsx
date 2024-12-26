@@ -15,7 +15,6 @@ export default function Explore() {
   const loadMorePosts = async() => {
     if (postNext) {
       const nextPage = new URL(postNext).searchParams.get('page');
-      console.log(nextPage);
       await dispatch(fetchPosts(nextPage));
       
     }
@@ -51,10 +50,12 @@ export default function Explore() {
     >
           {postData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
-                <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-normal lg:justify-center'>
+                <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-between lg:justify-center'>
                     <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
                     <h1 className='text-3xl ml-2'>{post.author.account.user.first_name}</h1>
-                    <q className='hidden lg:block'>{post.author.bio}</q>
+                    <p className=''>{new Date(post.created_at).toISOString().split('T')[0]}</p>
+                    {post.author.account.role === "trainer" || post.author.account.role === "manager"
+                       && (<p className='hidden lg:block'>{post.author.account.role}</p>)}
                 </div>
 
                 {post.post_image_url && (

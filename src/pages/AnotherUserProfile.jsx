@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProfile } from '../features/profile/allProfileSlice';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 import { ThreeDot } from 'react-loading-indicators';
+import {ShieldExclamationIcon} from '@heroicons/react/16/solid'
 export default function AnotherUserProfile() {
   const dispatch = useDispatch();
   const allProfileStatus  = useSelector((state) => state.allProfile.status);
@@ -34,10 +35,15 @@ export default function AnotherUserProfile() {
         <p data-aos="zoom-out" className="text-lg sm:text-xl md:text-2xl font-medium">
           {anotherUserProfileData?.bio}
         </p>
+        <b className='font-extrabold font-lovelo'>{anotherUserProfileData?.account?.role}</b>
+
 
       </div>
-      <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0">
+      <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0 relative">
         <img data-aos="flip-right" src={anotherUserProfileData?.uploaded_profile_picture ? anotherUserProfileData?.uploaded_profile_picture : anotherUserProfileData?.profile_picture_url ? anotherUserProfileData.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-indigo-500 object-cover object-center shadow-2xl"/>
+        {!anotherUserProfileData?.account?.active && 
+        <ShieldExclamationIcon className='absolute top-0 right-0 w-10 h-10'/>
+        }
       </div>
     </section>
 
