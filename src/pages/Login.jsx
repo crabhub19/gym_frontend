@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser, forgotPassword, validateResetPassword,resetPassword } from "../features/account/accountSlice";
 import { fetchUserProfile } from "../features/profile/profileSlice";
 import { fetchPosts } from "../features/post/postSlice";
+import { fetchAllProfile } from "../features/profile/allProfileSlice";
+import { fetchUserPosts } from "../features/post/userPostSlice";
 import { toast } from "sonner";
 import ForgotPasswordModal from "../components/ForgotPasswordModal";
 import ValidateResetPasswordModal from "../components/ValidateResetPasswordModal";
@@ -34,7 +36,9 @@ export default function Login() {
         setCredentials({ username: "", password: "" });
         toast.success("Login successfully");
         dispatch(fetchUserProfile());
+        dispatch(fetchUserPosts());
         dispatch(fetchPosts());
+        dispatch(fetchAllProfile());
         navigate("/profile");
       }else if (loginUser.rejected.match(resultAction)) {
         if (resultAction.payload.target === "password") {
