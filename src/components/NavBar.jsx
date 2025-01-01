@@ -282,7 +282,8 @@ export default function NavBar(pros) {
             <div className="-my-6 divide-y divide-black dark:divide-white">
               <div className="flex items-center gap-8 justify-end py-6">
                 {/* Profile dropdown */}
-  
+        {localStorage.getItem("token") && (
+          
           <Menu as="div" className="relative">
               <div>
                 <MenuButton className="relative flex items-center gap-8 ">
@@ -313,6 +314,8 @@ export default function NavBar(pros) {
                 ))}
               </MenuItems>
             </Menu>
+        )}
+        
               </div>
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
