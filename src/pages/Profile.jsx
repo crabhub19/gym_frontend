@@ -23,12 +23,10 @@ export default function Profile() {
     }
   };
   const handleDeletePost = async(postId) => {
-    await dispatch(deleteUserPostOptimal(postId));
+    dispatch(deleteUserPostOptimal(postId));
     await dispatch(deleteUserPost(postId));
   }
   const postLikeHandle = async(postId) => {
-    console.log("liked",postId);
-    
     await dispatch(updateUserPostLikeStatus(postId));
     await dispatch(addOrRemovePostLike(postId));
   };
