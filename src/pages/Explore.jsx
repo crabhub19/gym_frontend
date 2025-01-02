@@ -1,10 +1,12 @@
 import React,{useEffect} from 'react'
 // import { HeartIcon } from '@heroicons/react/24/outline'
-import { HeartIcon } from '@heroicons/react/16/solid'
-import { useSelector, useDispatch } from 'react-redux'
+import { HeartIcon } from '@heroicons/react/16/solid';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { BlinkBlur } from 'react-loading-indicators';
 import { addOrRemovePostLike } from '../features/post/postLikeSlice';
 import { updatePostLikeStatus,fetchPosts } from '../features/post/postSlice';
+import { fetchAnotherUserProfile } from '../features/profile/allProfileSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 export default function Explore() {
@@ -12,6 +14,7 @@ export default function Explore() {
   // const postData = useSelector((state) => state.post.data);
   const {status:postStatus, data:postData,next:postNext,count:postCount} = useSelector((state) => state.post);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loadMorePosts = async() => {
     if (postNext) {
       const nextPage = new URL(postNext).searchParams.get('page');
@@ -22,6 +25,13 @@ export default function Explore() {
   const postLikeHandle = async(postId) => {
     await dispatch(updatePostLikeStatus(postId));
     await dispatch(addOrRemovePostLike(postId));
+  };
+
+  const handleAnotherUserProfile = async (id) => {
+    dispatch(fetchAnotherUserProfile(id));
+    navigate("/team/anotherUserProfile");
+    console.log("click",id);
+    
   };
   return (
     <>
@@ -51,7 +61,7 @@ export default function Explore() {
           {postData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
                 <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-between lg:justify-center'>
-                    <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
+                    <img onClick={() => handleAnotherUserProfile(post.author.id)}  className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full cursor-pointer' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
                     <h1 className='text-3xl ml-2'>{post.author.account.user.first_name}</h1>
                     <p className=''>{new Date(post.created_at).toISOString().split('T')[0]}</p>
                     {post.author.account.role === "trainer" || post.author.account.role === "manager"
@@ -60,7 +70,7 @@ export default function Explore() {
 
                 {post.post_image_url && (
                 <div className=' shrink-0 flex justify-center lg:max-w-sm overflow-hidden max-h-[600px]'>
-                  <img className='w-full lg:w-full sm:max-w-sm  object-center object-cover' src={post.post_image_url} alt="" />
+                  <img className='w-full lg:w-full sm:max-w-sm  object-center object-cover cursor-pointer' src={post.post_image_url} alt="" />
                 </div>
                 )}
                 <div className='flex-1 p-2 flex flex-col justify-between'>

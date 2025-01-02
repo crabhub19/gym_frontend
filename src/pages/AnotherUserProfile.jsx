@@ -1,19 +1,12 @@
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllProfile } from '../features/profile/allProfileSlice';
+import {  useSelector } from 'react-redux';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 import { ThreeDot } from 'react-loading-indicators';
 import {ShieldExclamationIcon} from '@heroicons/react/16/solid'
 export default function AnotherUserProfile() {
-  const dispatch = useDispatch();
   const allProfileStatus  = useSelector((state) => state.allProfile.status);
   const anotherUserProfileData  = useSelector((state) => state.allProfile.anotherUserProfile);
-  useEffect(() => {
-    if (allProfileStatus === "idle") {
-      dispatch(fetchAllProfile());
-    }
-  }, [dispatch, allProfileStatus]);
   return (
     <>
     {allProfileStatus === "loading" ? (

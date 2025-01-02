@@ -23,8 +23,6 @@ export default function Profile() {
     }
   };
   const handleDeletePost = async(postId) => {
-    console.log("deleted",postId);
-    
     await dispatch(deleteUserPostOptimal(postId));
     await dispatch(deleteUserPost(postId));
   }
