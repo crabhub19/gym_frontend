@@ -30,8 +30,6 @@ export default function Explore() {
   const handleAnotherUserProfile = async (id) => {
     dispatch(fetchAnotherUserProfile(id));
     navigate("/team/anotherUserProfile");
-    console.log("click",id);
-    
   };
   return (
     <>
