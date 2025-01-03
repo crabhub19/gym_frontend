@@ -121,8 +121,8 @@ export default function Register() {
             transaction_id: formData.transaction_id,
             amount: formData.amount
           }
-          toast.success("we have sent you a varification email");
-          navigate("/");
+          toast.info("we have sent you a verification link to your email");
+          navigate("/emailVerification");
           dispatch(addTransaction(transactionData));
           setFormData({
             email: "",

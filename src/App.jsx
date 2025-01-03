@@ -20,6 +20,7 @@ import { Riple } from "react-loading-indicators";
 import Footer from "./components/Footer";
 import { fetchUserPosts } from "./features/post/userPostSlice";
 import { logoutUser } from "./features/account/accountSlice";
+import {jwtDecode} from "jwt-decode"; // Install using npm install jwt-decode
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
@@ -29,6 +30,7 @@ const AnotherUserProfile = lazy(() => import("./pages/AnotherUserProfile"));
 const AddPost = lazy(() => import("./pages/AddPost"));
 const Explore = lazy(() => import("./pages/Explore"));
 const MakePayment = lazy(() => import("./pages/MakePayment"));
+const EmailVerification = lazy(() => import("./pages/staticPage/EmailVerification"));
 function App() {
   //dispatch
   const dispatch = useDispatch();
@@ -41,13 +43,24 @@ function App() {
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
   const token = localStorage.getItem("token");
-    // authinticate
+
+  // authenticate
+  const isTokenValid = (token) => {
+    if (!token) return false;
+    try {
+      const { exp } = jwtDecode(token); // Decode token
+      return exp * 1000 > Date.now(); // Check if token is still valid
+    } catch (error) {
+      return false; // Token is invalid
+    }
+  };
+
   useEffect(() => {
-    if (!token) {
+    if (!isTokenValid(token)) {
       dispatch(logoutUser());
       navigate("/");
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (token && userProfileStatus === "idle") {
@@ -127,6 +140,26 @@ function App() {
                   }
                 >
                   <AnotherUserProfile />
+                </Suspense>
+              }
+            />
+        <Route
+              path="emailVerification"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        variant="bounce"
+                        color="#ff0000"
+                        size="large"
+                        
+                        
+                      />
+                    </div>
+                  }
+                >
+                 <EmailVerification/>
                 </Suspense>
               }
             />
