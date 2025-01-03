@@ -68,7 +68,7 @@ export default function Explore() {
 
                 {post.post_image_url && (
                 <div className=' shrink-0 flex justify-center lg:max-w-sm overflow-hidden max-h-[600px]'>
-                  <img className='w-full lg:w-full sm:max-w-sm  object-center object-cover cursor-pointer' src={post.post_image_url} alt="" />
+                  <img className='w-full min-w-96  lg:w-full sm:max-w-sm  object-center object-cover cursor-pointer' src={post.post_image_url} alt="" />
                 </div>
                 )}
                 <div className='flex-1 p-2 flex flex-col justify-between'>
