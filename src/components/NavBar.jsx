@@ -293,7 +293,7 @@ export default function NavBar(pros) {
                   <img
                     alt=""
                     src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture}
-                    className="size-12  object-cover rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-dark "
+                    className={`size-12 rounded-full object-cover ${userProfileStatus === "loading" ? "animate-spin" : ""}`}
                   />
                 </MenuButton>
               </div>

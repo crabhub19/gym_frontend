@@ -19,6 +19,7 @@ import Logout from "./components/Logout";
 import { Riple } from "react-loading-indicators";
 import Footer from "./components/Footer";
 import { fetchUserPosts } from "./features/post/userPostSlice";
+import { logoutUser } from "./features/account/accountSlice";
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
@@ -40,6 +41,13 @@ function App() {
   // enable and disable darkmode
   const [isDarkMode, setIsDarkMode] = useState(false);
   const token = localStorage.getItem("token");
+    // authinticate
+  useEffect(() => {
+    if (!token) {
+      dispatch(logoutUser());
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (token && userProfileStatus === "idle") {
@@ -67,13 +75,6 @@ function App() {
     return () => AOS.refresh();
   },[])
 
-  // authinticate
-  useEffect(() => {
-    if (!token) {
-      localStorage.removeItem("token");
-      navigate("/");
-    }
-  }, []);
 
   //scroll to top
   useEffect(() => {
