@@ -39,7 +39,7 @@ export default function Explore() {
         </section>
       ):(
         <>
-                <section className='min-h-screen pt-32'>
+        <section className='min-h-screen pt-32'>
         <InfiniteScroll
       dataLength={postData.length} // This is the length of the posts loaded so far
       next={loadMorePosts} // Function to load more data
@@ -47,11 +47,11 @@ export default function Explore() {
       scrollThreshold={.1} // Trigger next fetch when 50% scrolled
       loader={
         <div className="flex justify-center items-center py-4">
-          <BlinkBlur variant="bounce" color="#c20505" size="large" text="Loading..." />
+          <BlinkBlur color="#c20505" size="large" text="Loading..." />
         </div>
       }
       endMessage={
-        <p style={{ textAlign: "center", marginTop: "20px" }}>
+        <p className='text-center mt-5'>
           <b>No more posts to show!</b>
         </p>
       }

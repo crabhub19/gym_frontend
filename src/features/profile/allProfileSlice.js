@@ -6,9 +6,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // Async thunk to fetch user profile
 export const fetchAllProfile = createAsyncThunk(
     'allProfile/fetchAllProfile',
-    async (_, { rejectWithValue }) => {  
+    async (page = 1, { rejectWithValue }) => {  
       try {
-        const response = await api.get("/account/profile");          
+        const response = await api.get(`/account/profile/?page=${page}`);          
         return response.data;
           
         } catch (error) {
@@ -25,6 +25,9 @@ const allProfileSlice = createSlice({
       data: [],
       status: 'idle',
       detail: null,
+      next: null, // URL for the next page
+      previous: null, // URL for the previous page
+      count: 0, // Total number of posts
     },
     reducers: {
       fetchAnotherUserProfile: (state, action) => {
@@ -43,8 +46,14 @@ const allProfileSlice = createSlice({
           state.status = 'loading';
         })
         .addCase(fetchAllProfile.fulfilled, (state, action) => {
+          const newProfiles = action.payload.results.filter(
+            (profile) => !state.data.some((user) => user.id === profile.id)
+          );
+          state.data = [...state.data, ...newProfiles];
+          state.next = action.payload.next;
+          state.previous = action.payload.previous;
+          state.count = action.payload.count;
           state.status = 'succeeded';
-          state.data = action.payload;
           state.detail = action.payload.detail;
         })
         .addCase(fetchAllProfile.rejected, (state, action) => {
