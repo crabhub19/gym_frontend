@@ -460,8 +460,8 @@ export default function UpdateProfile() {
               </div>
               <div>
                 <h3 className="text-3xl font-bold py-2">Body Metrics</h3>
-                <div className="flex md:justify-start justify-center pb-2">
-                  <div className="lg:p-2 w-20">
+                <div className="flex flex-wrap justify-between md:justify-start  pb-2">
+                  <div className="lg:p-2 w-24">
                     <label htmlFor="height" className="block text-sm font-lato">
                       Height
                     </label>
@@ -469,13 +469,13 @@ export default function UpdateProfile() {
                       id="height"
                       className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 border-gray-light rounded-lg w-full outline-none`}
                       type="text"
-                      placeholder="5.8"
+                      placeholder="5.8 Feet"
                       name="height"
                       value={profileData?.height}
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="lg:p-2 w-20">
+                  <div className="lg:p-2 w-24">
                     <label htmlFor="weight" className="block text-sm font-lato">
                       Weight
                     </label>
@@ -483,13 +483,13 @@ export default function UpdateProfile() {
                       id="weight"
                       className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 border-gray-light rounded-lg w-full outline-none`}
                       type="text"
-                      placeholder="68"
+                      placeholder="68 KG"
                       name="weight"
                       value={profileData?.weight}
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="lg:p-2 w-20">
+                  <div className="lg:p-2 w-24">
                     <label htmlFor="age" className="block text-sm font-lato">
                       Age
                     </label>
@@ -497,7 +497,7 @@ export default function UpdateProfile() {
                       id="age"
                       className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 border-gray-light rounded-lg w-full outline-none`}
                       type="text"
-                      placeholder="23"
+                      placeholder="23 Years"
                       name="age"
                       value={profileData?.age}
                       onChange={handleChange}

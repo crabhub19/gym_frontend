@@ -30,6 +30,11 @@ export default function Profile() {
     await dispatch(updateUserPostLikeStatus(postId));
     await dispatch(addOrRemovePostLike(postId));
   };
+  const calculateBMI = (weight, heightFeet) => {
+    if (!weight || !heightFeet) return null; // Ensure both values are present
+    const heightMeters = heightFeet * 0.3048; // Convert feet to meters
+    return (weight / (heightMeters ** 2)).toFixed(2); // Calculate BMI
+  };
   return (
     <>
     {userProfileStatus === "loading" ? (
@@ -73,21 +78,23 @@ export default function Profile() {
   {(userProfile?.age || userProfile?.weight || userProfile?.height || userProfile?.gender) && (
     <section data-aos="fade-up" id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
-      <table className='w-full'>
+      <table className='w-full table-auto'>
         <thead>
           <tr>
-            {userProfile?.age && <th className='text-start'>Age</th>}
-            {userProfile?.weight && <th className='text-start'>Weight</th>}
-            {userProfile?.height && <th className='text-start'>Height</th>}
-            {userProfile?.gender && <th className='text-start'>Gender</th>}
+            {userProfile?.age &&    <th className=' border-r border-b pl-1'>Age</th>}
+            {userProfile?.weight && <th className=' border-r border-b pl-1'>Weight</th>}
+            {userProfile?.height && <th className=' border-r border-b pl-1'>Height</th>}
+            {(userProfile?.height && userProfile?.weight) && <th className=' border-r border-b pl-1'>BMI</th>}
+            {userProfile?.gender && <th className=' pl-1 border-b'>Gender</th>}
           </tr>
         </thead>
         <tbody>
           <tr>
-            {userProfile?.age && <td>{userProfile?.age}</td>}
-            {userProfile?.weight && <td>{userProfile?.weight}</td>}
-            {userProfile?.height && <td>{userProfile?.height}</td>}
-            {userProfile?.gender && <td>{userProfile?.gender}</td>}
+            {userProfile?.age &&    <td className='text-center border-r pl-1'>{userProfile?.age} Years</td>}
+            {userProfile?.weight && <td className='text-center border-r pl-1'>{userProfile?.weight} KG</td>}
+            {userProfile?.height && <td className='text-center border-r pl-1'>{userProfile?.height} Feet</td>}
+            {(userProfile?.height && userProfile?.weight) && <td className='text-center border-r pl-1'>{calculateBMI(userProfile?.weight,userProfile?.height)}</td>}
+            {userProfile?.gender && <td className='text-center pl-1'>{userProfile?.gender}</td>}
           </tr>
         </tbody>
       </table>

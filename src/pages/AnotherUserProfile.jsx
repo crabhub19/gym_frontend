@@ -7,6 +7,11 @@ import {ShieldExclamationIcon} from '@heroicons/react/16/solid'
 export default function AnotherUserProfile() {
   const allProfileStatus  = useSelector((state) => state.allProfile.status);
   const anotherUserProfileData  = useSelector((state) => state.allProfile.anotherUserProfile);
+  const calculateBMI = (weight, heightFeet) => {
+    if (!weight || !heightFeet) return null; // Ensure both values are present
+    const heightMeters = heightFeet * 0.3048; // Convert feet to meters
+    return (weight / (heightMeters ** 2)).toFixed(2); // Calculate BMI
+  };
   return (
     <>
     {allProfileStatus === "loading" ? (
@@ -53,21 +58,23 @@ export default function AnotherUserProfile() {
 {(anotherUserProfileData?.age || anotherUserProfileData?.weight || anotherUserProfileData?.height || anotherUserProfileData?.gender) && (
     <section data-aos="fade-up" id="services" className="px-6 sm:px-10 md:px-16 py-12  shadow-md">
       <h2 className=" text-3xl sm:text-4xl font-semibold mb-6">Body Metrics</h2>
-      <table className='w-full'>
+      <table className='w-full table-auto'>
         <thead>
           <tr>
-            {anotherUserProfileData?.age && <th className='text-start'>Age</th>}
-            {anotherUserProfileData?.weight && <th className='text-start'>Weight</th>}
-            {anotherUserProfileData?.height && <th className='text-start'>Height</th>}
-            {anotherUserProfileData?.gender && <th className='text-start'>Gender</th>}
+            {anotherUserProfileData?.age &&    <th className=' border-r border-b pl-1'>Age</th>}
+            {anotherUserProfileData?.weight && <th className=' border-r border-b pl-1'>Weight</th>}
+            {anotherUserProfileData?.height && <th className=' border-r border-b pl-1'>Height</th>}
+            {(anotherUserProfileData?.height && anotherUserProfileData?.weight) && <th className=' border-r border-b pl-1'>BMI</th>}
+            {anotherUserProfileData?.gender && <th className=' pl-1 border-b'>Gender</th>}
           </tr>
         </thead>
         <tbody>
           <tr>
-            {anotherUserProfileData?.age && <td>{anotherUserProfileData?.age}</td>}
-            {anotherUserProfileData?.weight && <td>{anotherUserProfileData?.weight}</td>}
-            {anotherUserProfileData?.height && <td>{anotherUserProfileData?.height}</td>}
-            {anotherUserProfileData?.gender && <td>{anotherUserProfileData?.gender}</td>}
+            {anotherUserProfileData?.age &&    <td className='text-center border-r pl-1'>{anotherUserProfileData?.age} Years</td>}
+            {anotherUserProfileData?.weight && <td className='text-center border-r pl-1'>{anotherUserProfileData?.weight} KG</td>}
+            {anotherUserProfileData?.height && <td className='text-center border-r pl-1'>{anotherUserProfileData?.height} Feet</td>}
+            {(anotherUserProfileData?.height && anotherUserProfileData?.weight) && <td className='text-center border-r pl-1'>{calculateBMI(anotherUserProfileData?.weight,anotherUserProfileData?.height)}</td>}
+            {anotherUserProfileData?.gender && <td className='text-center pl-1'>{anotherUserProfileData?.gender}</td>}
           </tr>
         </tbody>
       </table>

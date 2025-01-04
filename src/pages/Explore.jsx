@@ -27,10 +27,10 @@ export default function Explore() {
     await dispatch(addOrRemovePostLike(postId));
   };
 
-  const handleAnotherUserProfile = async (id) => {
-    dispatch(fetchAnotherUserProfile(id));
-    navigate("/team/anotherUserProfile");
-  };
+  // const handleAnotherUserProfile = async (id) => {
+  //   dispatch(fetchAnotherUserProfile(id));
+  //   navigate("/team/anotherUserProfile");
+  // };
   return (
     <>
       {postStatus === "loading" && postCount === 0 ? (
@@ -59,7 +59,7 @@ export default function Explore() {
           {postData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
                 <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-between lg:justify-center'>
-                    <img onClick={() => handleAnotherUserProfile(post.author.id)}  className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full cursor-pointer' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
+                    <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full cursor-pointer' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
                     <h1 className='text-3xl ml-2'>{post.author.account.user.first_name}</h1>
                     <p className=''>{new Date(post.created_at).toISOString().split('T')[0]}</p>
                     {post.author.account.role === "trainer" || post.author.account.role === "manager"
