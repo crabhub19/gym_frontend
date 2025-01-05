@@ -10,11 +10,14 @@ export default function Footer () {
                 <img src={logo} alt="" />
             </div>
           </div>
-          <div className="flex flex-col justify-between pt-5 pb-10 border-t border-white sm:flex-row">
+          <div className="flex flex-col md:flex-row justify-between pt-5 pb-10 border-t border-white sm:flex-row">
+            <div className="text-sm text-white border-b border-dashed border-white py-1">
+              <p>Xlorex Bishal</p>
+              <p>Founder & Creator of GYM</p>
+            </div>
             <p className="text-sm text-white">
               © Copyright 2024 gym. All rights reserved.
             </p>
-
           </div>
         </div>
       </div>

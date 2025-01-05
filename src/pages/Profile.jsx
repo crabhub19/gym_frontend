@@ -30,10 +30,13 @@ export default function Profile() {
     await dispatch(updateUserPostLikeStatus(postId));
     await dispatch(addOrRemovePostLike(postId));
   };
-  const calculateBMI = (weight, heightFeet) => {
-    if (!weight || !heightFeet) return null; // Ensure both values are present
-    const heightMeters = heightFeet * 0.3048; // Convert feet to meters
-    return (weight / (heightMeters ** 2)).toFixed(2); // Calculate BMI
+  const calculateBMI = (weight, height) => {
+    if (!weight || !height) return null;
+    const [feet, inches] = height.toString().includes('.')
+    ? height.toString().split('.').map(Number)
+    : [Number(height), 0];
+    const heightMeters = feet * 0.3048 + (inches * 0.0254);
+    return (weight / (heightMeters ** 2)).toFixed(2);
   };
   return (
     <>
