@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BlinkBlur } from 'react-loading-indicators';
 import { addOrRemovePostLike } from '../features/post/postLikeSlice';
-import { updatePostLikeStatus,fetchPosts } from '../features/post/postSlice';
-import { fetchAnotherUserProfile } from '../features/profile/allProfileSlice';
+import { updatePostLikeStatus,fetchPosts, fetchPostUserProfile } from '../features/post/postSlice';
+import { clearAnotherUserProfile, fetchAnotherUserProfile } from '../features/profile/allProfileSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import profilePicture from '../assets/image/builtIn/profile_picture.png';
 export default function Explore() {
@@ -31,6 +31,11 @@ export default function Explore() {
   //   dispatch(fetchAnotherUserProfile(id));
   //   navigate("/team/anotherUserProfile");
   // };
+  const handlePostUserProfile = async (id) => {
+    await dispatch(clearAnotherUserProfile());
+    dispatch(fetchPostUserProfile(id));
+    navigate("/anotherUserProfile");
+  }
   return (
     <>
       {postStatus === "loading" && postCount === 0 ? (
@@ -59,7 +64,7 @@ export default function Explore() {
           {postData.map((post) => (
             <div key={post.id} className='w-full lg:w-10/12 shadow-lg block lg:flex flex-col lg:flex-row mx-auto my-10'>
                 <div className='flex-1 lg:max-w-sm flex lg:flex-col items-center px-4 py-2 justify-between lg:justify-center'>
-                    <img className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full cursor-pointer' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
+                    <img onClick={() => handlePostUserProfile(post.author.id)} className='w-12 h-12 lg:w-24 lg:h-24 object-cover rounded-full cursor-pointer' src={post.author.profile_picture_url?post.author.profile_picture_url:profilePicture} alt="" />
                     <h1 className='text-3xl ml-2'>{post.author.account.user.first_name}</h1>
                     <p className=''>{new Date(post.created_at).toISOString().split('T')[0]}</p>
                     {post.author.account.role === "trainer" || post.author.account.role === "manager"
@@ -68,7 +73,9 @@ export default function Explore() {
 
                 {post.post_image_url && (
                 <div className=' shrink-0 flex justify-center lg:max-w-sm overflow-hidden max-h-[600px]'>
-                  <img className='w-full min-w-96  lg:w-full sm:max-w-sm  object-center object-cover cursor-pointer' src={post.post_image_url} alt="" />
+                  <a href={post?.post_image_url}>
+                  <img className='w-full min-w-96  lg:w-full sm:max-w-sm  object-center object-cover cursor-pointer' src={post?.post_image_url} alt=""/>
+                  </a>
                 </div>
                 )}
                 <div className='flex-1 p-2 flex flex-col justify-between'>

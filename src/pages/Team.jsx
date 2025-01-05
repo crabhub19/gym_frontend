@@ -6,6 +6,7 @@ import profilePicture from "../assets/image/builtIn/profile_picture.png";
 import { BlinkBlur, ThreeDot } from "react-loading-indicators";
 import CardOfTeam from "./CardOfTeam";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { clearPostUserProfile } from "../features/post/postSlice";
 export default function Team() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,16 +18,15 @@ export default function Team() {
   } = useSelector((state) => state.allProfile);
 
   const loadMoreProfiles = async () => {
-    console.log("enter");
-    
     if (allProfileNext) {
       const nextPage = new URL(allProfileNext).searchParams.get("page");
       await dispatch(fetchAllProfile(nextPage));
     }
   };
   const handleAnotherUserProfile = async (id) => {
+    await dispatch(clearPostUserProfile());
     dispatch(fetchAnotherUserProfile(id));
-    navigate("anotherUserProfile");
+    navigate("/anotherUserProfile");
   };
 
   return (

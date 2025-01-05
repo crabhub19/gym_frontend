@@ -29,6 +29,7 @@ export const addPost = createAsyncThunk(
 const postSlice = createSlice({  
     name: 'post',
     initialState: {
+      postUserProfile: null,
       data: [],
       status: 'idle',
       detail: null,
@@ -44,6 +45,18 @@ const postSlice = createSlice({
           post.is_liked = !post.is_liked;
           post.like_count += post.is_liked ? 1 : -1;
         }
+      },
+      fetchPostUserProfile: (state, action) => {
+        const id = action.payload;
+        const data = state.data.find((post) => post.author.id === id);
+        if (data) {
+          state.postUserProfile = data.author;
+        } else {
+          state.postUserProfile = null; // Reset if no matching post is found
+        }
+      },
+      clearPostUserProfile: (state) => {
+        state.postUserProfile = null;
       },
     },
     extraReducers: (builder) => {
@@ -78,5 +91,5 @@ const postSlice = createSlice({
           })
       },
   });
-export const { updatePostLikeStatus } = postSlice.actions;
+export const { updatePostLikeStatus, fetchPostUserProfile, clearPostUserProfile } = postSlice.actions;
 export default postSlice.reducer;

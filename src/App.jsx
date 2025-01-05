@@ -124,7 +124,7 @@ function App() {
               }
             />
         <Route
-              path="team/anotherUserProfile"
+              path="anotherUserProfile"
               element={
                 <Suspense
                   fallback={

@@ -39,6 +39,9 @@ const allProfileSlice = createSlice({
           state.anotherUserProfile = null; // Reset if no matching profile is found
         }
       },
+      clearAnotherUserProfile: (state) => {
+        state.anotherUserProfile = null;
+      },
     },
     extraReducers: (builder) => {
       builder
@@ -63,5 +66,5 @@ const allProfileSlice = createSlice({
     },
   });
 
-  export const { fetchAnotherUserProfile } = allProfileSlice.actions;
+  export const { fetchAnotherUserProfile, clearAnotherUserProfile } = allProfileSlice.actions;
   export default allProfileSlice.reducer;

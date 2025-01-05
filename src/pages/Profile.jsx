@@ -61,7 +61,9 @@ export default function Profile() {
         </div>
       </div>
       <div className="md:w-1/2 flex justify-center items-center mb-6 md:mb-0 relative">
+        <a href={userProfile?.profile_picture_url}>
         <img data-aos="flip-right" src={userProfile?.uploaded_profile_picture ? userProfile?.uploaded_profile_picture : userProfile?.profile_picture_url ? userProfile.profile_picture_url : profilePicture} alt="Profile Picture" className="w-64 h-64 sm:w-80 sm:h-80 rounded-full object-cover object-center shadow-2xl"/>
+        </a>
         {!userProfile?.account?.active && 
         <ShieldExclamationIcon className='absolute top-0 right-0 w-10 h-10 text-red'/>
         }
