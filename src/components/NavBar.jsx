@@ -34,9 +34,9 @@ export default function NavBar(pros) {
       ]
     : [
         {
-          name: "Register",
-          to: "/register",
-          current: pathLocation === "/register" ? true : false,
+          name: "Course",
+          to: "/course",
+          current: pathLocation === "/course" ? true : false,
         },
         {
           name: "Login",

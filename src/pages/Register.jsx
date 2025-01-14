@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { StepsController } from "multistep-react-form";
@@ -13,6 +13,7 @@ import { addTransaction } from "../features/transaction/transactionSlice";
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const [email, setEmail] = useState(true);
   const [password, setPassword] = useState(true);
   const [retypePassword, setRetypePassword] = useState(true);
@@ -21,6 +22,7 @@ export default function Register() {
   const [transaction_number, setTransactionNumber] = useState(true);
   const [transaction_id, setTransactionId] = useState(true);
   const [amount, setAmount] = useState(true);
+  const { course_id } = location.state || null;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -39,7 +41,6 @@ export default function Register() {
       setFormData(savedFormData);
     }
   }, []);
-
   // handleChange
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,6 +113,7 @@ export default function Register() {
           last_name: formData.last_name,
         },
         phone_number: formData.phone_number,
+        course_name: course_id,
       };
       dispatch(register(accountData)).then((resultAction) => {
         if (register.fulfilled.match(resultAction)) {
@@ -134,6 +136,7 @@ export default function Register() {
             transaction_number: "",
             transaction_id: "",
             amount: "",
+            course_name: null,
           })
           localStorage.removeItem("formData");
           return true
@@ -149,7 +152,7 @@ export default function Register() {
   const steps = [
     <Account email={email} password={password} retypePassword={retypePassword} formData={formData} handleChange={handleChange} />,
     <Information first_name={first_name} phone_number={phone_number} formData={formData} handleChange={handleChange} />,
-    <Payment transaction_number={transaction_number} transaction_id={transaction_id} amount={amount} formData={formData} handleChange={handleChange} />,
+    <Payment transaction_number={transaction_number} transaction_id={transaction_id} amount={amount} formData={formData} handleChange={handleChange} course_id={course_id} />,
     <Complete formData={formData} handleChange={handleChange} />,
   ];
   return (

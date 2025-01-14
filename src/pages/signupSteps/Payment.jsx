@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { viewPaymentMethod } from "../../features/paymentMethod/paymentMethodSlice";
 import { BlinkBlur } from "react-loading-indicators";
 export default function Payment(props) {
-  let {formData,handleChange,transaction_number,transaction_id,amount} = props
-
+  let {formData,handleChange,transaction_number,transaction_id,amount,course_id} = props
+  const dispatch = useDispatch();
   const paymentMethodData = useSelector((state) => state.paymentMethod.data);
   const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
-  const dispatch = useDispatch();
+  const courseData = useSelector((state) => state.course.data);
   const [expandedDivs, setExpandedDivs] = useState(null);
   useEffect(() => {
     if(paymentMethodStatus === "idle"){
@@ -16,16 +16,20 @@ export default function Payment(props) {
     }
   }, [dispatch,paymentMethodStatus]);
 
-// Update expandedDivs when paymentMethodData is available
-useEffect(() => {
-  if (paymentMethodData.length > 0) {
-    setExpandedDivs(paymentMethodData[0]?.id); // Set the ID of the first element
-  }
-}, [paymentMethodData]); // Re-run whenever paymentMethodData changes
+  // Update expandedDivs when paymentMethodData is available
+  useEffect(() => {
+    if (paymentMethodData.length > 0) {
+      setExpandedDivs(paymentMethodData[0]?.id); // Set the ID of the first element
+    }
+  }, [paymentMethodData]); // Re-run whenever paymentMethodData changes
   // Function to toggle the expansion for a specific div
   const toggleExpand = (id) => {
     setExpandedDivs(id);
   };
+  console.log(course_id);
+  const course = courseData.find((item) => item.id === course_id);
+
+
   return (
     <div className="shadow-2xl drop-shadow-2xl rounded-sm md:max-w-[460px] dark:bg-dark">
       <h1 className="text-5xl bg-dark dark:bg-white p-3 dark:text-dark text-gray-light font-lato">
@@ -101,7 +105,7 @@ useEffect(() => {
             id="amount"
             className={`border p-3 dark:bg-dark dark:text-gray-light  dark:border-gray-dark shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-light rounded-lg w-full outline-none pl-12 ${amount?'':'outline-2  outline-theme'}`}
             type="number"
-            placeholder="Amount: Our Join Fee 3000 Taka"
+            placeholder={"Amount: "+course?.price}
             name="amount"
             onChange={handleChange}
             value={formData.amount}
@@ -120,7 +124,7 @@ useEffect(() => {
       </div>
       <div className="px-4 text-center pb-4">
         <blockquote className="font-oswald">
-          <b>Note: </b>We  charge 900 Taka per
+          <b>Note: </b>{course?.name} course fee is {course?.price} Taka per
           month.
         </blockquote>
       </div>

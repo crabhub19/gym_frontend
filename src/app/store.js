@@ -9,6 +9,7 @@ import postReducer from '../features/post/postSlice'
 import postLikeReducer from '../features/post/postLikeSlice'
 import transactionReducer from '../features/transaction/transactionSlice'
 import userPostReducer from '../features/post/userPostSlice'
+import courseReducer from '../features/course/courseSlice'
 export const store = configureStore({
   reducer: {
     loading: loadingReducer,
@@ -20,7 +21,8 @@ export const store = configureStore({
     post:postReducer,
     postLike:postLikeReducer,
     transaction:transactionReducer,
-    userPost:userPostReducer
+    userPost:userPostReducer,
+    course:courseReducer,
   },
 });
 

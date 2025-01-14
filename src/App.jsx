@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 import { fetchUserPosts } from "./features/post/userPostSlice";
 import { logoutUser } from "./features/account/accountSlice";
 import {jwtDecode} from "jwt-decode"; // Install using npm install jwt-decode
+import { fetchCourse } from "./features/course/courseSlice";
 const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
@@ -30,6 +31,7 @@ const AnotherUserProfile = lazy(() => import("./pages/AnotherUserProfile"));
 const AddPost = lazy(() => import("./pages/AddPost"));
 const Explore = lazy(() => import("./pages/Explore"));
 const MakePayment = lazy(() => import("./pages/MakePayment"));
+const Course = lazy(() => import("./pages/Course"));
 const EmailVerification = lazy(() => import("./pages/staticPage/EmailVerification"));
 function App() {
   //dispatch
@@ -37,6 +39,7 @@ function App() {
   const userProfileStatus = useSelector((state) => state.profile.status);
   const fetchAllProfileStatus = useSelector((state) => state.allProfile.status);
   const postStatus = useSelector((state) => state.post.status);
+  const CourseStatus = useSelector((state) => state.course.status);
   //navigation
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,6 +74,9 @@ function App() {
   useEffect(() => {
     if (fetchAllProfileStatus === "idle") {
       dispatch(fetchAllProfile());
+    }
+    if (CourseStatus === "idle") {
+      dispatch(fetchCourse());
     }
     if (!token) return;
     if (postStatus === "idle") {
@@ -277,6 +283,25 @@ function App() {
                   }
                 >
                   <Register />
+                </Suspense>
+              }
+            />
+            <Route
+              path="course"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="flex justify-center items-center py-48">
+                      <Riple
+                        color="#ff0000"
+                        size="large"
+                        
+                        
+                      />
+                    </div>
+                  }
+                >
+                  <Course />
                 </Suspense>
               }
             />

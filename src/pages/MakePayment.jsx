@@ -10,6 +10,12 @@ export default function MakePayment() {
     const paymentMethodData = useSelector((state) => state.paymentMethod.data);
     const paymentMethodStatus = useSelector((state) => state.paymentMethod.status);
     const transactionStatus = useSelector((state) => state.transaction.status);
+    const profileData = useSelector((state) => state.profile.data);
+    useEffect(() => {
+      if (profileData) {
+        setCourse(profileData.account.course_details);
+      }
+    },[profileData]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [expandedDivs, setExpandedDivs] = useState(null);
@@ -21,6 +27,7 @@ export default function MakePayment() {
         transaction_id: "",
         amount: "",
     });
+    const[course,setCourse] = useState(null)
     useEffect(() => {
       if(paymentMethodStatus === "idle"){
         dispatch(viewPaymentMethod());
@@ -185,7 +192,7 @@ export default function MakePayment() {
       </div>
       <div className="px-4 text-center pb-4">
         <blockquote className="font-oswald">
-          <b>Note: </b>We charge 900 Taka per
+          <b>Note: </b>{course?.name} course fee is {course?.price} Taka per
           month.
         </blockquote>
       </div>
